@@ -31,3 +31,17 @@ colourComponent.prototype = Object.create(renderComponent.prototype, {
 });
 
 colourComponent.prototype.constructor = colourComponent;
+
+//-----------------------------------
+// Load from Json
+// Format:
+//	"data": 
+//	[{
+//		"colour": "#ffffff"
+//	}]
+//-----------------------------------
+colourComponent.load = function(temp, json) {
+	
+	var colour = json.data[0].colour;
+	return new colourComponent(temp, colour);
+}

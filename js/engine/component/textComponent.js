@@ -28,7 +28,7 @@ textComponent.prototype = Object.create(renderComponent.prototype, {
 		value: function() {
 			if(this.isVisible())
 			{
-				ctx = sceneManager.context;			
+				var ctx = globalCanvas.context;		
 				ctx.save();
 				
 				// Grab our textResource object
@@ -50,3 +50,26 @@ textComponent.prototype = Object.create(renderComponent.prototype, {
 });
 
 textComponent.prototype.constructor = textComponent;
+
+//-----------------------------------
+// Load from Json
+// Format:
+//	"data": 
+//	[{
+//		"text": "Hello World",
+//		"resource": {
+//			"font": "family",
+//			"color": "#ffffff",
+//			"alignment": "left"
+//		}
+//	}]
+//-----------------------------------
+textComponent.load = function(temp, json) {
+	
+	var str = json.data[0].text;
+	var textRes = new textResource( json.data[0].resource.font,
+							json.data[0].resource.colour,
+							json.data[0].resource.alignment);
+							
+	return new textComponent(temp, textRes, str);
+}

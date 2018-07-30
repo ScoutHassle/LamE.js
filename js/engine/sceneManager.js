@@ -9,6 +9,7 @@ var sceneManager = {
 	//-----------------------------
 	// Variables
 	//-----------------------------
+	projectData : null,
 	currentScene : null,
 	
 	//-----------------------------
@@ -31,7 +32,7 @@ var sceneManager = {
 	//-----------------------------
 	// Scene Update etc.
 	//-----------------------------
-	start : function() {
+	initialise : function() {
 		
 		// Default things we need to get running.
 		// Global Canvas
@@ -43,29 +44,15 @@ var sceneManager = {
 		
 		// Input Manager
 		inputManager.start();
+	},
+	
+	start : function(data) {
 		
-		// Finally handle our first scene
-		// TO DO - Find correct first scene based on json
-		this.changeScene(new scene()); // For now go to Splash
+		this.projectData = JSON.parse(data);		
 		
-		// [DEBUG] - Force json load
-		var json = {
-			"entitys": [{
-				"name": "e1",
-				"x": 0.0,
-				"y": 0.0,
-				"w": 800.0,
-				"h": 600.0,
-				"components": [{
-						"type": "image",
-						"data": [{
-							"file": "assets/images/splash.png"
-						}]
-				}]
-			}]
-		};
-		
-		this.currentScene.load(json);
+		// Finally handle our first scene - taken from json
+		this.changeScene(new scene());		
+		this.currentScene.load(this.getSceneData(0));
 		
 		// And create the tick
 		// Interval is 1 second/frameTime in ms = ticks per second 
@@ -94,5 +81,10 @@ var sceneManager = {
 		
 		globalCanvas.clear();
 		this.currentScene.render();
+	},
+	
+	getSceneData : function(i) {
+		
+		return this.projectData['Project']['Scenes'][i];
 	}
 }

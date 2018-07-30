@@ -61,37 +61,36 @@ scene.prototype.load = function(json) {
 	// TO DO - Load in from json
 	// Running as a test example
 	
-	var entitys = json['entitys'];
+	var entitys = json['Entitys'];
 	for(var i = 0; i < entitys.length; i++)
 	{
-		// TO DO - Pass entitys[i] into createEntity. Not my problem!
-		var name, x, y, w, h;
-		name = 	entitys[i].name;
-		x = 	entitys[i].x;
-		y =		entitys[i].y;
-		w = 	entitys[i].w;
-		h = 	entitys[i].h;
-		
-		var temp = this.createEntity(name, x, y, w, h);
-		
-		var components = entitys[i].components;//['components'];
-		for(var j = 0; j < components.length; j++)
-		{
-			// Just do something basic...
-			if(components[j].type === "image")
-			{
-				// So thinking I might store this as part of the object.
-				// Do a "loadFromJson" function on base component.
-				
-				// Anyway I know what I want from it right now so we'll just rip it
-				// out at this stage and do some jazz.
-				
-				var path = components[j].data[0].file;
-				new imageComponent(temp, 
-					resourceManager.loadResource(path, resource_type_image));
-			}
-		}
+		// DONE - Pass entitys[i] into createEntity. Not my problem!
+		this.createEntityFromJson(entitys[i]);
 	}		
+};
+
+scene.prototype.createEntityFromJson = function(data) {	
+		
+	var temp = this.createEntity(data.name, data.x, data.y, data.w, data.h);
+	
+	var components = data.components;
+	for(var i = 0; i < components.length; i++)
+	{
+		switch(components[i].type)
+		{
+			case "image":
+				imageComponent.load(temp, components[i]);
+				break;
+				
+			case "colour":
+				colourComponent.load(temp, components[i]);
+				break;
+				
+			case "text":
+				textComponent.load(temp, components[i]);
+				break;
+		}
+	}
 };
 
 scene.prototype.start = function() {

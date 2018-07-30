@@ -1,0 +1,36 @@
+{
+	"Project": {
+		"Scenes": [{
+			"Name": "Splash",
+			"Entitys": 
+			[{
+				"name": "e1",
+				"x": 0.0,
+				"y": 0.0,
+				"w": 800.0,
+				"h": 600.0,
+				"components": 
+				[{
+					"type": "image",
+					"data": 
+					[{
+						"file": "assets/images/splash.png" 
+					}]
+				},
+				{
+					"type": "text",
+					"data":
+					[{
+						"text": "Hello World!",
+						"resource": {
+							"font": "70px Verdana",
+							"colour": "#ffffff",
+							"alignment": "left"
+						}
+					}]
+				}
+				]
+			}]			
+		}]
+	}
+}

@@ -1,7 +1,7 @@
 var ComponentType = {
-	"Component_Base":1,
-	"Component_Renderable":2,
-	"Component_Input":3 };
+	"Component_Base": 1,
+	"Component_Renderable": 2,
+	"Component_Input": 3 };
 Object.freeze(ComponentType);
 
 //-----------------------------------
