@@ -1,65 +1,46 @@
-//-----------------------------------
-// Constructor
-//-----------------------------------
-function renderComponent(parent, r)
-{
-	component.call(this, ComponentType.Component_Renderable, parent);
-	
-	//-----------------------------------
-	// Private Vars
-	//-----------------------------------
-	var resource = r;
-	var visible = true;	
-	
-	//-----------------------------------
-	// Getters
-	//-----------------------------------	
-	this.getResource = function() {
-		return resource;
-	};
-	
-	this.isVisible = function() {
-	
-		return visible;
-	};
-	
-	//-----------------------------------
-	// Setters
-	//-----------------------------------
-	this.setResource = function(r) {
-		resource = r;
-	};
-	
-	this.setVisible = function(state) {
-	
-		visible = state;
-	};
+'use strict';
+
+class RenderComponent extends Component {    
+    
+    constructor(parent, r) {
+        
+        super(ComponentType.Component_Renderable, parent);
+        this.resource = r;
+        this.visible = true;
+    }
+    
+    get GetResource() {
+        
+        return this.resource;
+    }
+
+    get IsVisible() {
+        
+        return this.visible;
+    }
+
+    set SetResource(r) {
+        
+        this.resource = r;
+    }
+
+    set SetVisible(state) {
+        
+        this.visible = state;
+    }
+
+    update() {
+        
+        super.update();        
+    }
+
+    shutdown() {
+        
+        super.shutdown();
+        this.resource = null;
+    }
+
+    render() {
+        
+    }
 }
-
-//-----------------------------------
-// Inheritance
-//-----------------------------------
-renderComponent.prototype = Object.create(component.prototype, {
-	update: {
-		value: function() {
-		}
-	},
-	
-	shutdown: {
-		value : function() {
-			component.prototype.shutdown.apply(this);
-			
-			// Should we just let our inherited handle their resource?
-			resource = null;
-		}
-	}
-});
-
-renderComponent.prototype.constructor = renderComponent;
-
-//-----------------------------------
-// Extend
-//-----------------------------------
-renderComponent.prototype.render = function(){
-	
-};

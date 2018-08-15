@@ -1,4 +1,4 @@
-function textResource(font, colour, alignment)
+/*function textResource(font, colour, alignment)
 {
 	this.font = font;
 	this.colour = colour;
@@ -72,4 +72,4 @@ textComponent.load = function(temp, json) {
 							json.data[0].resource.alignment);
 							
 	return new textComponent(temp, textRes, str);
-}
+}*/

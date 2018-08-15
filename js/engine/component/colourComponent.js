@@ -1,4 +1,4 @@
-//-----------------------------------
+/*//-----------------------------------
 // Constructor
 //-----------------------------------
 function colourComponent(parent, r)
@@ -44,4 +44,4 @@ colourComponent.load = function(temp, json) {
 	
 	var colour = json.data[0].colour;
 	return new colourComponent(temp, colour);
-}
+}*/

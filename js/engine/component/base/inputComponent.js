@@ -3,7 +3,7 @@ var TouchEventType = {
 	"Touch_Move":2,
 	"Touch_End":3 };
 Object.freeze(TouchEventType);
-
+/*
 //-----------------------------------
 // Constructor
 //-----------------------------------
@@ -113,4 +113,4 @@ inputComponent.prototype.onTouchMove = function(touch)
 inputComponent.prototype.onTouchEnd = function(touch)
 {
 	return false;
-}	
+}	*/

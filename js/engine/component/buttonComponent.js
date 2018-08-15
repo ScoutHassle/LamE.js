@@ -1,4 +1,4 @@
-//-----------------------------------
+/*//-----------------------------------
 // Constructor
 //-----------------------------------
 function buttonComponent(parent)
@@ -89,4 +89,4 @@ buttonComponent.prototype.touchBoundCheck = function(touch)
 	}
 		
 	return false;
-};
+};*/

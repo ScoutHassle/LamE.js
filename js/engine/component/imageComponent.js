@@ -1,45 +1,26 @@
-//-----------------------------------
-// Constructor
-//-----------------------------------
-function imageComponent(parent, r)
-{
-	renderComponent.call(this, parent, r);
-}
+'use strict';
 
-//-----------------------------------
-// Inheritance
-//-----------------------------------
-imageComponent.prototype = Object.create(renderComponent.prototype, {
-	update: {
-		value: function() {
-		}
-	},
+class ImageComponent extends RenderComponent {
+    
+    constructor(parent, r) {
+        
+        super(parent, r);
+    }
+    
+    static load(temp, json) {
+        
+       var path = json.data[0].file;
+	   var imgComp = new ImageComponent(temp, resourceManager.loadResource(path, resource_type_image));
 	
-	render: {
-		value: function() {
-			if(this.isVisible())
-			{
-				var ctx = globalCanvas.context;
-				var transform = this.parent.transform;
-				ctx.drawImage(this.getResource(), transform.x, transform.y, transform.width, transform.height);
-			}
-		}
-		
-	}
-});
-
-imageComponent.prototype.constructor = imageComponent;
-
-//-----------------------------------
-// Load from Json
-// Format:
-//	"data": 
-//	[{
-//		"file": "FILENAME.EXT"
-//	}]
-//-----------------------------------
-imageComponent.load = function(temp, json) {
-	
-	var path = json.data[0].file;
-	return new imageComponent(temp, resourceManager.loadResource(path, resource_type_image));
+	   return imgComp;
+    }
+    
+    render() {
+        if(this.IsVisible)
+		{
+            var ctx = globalCanvas.context;
+            var transform = this.parent.transform;
+            ctx.drawImage(this.GetResource, transform.x, transform.y, transform.width, transform.height);
+        }
+    }
 }

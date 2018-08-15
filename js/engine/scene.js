@@ -66,7 +66,7 @@ scene.prototype.load = function(json) {
 	{
 		// DONE - Pass entitys[i] into createEntity. Not my problem!
 		this.createEntityFromJson(entitys[i]);
-	}		
+	}
 };
 
 scene.prototype.createEntityFromJson = function(data) {	
@@ -79,7 +79,7 @@ scene.prototype.createEntityFromJson = function(data) {
 		switch(components[i].type)
 		{
 			case "image":
-				imageComponent.load(temp, components[i]);
+				ImageComponent.load(temp, components[i]);
 				break;
 				
 			case "colour":
@@ -87,7 +87,7 @@ scene.prototype.createEntityFromJson = function(data) {
 				break;
 				
 			case "text":
-				textComponent.load(temp, components[i]);
+				//textComponent.load(temp, components[i]);
 				break;
 		}
 	}

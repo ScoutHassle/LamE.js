@@ -15,7 +15,9 @@ function entity(name, x, y, w, h) {
 
 entity.prototype.addComponent = function(component) {
 	
-	this.components.push(component);
+	if(component != null) {
+		this.components.push(component);
+	}
 };
 
 entity.prototype.removeComponent = function(index) {
