@@ -3,114 +3,101 @@ var TouchEventType = {
 	"Touch_Move":2,
 	"Touch_End":3 };
 Object.freeze(TouchEventType);
-/*
-//-----------------------------------
-// Constructor
-//-----------------------------------
-function inputComponent(parent)
-{
-	component.call(this, ComponentType.Component_Input, parent);
-	
-	var touchId = -1;
-	var onTouchStartEvent = null;
-	var onTouchMoveEvent = null;
-	var onTouchEndEvent = null;
-	
-	// Add to the inputManager
-	inputManager.addInputComponent(this);
-	
-	this.setTouchId = function(id)
-	{
-		touchId = id;
-	};
-	
-	this.validTouchId = function(id)
-	{
-		if(touchId == id && touchId != -1) return true;
+
+class InputComponent extends Component {
+    
+    constructor(parent) {
+        
+        super(ComponentType.Component_Input, parent);
+        
+        this.touchId = -1;
+        this.onTouchStartEvent = null;
+        this.onTouchMoveEvent = null;
+        this.onTouchEndEvent = null;
+        
+        inputManager.addInputComponent(this);
+    }
+
+    update() {
+        
+    }
+
+    shutdown() {
+        
+        super.shutdown();
+        component.prototype.shutdown.apply(this);
+			
+        this.onTouchStartEvent = null;
+		this.onTouchMoveEvent = null;
+		this.onTouchEndEvent = null;
+			
+		inputManager.removeInputComponent(this);
+    }
+
+    set SetTouchId(id) {
+        this.touchId = id;
+    }
+
+    IsValidTouchId(id) {
+        
+        if(this.touchId == id && this.touchId != -1) return true;
 		
 		return false;
-	};
-	
-	this.clearTouchId = function()
-	{
-		touchId = -1;
-	};
-	
-	this.setTouchEvent = function(type, func)
-	{
-		switch(type)
-		{
-			case TouchEventType.Touch_Start:
-				onTouchStartEvent = func;
-			break;
-			
-			case TouchEventType.Touch_Move:
-				onTouchMoveEvent = func;
-			break;
-			
-			case TouchEventType.Touch_End:
-				onTouchEndEvent = func;
-			break;
-		}
-	};
-	
-	this.triggerTouchEvent = function(type, touch)
-	{
-		switch(type)
-		{
-			case TouchEventType.Touch_Start:
-				if(onTouchStartEvent != null) onTouchStartEvent(touch);
-			break;
-			
-			case TouchEventType.Touch_Move:
-				if(onTouchMoveEvent != null) onTouchMoveEvent(touch);
-			break;
-			
-			case TouchEventType.Touch_End:
-				if(onTouchEndEvent != null) onTouchEndEvent(touch);
-			break;
-		}
-	};
-}
+    }
 
-//-----------------------------------
-// Inheritance
-//-----------------------------------
-inputComponent.prototype = Object.create(component.prototype, {
-	update: {
-		value: function() {
-		}
-	},
+    ClearTouchId() {
+        
+		this.touchId = -1;
+	}
 	
-	shutdown: {
-		value: function() {
-			component.prototype.shutdown.apply(this);
+	SetTouchEvent(type, func) {
+        
+		switch(type)
+		{
+			case TouchEventType.Touch_Start:
+				this.onTouchStartEvent = func;
+			break;
 			
-			onTouchStartEvent = null;
-			onTouchMoveEvent = null;
-			onTouchEndEvent = null;
+			case TouchEventType.Touch_Move:
+				this.onTouchMoveEvent = func;
+			break;
 			
-			inputManager.removeInputComponent(this);
+			case TouchEventType.Touch_End:
+				this.onTouchEndEvent = func;
+			break;
 		}
 	}
-});
+	
+	TriggerTouchEvent(type, touch) {
+        
+		switch(type)
+		{
+			case TouchEventType.Touch_Start:
+				if(this.onTouchStartEvent != null) this.onTouchStartEvent(touch);
+			break;
+			
+			case TouchEventType.Touch_Move:
+				if(this.onTouchMoveEvent != null) this.onTouchMoveEvent(touch);
+			break;
+			
+			case TouchEventType.Touch_End:
+				if(this.onTouchEndEvent != null) this.onTouchEndEvent(touch);
+			break;
+		}
+	}
 
-inputComponent.prototype.constructor = inputComponent;
+    OnTouchStart(touch) {
+        
+        return false;
+    }
 
-//-----------------------------------
-// Extend
-//-----------------------------------
-inputComponent.prototype.onTouchStart = function(touch)
-{
-	return false;
+    OnTouchMove(touch) {
+        
+        return false;
+    }
+
+    OnTouchEnd(touch) {
+        
+        return false;
+    }
 }
-
-inputComponent.prototype.onTouchMove = function(touch)
-{
-	return false;
-}
-
-inputComponent.prototype.onTouchEnd = function(touch)
-{
-	return false;
-}	*/
