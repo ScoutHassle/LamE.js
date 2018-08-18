@@ -7,6 +7,11 @@ var key_Arrow_Up = 40;
 var key_Arrow_Down = 38;
 var key_Space_Bar = 32;
 
+var key_W = 87;
+var key_A = 65;
+var key_S = 83;
+var key_D = 68;
+
 var inputManager = {
 	
 	//-----------------------------
@@ -20,6 +25,7 @@ var inputManager = {
 	handledTouches : [],
 	
 	// Currently not using keys... mobile focused still?
+    keys : [],
 	
 	//-----------------------------
 	start : function() {
@@ -39,6 +45,10 @@ var inputManager = {
 			globalCanvas.canvas.addEventListener('mousedown', 	this.onMouseDown, 	false);
 			globalCanvas.canvas.addEventListener('mousemove', 	this.onMouseMove, 	false);
 			globalCanvas.canvas.addEventListener('mouseup', 	this.onMouseUp, 	false);
+        
+        // Keys
+        document.addEventListener('keydown',     this.onKeyDown,     false);
+       document.addEventListener('keyup',       this.onKeyUp,       false);
 		//}
 	},
 	
@@ -146,7 +156,7 @@ var inputManager = {
 	
 
 	getTouchIdxById : function(inId) {
-		for (i = 0; i < this.handledTouches.length; i++) 
+		for (var i = 0; i < this.handledTouches.length; i++) 
 		{
 			var id = this.handledTouches[i].identifier;
 		
@@ -228,5 +238,25 @@ var inputManager = {
 				}
 			}
 		}
-	}
+	},
+    
+    onKeyDown : function(e) {
+        
+        inputManager.keys[e.keyCode] = 1;
+    },
+    
+    onKeyUp : function(e) {
+        
+         inputManager.keys[e.keyCode] = 0;
+    },
+    
+    isKeyDown : function(code) {
+        
+        if(this.keys[code] != null && this.keys[code] == 1) {
+        
+            return true;
+        }
+        
+        return false;
+    }
 }

@@ -11,11 +11,12 @@ var sceneManager = {
 	//-----------------------------
 	projectData : null,
 	currentScene : null,
+    currentSceneIndex : 0,
 	
 	//-----------------------------
 	// Scene Management
 	//-----------------------------
-	changeScene : function(scene) {
+	changeScene : function(index) {
 		
 		// Shutdown current
 		if(this.currentScene)
@@ -23,7 +24,11 @@ var sceneManager = {
 			this.currentScene.shutdown();
 		}
 		
-		this.currentScene = scene;
+        this.currentSceneIndex = index;
+        
+        
+		this.currentScene = new scene();
+        this.currentScene.load(this.getSceneData(index));
 		this.currentScene.start();
 		
 		return scene;
@@ -51,8 +56,8 @@ var sceneManager = {
 		this.projectData = JSON.parse(data);		
 		
 		// Finally handle our first scene - taken from json
-		this.changeScene(new scene());		
-		this.currentScene.load(this.getSceneData(0));
+		this.changeScene(0);
+
 		
 		// And create the tick
 		// Interval is 1 second/frameTime in ms = ticks per second 

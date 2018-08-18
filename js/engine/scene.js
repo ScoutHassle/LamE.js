@@ -89,6 +89,10 @@ scene.prototype.createEntityFromJson = function(data) {
 			case "text":
 				TextComponent.load(temp, components[i]);
 				break;
+                
+            case "script":
+                ScriptComponent.load(temp, components[i]);
+                break;
 		}
 	}
 };

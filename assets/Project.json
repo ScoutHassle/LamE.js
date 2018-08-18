@@ -28,9 +28,38 @@
 							"alignment": "left"
 						}
 					}]
-				}
-				]
+				},
+                {
+                    "type": "script",
+                    "data":
+                    [{
+                        "type": 4,
+                        "parent": null,
+                        "scriptName":"SkipSplash",
+                        "skipKey": 32
+                    }]
+                }]
 			}]			
-		}]
+		},
+        {
+            "Name": "Main",
+            "Entitys":
+            [{
+                "name": "e1",
+                "x": 0.0,
+                "y": 0.0,
+                "w": 800.0,
+                "h": 600.0,
+                "components":
+                [{
+                    "type": "image",
+                    "data":
+                    [{
+                        "file": "assets/images/main_image.png"
+                    }]
+                }]
+            }]
+        
+        }]
 	}
 }

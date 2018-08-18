@@ -15,7 +15,7 @@ class Component {
         
         this.type = type;
         this.parent = parent;
-        parent.addComponent(this);
+        if(parent != null)  parent.addComponent(this);
     }
     
     get GetParent(){
@@ -30,5 +30,10 @@ class Component {
     shutdown() {
         
         this.parent = null;
+    }
+    
+    save() {
+        
+        return JSON.stringify(flatten(this));
     }
 }

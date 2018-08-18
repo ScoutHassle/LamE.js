@@ -10,6 +10,7 @@
 	<script src="js/engine/component/base/component.js"></script>
 	<script src="js/engine/component/base/renderComponent.js"></script>
 	<script src="js/engine/component/base/inputComponent.js"></script>
+    <script src="js/engine/component/base/scriptComponent.js"></script>
 	
 	<!-- Extended Components -->
 	<!-- Render -->
@@ -18,6 +19,13 @@
 	<script src="js/engine/component/colourComponent.js"></script>
 	<!-- Input -->
 	<script src="js/engine/component/buttonComponent.js"></script>
+    
+    <!-- Required before all additional scripts -->
+    <script src="js/engine/utility/scriptBuilder.js"></script>
+    
+     <!-- Game -->
+    <script src="js/game/player.js"></script>
+    <script src="js/game/skipSplash.js"></script>
 	
 	<script src="js/engine/canvas.js"></script>
 	<script src="js/engine/transform.js"></script>
@@ -27,14 +35,14 @@
 	<script src="js/engine/scene.js"></script>
 	<script src="js/engine/sceneManager.js"></script>
 
+    <!-- Utility -->
 	<script src="js/engine/utility/vec2.js"></script>
+    <script src="js/engine/utility/flatten.js"></script>
 	<script src="js/engine/loadBarrier.js"></script>
-	<script src="js/engine/resourceManager.js"></script>	
+	<script src="js/engine/resourceManager.js"></script>
 	
 	<!-- Root -->
 	<script src="js/main.js"></script>
-	<script src="js/debugLog.js"></script>
-
 </head>
 
 <body onload="startEngine()">

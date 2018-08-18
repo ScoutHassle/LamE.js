@@ -25,7 +25,6 @@ class InputComponent extends Component {
     shutdown() {
         
         super.shutdown();
-        component.prototype.shutdown.apply(this);
 			
         this.onTouchStartEvent = null;
 		this.onTouchMoveEvent = null;
