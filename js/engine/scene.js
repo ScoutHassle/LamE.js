@@ -93,6 +93,10 @@ scene.prototype.createEntityFromJson = function(data) {
             case "script":
                 ScriptComponent.load(temp, components[i]);
                 break;
+                
+            case "raycast":
+                new RaycasterComponent(temp, new grid(20, 20), "/assets/images/wall_texture.jpg");
+                break;
 		}
 	}
 };

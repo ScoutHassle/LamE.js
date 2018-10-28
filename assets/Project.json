@@ -57,6 +57,8 @@
                     [{
                         "file": "assets/images/main_image.png"
                     }]
+                }, {
+                    "type": "raycast"
                 }]
             }]
         
