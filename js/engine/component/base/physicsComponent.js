@@ -12,7 +12,7 @@ class PhysicsComponent extends Component {
         
     }
     
-    physicsUpdate() {
+    physicsUpdate(delta) {
         
     }
     

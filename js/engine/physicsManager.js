@@ -20,11 +20,20 @@ class PhysicsManager {
     get Drag() {
         return this.drag;
     }
+
+    // Physics Object Management
+    addRigidBody(rb) {
+        this.kineticObjects.push(rb)
+    }
     
     update() {
         // PrePhysics
 
         // PhysicsUpdate
+        for(var i = 0; i < this.kineticObjects.length; i++) {
+
+            this.kineticObjects[i].physicsUpdate(frameTime)
+        }
 
         // PostPhysics
     }

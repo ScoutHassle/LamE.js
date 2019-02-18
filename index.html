@@ -5,12 +5,17 @@
 	<link rel="stylesheet" type="text/css" href="style/canvas.css">
 
 	<!-- Engine Includes -->
+	<!-- Early/Shared -->
+	<script src="js/engine/utility/vec2.js"></script>
+
 	<!-- Engine//Components -->
 	<!-- Base -->
 	<script src="js/engine/component/base/component.js"></script>
 	<script src="js/engine/component/base/renderComponent.js"></script>
 	<script src="js/engine/component/base/inputComponent.js"></script>
-    <script src="js/engine/component/base/scriptComponent.js"></script>
+	<script src="js/engine/component/base/physicsComponent.js"></script>
+	<script src="js/engine/component/base/scriptComponent.js"></script>
+
 	
 	<!-- Extended Components -->
 	<!-- Render -->
@@ -19,7 +24,9 @@
 	<script src="js/engine/component/colourComponent.js"></script>
 	<!-- Input -->
 	<script src="js/engine/component/buttonComponent.js"></script>
-    
+	<!-- Physics -->
+	<script src="js/engine/component/rigidBodyComponent.js"></script>
+	
     <!-- Required before all additional scripts -->
     <script src="js/engine/utility/scriptBuilder.js"></script>
     
@@ -34,9 +41,10 @@
 	<script src="js/engine/inputManager.js"></script>
 	<script src="js/engine/scene.js"></script>
 	<script src="js/engine/sceneManager.js"></script>
+	<script src="js/engine/physicsManager.js"></script>
 
     <!-- Utility -->
-	<script src="js/engine/utility/vec2.js"></script>
+	
     <script src="js/engine/utility/flatten.js"></script>
 	<script src="js/engine/loadBarrier.js"></script>
 	<script src="js/engine/resourceManager.js"></script>

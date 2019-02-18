@@ -7,16 +7,16 @@ class vec2 {
         this.y = y;
     }
     
-    set set(x, y) {
-        this.x = x;
-        this.y = y;
+    set Set(v) {
+        this.x = v.x;
+        this.y = v.y;
     }
     
-    get magnitude() {
+    magnitude() {
         return Math.sqrt((this.x * this.x) + (this.y * this.y));
     }
     
-    get magnitudeSquared() {
+    magnitudeSquared() {
         return (this.x * this.x) + (this.y * this.y)
     }
     

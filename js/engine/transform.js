@@ -1,28 +1,35 @@
-function transform(x, y, w, h)
-{
-	this.x = x;
-	this.y = y;
-	this.width = w;
-	this.height = h;
-}
-
-transform.prototype.rotate = function(angle)
-{
+class Transform {
 	
-};
+	constructor(x, y, w, h) {
+		this.x = x;
+		this.y = y;
+		this.width = w;
+		this.height = h;
+	}
+	
+	get Position() {
+		return {x: x, y: y};
+	}
 
-transform.prototype.moveY = function(y)
-{
-	this.y += y;
-};
+	set Position(v) {
+		this.x = v.x;
+		this.y = v.y;
+	}
 
-transform.prototype.moveX = function(x)
-{
-	this.x += x;
-};
+	moveX(x) {
+		this.x += x;
+	}
 
-transform.prototype.move = function(x, y)
-{
-	this.moveY(y);
-	this.moveX(x);
-};
+	moveY(y) {
+		this.y += y;
+	}
+
+	move(v) {
+		this.x += v.x;
+		this.y += v.y;
+	}
+
+	rotate(angle) {
+
+	}
+}

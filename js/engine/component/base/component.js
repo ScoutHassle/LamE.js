@@ -19,7 +19,7 @@ class Component {
         if(parent != null)  parent.addComponent(this);
     }
     
-    get GetParent(){
+    get Parent(){
         
         return this.parent;
     }

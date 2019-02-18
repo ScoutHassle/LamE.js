@@ -17,7 +17,7 @@ class ColourComponent extends RenderComponent {
         
         if(this.IsVisible)
         {
-            ctx = globalCanvas.context;
+            var ctx = globalCanvas.context;
 			ctx.fillStyle = this.GetResource;
 				
 			var transform = this.parent.transform;

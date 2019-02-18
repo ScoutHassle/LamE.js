@@ -39,7 +39,7 @@ var entityManager = {
 	
 	updatePhysics : function()
 	{
-		// TO DO
+
 	},
 	
 	render : function()

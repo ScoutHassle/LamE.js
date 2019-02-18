@@ -77,6 +77,9 @@ var sceneManager = {
 		
 		// Now the scene handling
 		this.currentScene.update();
+
+		// Global PhysicsManager.
+		physics.update();
 		
 		// Finally draw...
 		this.render();

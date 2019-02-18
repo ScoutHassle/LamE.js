@@ -8,6 +8,8 @@ class Player extends ScriptComponent {
         
         this.health = 10;
         this.speed = 5.0;
+
+        this.spawn = null;
     }
     
     setScriptData(json) {
@@ -21,6 +23,17 @@ class Player extends ScriptComponent {
         if(inputManager.isKeyDown(key_W)) {
             
             // Do something.
+            if (this.spawn == null) {
+               
+                // Spawn a physics object
+                var e =sceneManager.currentScene.createEntity("entity", 375, 250, 50, 50);
+                new ColourComponent(e, "#ff0000");
+                var rb = new RigidBodyComponent(e);
+
+                this.spawn = {e: e, rb: rb};
+            }
+
+            this.spawn.rb.Velocity = {x: 0, y: -20};
         }
     }
     

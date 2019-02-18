@@ -8,6 +8,8 @@ class RigidBodyComponent extends PhysicsComponent {
 		this.constantForce = new vec2(0.0, 0.0);
         this.velocity = new vec2(0.0, 0.0);
         this.mass = 1.0;
+
+        physics.addRigidBody(this)
     }
 
     get Velocity() {
@@ -18,11 +20,11 @@ class RigidBodyComponent extends PhysicsComponent {
         return this.mass;
     }
 
-    set SetVelocity(v) {
-        this.velocity = v;
+    set Velocity(v) {
+        this.velocity.Set = v;
     }
 
-    set SetMass(m) {
+    set Mass(m) {
         this.mass = m;
     }
 
@@ -31,15 +33,20 @@ class RigidBodyComponent extends PhysicsComponent {
         // Stub - Unused by the physics side.   
     }
     
-    physicsUpdate() {
+    physicsUpdate(delta) {
         
         // Start with Euler's method for force calculations.
         // It's simple and should serve my current needs.
-        var accel = this.ComputeForces().fdivide(this.mass);
+        var accel = this.ComputeForces()
+        accel.fdivide(this.mass);
         accel.clean();
         
-        //position += frameTime * velocity
-        this.velocity.add(accel.scale(frameTime));
+        var movement = new vec2(this.velocity.x, this.velocity.y);
+        movement.fmultiply(delta);
+        this.Parent.transform.move(movement);
+
+        accel.fmultiply(delta)
+        this.velocity.add(accel);
         this.velocity.clean();
     }
 
@@ -51,14 +58,16 @@ class RigidBodyComponent extends PhysicsComponent {
 	//  Utility
     ComputeForces(velocity) {
         
-        var totalForce = new vec2(this.constant.x, this.constant.y);
+        var totalForce = new vec2(this.constantForce.x, this.constantForce.y);
         var gravity = new vec2(physics.Gravity.x, physics.Gravity.y);
-        totalForce.add(gravity.fmultiply(this.mass));
+        gravity.fmultiply(this.mass)
+        totalForce.subtract(gravity);
         
         // Apply drag
         var speed = this.velocity.magnitude();
         var vel = new vec2(this.velocity.x, this.velocity.y);
-        totalForce.subtract(vel.fmultiply(physics.Drag * this.mass * speed));
+        vel.fmultiply(physics.Drag * this.mass * speed)
+        totalForce.subtract(vel);
         
         return totalForce;
     }

@@ -58,7 +58,25 @@
                         "file": "assets/images/main_image.png"
                     }]
                 }]
-            }]
+			},
+			{
+				"name": "player",
+				"x": 0.0,
+				"y": 0.0,
+				"w": 0.0,
+				"h": 0.0,
+				"components":[
+					{
+						"type": "script",
+						"data": [
+							{
+								"parent": null,
+								"scriptName": "Player"
+							}
+						]
+					}
+				]
+			}]
         
         }]
 	}

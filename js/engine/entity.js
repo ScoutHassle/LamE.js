@@ -9,7 +9,7 @@ Object.freeze(ExtendedComponentType);
 function entity(name, x, y, w, h) {
 	
 	this.name = name;
-	this.transform = new transform(x, y, w, h);
+	this.transform = new Transform(x, y, w, h);
 	this.components = [];
 }
 
