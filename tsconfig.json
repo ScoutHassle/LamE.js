@@ -4,7 +4,9 @@
         "target": "es6",
         "module": "commonjs",
         "sourceMap": true,
-        "outDir": "../jsc",
-        "esModuleInterop": true
+        "outDir": "./jsc",
+        "esModuleInterop": true,
+
+        "baseUrl": "./ts"
     }    
 }
