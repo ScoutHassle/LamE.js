@@ -24,8 +24,7 @@ class Player extends ScriptComponent {
         
     }
     
-    Save() {
-        
+    Save(): any {        
         return this.constructor;
     }
 }

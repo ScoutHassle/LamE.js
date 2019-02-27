@@ -34,7 +34,7 @@ export class Component {
 
     }
 
-    Save(): void {
-        // TO DO
+    Save(): any {        
+        return JSON.stringify(Flatten(this));
     }
 }
