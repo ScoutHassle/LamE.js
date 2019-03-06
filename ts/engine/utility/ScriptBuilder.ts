@@ -2,8 +2,8 @@ let ScriptDatabase:any[];
 
 function ScriptBuilder(json) {
     
-    var name = json.scriptName;
-    var script = null;
+    const name = json.scriptName;
+    let script = null;
     if(name != null) {
         if(ScriptDatabase[name] != null && ScriptDatabase[name] != undefined) {
             

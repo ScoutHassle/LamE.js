@@ -21,7 +21,7 @@ export class Vector2 {
     }
     
     Normalize() {
-        var length = Math.sqrt((this.x * this.x) + (this.y * this.y));
+        const length = Math.sqrt((this.x * this.x) + (this.y * this.y));
         this.x = this.x / length;
         this.y = this.y / length;
     }

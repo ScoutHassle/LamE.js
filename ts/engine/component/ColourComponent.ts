@@ -8,7 +8,7 @@ export class ColourComponent extends RenderComponent {
     }
 
     static Load(temp: Entity, json: any): ColourComponent {
-        var colour = json.data[0].colour;
+        const colour = json.data[0].colour;
         return new ColourComponent(temp, colour);
     }
 
@@ -17,7 +17,7 @@ export class ColourComponent extends RenderComponent {
         if (this.visible) {
 
             // TO DO - Port GlobalCanvas for context etc.
-            let transform = this.Parent().transform;
+            const transform = this.Parent().transform;
         }
     }
 }

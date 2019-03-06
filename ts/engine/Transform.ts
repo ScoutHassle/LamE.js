@@ -4,8 +4,8 @@ import {Vector2} from './utility/Vector2';
 export class Transform {
     
     // Variables
-    position: Vector2;
-    size: Vector2;
+    private position: Vector2;
+    private size: Vector2;
 
 	constructor(x: number, y: number, w: number, h: number) {
 
@@ -15,6 +15,10 @@ export class Transform {
 	
 	Position(): Vector2 {
 		return this.position;
+	}
+
+	Size(): Vector2 {
+		return this.size;
 	}
 
 	SetPosition(v: Vector2): void{

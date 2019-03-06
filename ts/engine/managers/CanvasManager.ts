@@ -1,5 +1,12 @@
 export class CanvasManager {
 
+    // Singleton
+    private static instance: CanvasManager;
+
+    public static get Instance() {
+        return this.instance || (this.instance = new this());
+    }
+
     canvas: HTMLCanvasElement;
     context: CanvasRenderingContext2D;
 
@@ -11,7 +18,7 @@ export class CanvasManager {
 
     CreateCanvas(w: number, h: number): HTMLCanvasElement {
 
-        var c = document.createElement("canvas");
+        let c = document.createElement("canvas");
         c.id = "MainCanvas";
         c.width = w;
         c.height = h;

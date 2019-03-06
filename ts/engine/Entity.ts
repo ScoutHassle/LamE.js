@@ -25,13 +25,13 @@ export class Entity {
 	}
 
 	Update() {
-		for (var i = 0; i < this.components.length; i++) {
+		for (let i = 0; i < this.components.length; i++) {
 			this.components[i].Update();
 		}
 	}
 
 	Render() {
-		for(var i = 0; i < this.components.length; i++)
+		for(let i = 0; i < this.components.length; i++)
 		{
 			if(this.components[i].Render) {
 				this.components[i].Render();
@@ -40,7 +40,7 @@ export class Entity {
 	}
 
 	Shutdown() {
-		for(var i = 0; i < this.components.length; i++)
+		for(let i = 0; i < this.components.length; i++)
 		{
 			this.components[i].shutdown();
 		}
@@ -55,7 +55,7 @@ export class Entity {
 
 	GetComponentIndexOfBaseType(type: ComponentType): number {
 
-		for(var i = 0; i < this.components.length; i++)
+		for(let i = 0; i < this.components.length; i++)
 		{
 			if(this.components[i].type === type)
 			{
