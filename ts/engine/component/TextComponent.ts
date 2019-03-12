@@ -1,6 +1,6 @@
 import { Entity } from "engine/Entity";
 import { RenderComponent } from "./base/RenderComponent";
-import { CanvasManager } from "engine/managers/CanvasManager";
+import { CanvasManager } from "../managers/CanvasManager";
 
 
 export class TextComponent extends RenderComponent {

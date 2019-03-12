@@ -1,7 +1,5 @@
-'use strict';
-
-import { Vector2 } from "engine/utility/Vector2";
-import { frameTime } from "engine/GlobalSettings";
+import { Vector2 } from "../utility/Vector2";
+import { frameTime } from "../GlobalSettings";
 
 export class PhysicsManager {
     

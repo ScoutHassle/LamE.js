@@ -1,6 +1,6 @@
 import { RenderComponent } from './base/RenderComponent';
 import { Entity } from '../Entity';
-import { CanvasManager } from 'engine/managers/CanvasManager';
+import { CanvasManager } from '../managers/CanvasManager';
 
 export class ColourComponent extends RenderComponent {
 

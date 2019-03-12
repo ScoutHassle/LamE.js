@@ -1,9 +1,7 @@
-'use strict';
-
 import { RenderComponent } from "./base/RenderComponent";
 import { Entity } from "engine/Entity";
-import { CanvasManager } from "engine/managers/CanvasManager";
-import { ResourceManager } from "engine/managers/ResourceManager";
+import { CanvasManager } from "../managers/CanvasManager";
+import { ResourceManager } from "../managers/ResourceManager";
 
 export class ImageComponent extends RenderComponent {
     

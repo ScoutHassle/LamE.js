@@ -1,46 +1,32 @@
-'use strict';
-
-class RenderComponent extends Component {    
-    
-    constructor(parent, r) {
-        
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const Component_1 = require("./Component");
+class RenderComponent extends Component_1.Component {
+    constructor(parent, resource) {
         super(ComponentType.Component_Renderable, parent);
-        this.resource = r;
+        this.resource = resource;
         this.visible = true;
     }
-    
-    get GetResource() {
-        
+    Resource() {
         return this.resource;
     }
-
-    get IsVisible() {
-        
+    SetResource(resource) {
+        this.resource = resource;
+    }
+    IsVisible() {
         return this.visible;
     }
-
-    set SetResource(r) {
-        
-        this.resource = r;
-    }
-
-    set SetVisible(state) {
-        
+    SetVisible(state) {
         this.visible = state;
     }
-
-    update() {
-        
-        super.update();        
+    Update() {
     }
-
-    shutdown() {
-        
-        super.shutdown();
+    Shutdown() {
+        super.Shutdown();
         this.resource = null;
     }
-
-    render() {
-        
+    Render() {
     }
 }
+exports.RenderComponent = RenderComponent;
+//# sourceMappingURL=RenderComponent.js.map

@@ -1,7 +1,5 @@
-'use strict';
-
 import { PhysicsComponent } from "./base/PhysicsComponent";
-import { Vector2 } from "engine/utility/Vector2";
+import { Vector2 } from "../utility/Vector2";
 import { PhysicsManager } from "engine/managers/PhysicsManager";
 import { Entity } from "engine/Entity";
 

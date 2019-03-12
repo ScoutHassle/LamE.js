@@ -1,6 +1,6 @@
-import { updateEngine } from "../main";
-import { frameTime } from "engine/GlobalSettings";
-import { Scene } from "engine/Scene";
+import { updateEngine } from "../Main";
+import { frameTime } from "../GlobalSettings";
+import { Scene } from "../Scene";
 import { CanvasManager } from "./CanvasManager";
 import { ResourceManager } from "./ResourceManager";
 import { PhysicsManager } from "./PhysicsManager";

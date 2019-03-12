@@ -1,74 +1,60 @@
-'use strict';
-
-class RigidBodyComponent extends PhysicsComponent {    
-    
-	constructor(parent) {
-        
-		super(parent);
-		this.constantForce = new vec2(0.0, 0.0);
-        this.velocity = new vec2(0.0, 0.0);
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const PhysicsComponent_1 = require("./base/PhysicsComponent");
+const Vector2_1 = require("../utility/Vector2");
+const PhysicsManager_1 = require("engine/managers/PhysicsManager");
+class RigidBodyComponent extends PhysicsComponent_1.PhysicsComponent {
+    constructor(parent) {
+        super(parent);
+        this.constantForce = new Vector2_1.Vector2(0.0, 0.0);
+        this.velocity = new Vector2_1.Vector2(0.0, 0.0);
         this.mass = 1.0;
-
-        physics.addRigidBody(this)
+        PhysicsManager_1.PhysicsManager.Instance.AddRigidBody(this);
     }
-
-    get Velocity() {
+    Velocity() {
         return this.velocity;
     }
-
-    get Mass() {
+    Mass() {
         return this.mass;
     }
-
-    set Velocity(v) {
-        this.velocity.Set = v;
+    SetVelocity(v) {
+        this.velocity.Set(v);
     }
-
-    set Mass(m) {
+    SetMass(m) {
         this.mass = m;
     }
-
-    update() {
-        
+    Update() {
         // Stub - Unused by the physics side.   
     }
-    
-    physicsUpdate(delta) {
-        
+    PhysicsUpdate(delta) {
         // Start with Euler's method for force calculations.
         // It's simple and should serve my current needs.
-        var accel = this.ComputeForces()
-        accel.fdivide(this.mass);
-        accel.clean();
-        
-        var movement = new vec2(this.velocity.x, this.velocity.y);
-        movement.fmultiply(delta);
-        this.Parent.transform.move(movement);
-
-        accel.fmultiply(delta)
-        this.velocity.add(accel);
-        this.velocity.clean();
+        let accel = this.ComputeForces();
+        accel.FloatDivide(this.mass);
+        accel.Clean();
+        let movement = new Vector2_1.Vector2(this.velocity.x, this.velocity.y);
+        movement.FloatMultiply(delta);
+        this.Parent().transform.Move(movement);
+        accel.FloatMultiply(delta);
+        this.velocity.Add(accel);
+        this.velocity.Clean();
     }
-
-    shutdown() {
-        
-        super.shutdown();
+    Shutdown() {
+        super.Shutdown();
     }
-	
-	//  Utility
-    ComputeForces(velocity) {
-        
-        var totalForce = new vec2(this.constantForce.x, this.constantForce.y);
-        var gravity = new vec2(physics.Gravity.x, physics.Gravity.y);
-        gravity.fmultiply(this.mass)
-        totalForce.subtract(gravity);
-        
+    //  Utility
+    ComputeForces() {
+        let totalForce = new Vector2_1.Vector2(this.constantForce.x, this.constantForce.y);
+        let gravity = new Vector2_1.Vector2(PhysicsManager_1.PhysicsManager.Instance.Gravity().x, PhysicsManager_1.PhysicsManager.Instance.Gravity().y);
+        gravity.FloatMultiply(this.mass);
+        totalForce.Subtract(gravity);
         // Apply drag
-        var speed = this.velocity.magnitude();
-        var vel = new vec2(this.velocity.x, this.velocity.y);
-        vel.fmultiply(physics.Drag * this.mass * speed)
-        totalForce.subtract(vel);
-        
+        const speed = this.velocity.Magnitude();
+        let vel = new Vector2_1.Vector2(this.velocity.x, this.velocity.y);
+        vel.FloatMultiply(PhysicsManager_1.PhysicsManager.Instance.Drag() * this.mass * speed);
+        totalForce.Subtract(vel);
         return totalForce;
     }
 }
+exports.RigidBodyComponent = RigidBodyComponent;
+//# sourceMappingURL=RigidBodyComponent.js.map

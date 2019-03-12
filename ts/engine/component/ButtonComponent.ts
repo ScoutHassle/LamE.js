@@ -1,5 +1,3 @@
-'use strict';
-
 import { InputComponent } from "./base/InputComponent";
 import { Entity } from "engine/Entity";
 

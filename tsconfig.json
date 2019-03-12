@@ -3,7 +3,8 @@
     "compilerOptions": {
         "target": "es6",
         "module": "commonjs",
-        "outDir": "./jsc",
+        "outDir": "./js",
+        "sourceMap": true,
         "esModuleInterop": true,
 
         "baseUrl": "./ts"
