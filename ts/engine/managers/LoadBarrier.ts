@@ -1,3 +1,5 @@
+import { CanvasManager } from "./CanvasManager";
+
 export class LoadBarrier {
 
     // Singleton
@@ -35,19 +37,17 @@ export class LoadBarrier {
 	
 	Render(): void {
         // Draw loading screen
-        
-        // TO DO - globalcanvas etc.
 		
-		// ctx = sceneManager.context;
-		// canvas = sceneManager.canvas;
-		// ctx.fillStyle = "Blue";
-		// ctx.fillRect(0, 0, sceneManager.canvas.width, sceneManager.canvas.height);
+		let ctx = CanvasManager.Instance.GetContext();
+		const canvas = CanvasManager.Instance.GetCanvas();
+		ctx.fillStyle = "Blue";
+		ctx.fillRect(0, 0, canvas.width, canvas.height);
 		
-		// // Text
-		// ctx.font = "20px Arial";
-		// ctx.fillStyle = "red";
-		// ctx.textAlign = "center";
+		// Text
+		ctx.font = "20px Arial";
+		ctx.fillStyle = "red";
+		ctx.textAlign = "center";
 		
-		// ctx.fillText("LOADING", canvas.width/2, canvas.height/2 - 20);
+		ctx.fillText("LOADING", canvas.width/2, canvas.height/2 - 20);
 	}
 }

@@ -23,12 +23,11 @@ export class ImageComponent extends RenderComponent {
     render() {
         if(this.IsVisible)
 		{
-            // TO DO - Port GlobalCanvas for context etc.
-            // const ctx = globalCanvas.context;
-            // const transform = this.parent.transform;
-            // const pos = transform.Position();
-            // const size = transform.Size();
-            // ctx.drawImage(this.Resource(), pos.x, pos.y, size.x, size.y);
+            const ctx = CanvasManager.Instance.GetContext();
+            const transform = this.parent.transform;
+            const pos = transform.Position();
+            const size = transform.Size();
+            ctx.drawImage(this.Resource(), pos.x, pos.y, size.x, size.y);
         }
     }
 }

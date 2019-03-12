@@ -1,6 +1,7 @@
 'use strict';
 
 import { Vector2 } from "engine/utility/Vector2";
+import { frameTime } from "engine/GlobalSettings";
 
 export class PhysicsManager {
     
@@ -46,7 +47,7 @@ export class PhysicsManager {
         // PrePhysics
 
         // PhysicsUpdate
-        for(var i = 0; i < this.kineticObjects.length; i++) {
+        for(let i = 0; i < this.kineticObjects.length; i++) {
 
             this.kineticObjects[i].physicsUpdate(frameTime)
         }

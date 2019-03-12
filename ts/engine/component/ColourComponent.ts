@@ -1,5 +1,6 @@
 import { RenderComponent } from './base/RenderComponent';
 import { Entity } from '../Entity';
+import { CanvasManager } from 'engine/managers/CanvasManager';
 
 export class ColourComponent extends RenderComponent {
 
@@ -17,7 +18,15 @@ export class ColourComponent extends RenderComponent {
         if (this.visible) {
 
             // TO DO - Port GlobalCanvas for context etc.
+            
+
+            let ctx = CanvasManager.Instance.GetContext();
+			ctx.fillStyle = this.Resource();
+				
             const transform = this.Parent().transform;
+            const pos = transform.Position();
+            const size = transform.Size();
+			ctx.fillRect( pos.x, pos.y, size.x, size.y);
         }
     }
 }

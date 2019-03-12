@@ -62,7 +62,7 @@ export class ResourceManager {
 	
 	GetResource(src: string): any {
 
-		var res = this.resourceList.find(res => res.source === src);
+		const res = this.resourceList.find(res => res.source === src);
 		if(res)
 		{
 			return res.obj;

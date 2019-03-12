@@ -67,7 +67,7 @@ export class Scene {
 	
 	RenderEntityList(): void {
 		
-		for(var i = 0; i < this.entityList.length; i++)
+		for(let i = 0; i < this.entityList.length; i++)
 		{
 			this.entityList[i].Render();
 		}
@@ -105,7 +105,7 @@ export class Scene {
         const temp = this.CreateEntity(data.name, data.x, data.y, data.w, data.h);
         
         const components = data.components;
-        for(var i = 0; i < components.length; i++)
+        for(let i = 0; i < components.length; i++)
         {
             switch(components[i].type)
             {

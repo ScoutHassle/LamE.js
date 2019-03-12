@@ -33,6 +33,10 @@ export class CanvasManager {
         return this.canvas;
     }
 
+    GetContext(): CanvasRenderingContext2D {
+        return this.context;
+    }
+
     Clear(): void {
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
     }

@@ -1,7 +1,10 @@
+import { updateEngine } from "../main";
+import { frameTime } from "engine/GlobalSettings";
 import { Scene } from "engine/Scene";
 import { CanvasManager } from "./CanvasManager";
 import { ResourceManager } from "./ResourceManager";
 import { PhysicsManager } from "./PhysicsManager";
+import { InputManager } from "./InputManager";
 
 // Scene Manager is charged with running the current scene
 // and the handling of the global canvas in the game.

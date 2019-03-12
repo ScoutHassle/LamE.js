@@ -1,15 +1,5 @@
 import { SceneManager } from "./managers/SceneManager";
 
-declare global {
-// Globals
-let globalCanvas = null;
-let frameTime = 0.05;
-let usingDebug = false;
-
-var platform_mobile = 0;
-var platform_web = 1;
-var platform_pc = 2;
-var platform = platform_web;
 
 function loadProjectJson(path, callback)
 {
@@ -41,7 +31,7 @@ function startEngine()
 	// Having a few ideas about handling this all.
 	
 	// Strip the index.html
-	var loc = window.location.href;
+	let loc = window.location.href;
 	loc = loc.slice(0, loc.indexOf("index.html"));
 	
 	// Callback to start the SceneManager.
@@ -50,8 +40,7 @@ function startEngine()
 	});
 }
 
-function updateEngine() {
+export function updateEngine() {
 	// Dummy function to avoid issues
 	SceneManager.Instance.Update();
-}
 }
