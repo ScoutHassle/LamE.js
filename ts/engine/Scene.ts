@@ -3,6 +3,7 @@ import { ScriptComponent } from "./component/base/ScriptComponent";
 import { ColourComponent } from "./component/ColourComponent";
 import { ImageComponent } from "./component/ImageComponent";
 import { TextComponent } from "./component/TextComponent";
+import { Component } from "./component/base/Component";
 
 export class Scene {
 	
@@ -13,6 +14,7 @@ export class Scene {
     
     constructor() {
         // ?
+        this.entityList = [];
     }
 
     //--------------------------------
@@ -67,8 +69,7 @@ export class Scene {
 	
 	RenderEntityList(): void {
 		
-		for(let i = 0; i < this.entityList.length; i++)
-		{
+		for(let i = 0; i < this.entityList.length; i++) {
 			this.entityList[i].Render();
 		}
 	}
@@ -107,23 +108,28 @@ export class Scene {
         const components = data.components;
         for(let i = 0; i < components.length; i++)
         {
+            let comp: Component = null;
             switch(components[i].type)
             {
                 case "image":
-                    ImageComponent.Load(temp, components[i]);
+                    comp = ImageComponent.Load(temp, components[i]);
                     break;
                     
                 case "colour":
-                    ColourComponent.Load(temp, components[i]);
+                    comp = ColourComponent.Load(temp, components[i]);
                     break;
                     
                 case "text":
-                    TextComponent.Load(temp, components[i]);
+                    comp = TextComponent.Load(temp, components[i]);
                     break;
                     
                 case "script":
-                    ScriptComponent.Load(temp, components[i]);
+                    comp = ScriptComponent.Load(temp, components[i]);
                     break;
+            }
+
+            if (comp != null) {
+                temp.AddComponent(comp);
             }
         }
     };

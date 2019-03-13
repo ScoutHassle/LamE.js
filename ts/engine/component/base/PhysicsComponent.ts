@@ -1,5 +1,5 @@
-import {Component} from './Component';
-import {Entity} from '../../Entity';
+import { Component, ComponentType } from './Component';
+import { Entity } from '../../Entity';
 
 export class PhysicsComponent extends Component {    
     

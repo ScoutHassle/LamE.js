@@ -1,15 +1,14 @@
 
-import {Entity} from '../../Entity';
+import { Entity } from '../../Entity';
 
-declare global {
-        enum ComponentType {
-        Component_Base = 1,
-        Component_Renderable,
-        Component_Input,
-        Component_Script,
-        Component_Physics
-    }
+export enum ComponentType {
+    Component_Base = 1,
+    Component_Renderable,
+    Component_Input,
+    Component_Script,
+    Component_Physics
 }
+
 
 export class Component {
 

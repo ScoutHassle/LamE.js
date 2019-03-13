@@ -1,6 +1,7 @@
-import { ScriptComponent } from "engine/component/base/ScriptComponent";
-import { InputManager } from "engine/managers/InputManager";
-import { SceneManager } from "engine/managers/SceneManager";
+import { ScriptComponent } from "../engine/component/base/ScriptComponent";
+import { InputManager, Keys } from "../engine/managers/InputManager";
+import { SceneManager } from "../engine/managers/SceneManager";
+import { ScriptDatabase } from "../engine/utility/ScriptBuilder";
 
 class SkipSplash extends ScriptComponent {
     
@@ -13,12 +14,12 @@ class SkipSplash extends ScriptComponent {
         this.skipKey = Keys.Key_Space_Bar;
     }
     
-    setScriptData(json) {
+    SetScriptData(json: any): void {
         
         this.skipKey = json.skipKey;
     }
     
-    update() {
+    Update(): void {
         
         if(InputManager.Instance.IsKeyDown(this.skipKey)) {
         

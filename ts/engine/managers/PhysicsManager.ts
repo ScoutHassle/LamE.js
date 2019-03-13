@@ -47,7 +47,7 @@ export class PhysicsManager {
         // PhysicsUpdate
         for(let i = 0; i < this.kineticObjects.length; i++) {
 
-            this.kineticObjects[i].physicsUpdate(frameTime)
+            this.kineticObjects[i].PhysicsUpdate(frameTime)
         }
 
         // PostPhysics

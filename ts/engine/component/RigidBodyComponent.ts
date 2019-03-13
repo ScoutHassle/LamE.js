@@ -1,7 +1,7 @@
 import { PhysicsComponent } from "./base/PhysicsComponent";
 import { Vector2 } from "../utility/Vector2";
-import { PhysicsManager } from "engine/managers/PhysicsManager";
-import { Entity } from "engine/Entity";
+import { PhysicsManager } from "../managers/PhysicsManager";
+import { Entity } from "../Entity";
 
 export class RigidBodyComponent extends PhysicsComponent {    
     

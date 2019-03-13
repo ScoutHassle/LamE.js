@@ -20,7 +20,7 @@ function loadProjectJson(path, callback)
 	file.send(null);
 }
 
-function startEngine()
+export function startEngine()
 {
 	// Initialise the Scene Manager and all the 
 	// other bits needed to run the engine.
@@ -44,3 +44,5 @@ export function updateEngine() {
 	// Dummy function to avoid issues
 	SceneManager.Instance.Update();
 }
+
+window.onload = startEngine;

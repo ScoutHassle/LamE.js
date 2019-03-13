@@ -30,7 +30,7 @@ export class SceneManager {
     private interval: any;
 
     constructor() {
-
+		this.currentScene = null;
     }
 	
 	//-----------------------------

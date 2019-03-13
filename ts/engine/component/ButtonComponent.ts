@@ -1,4 +1,4 @@
-import { InputComponent } from "./base/InputComponent";
+import { InputComponent, TouchEventType } from "./base/InputComponent";
 import { Entity } from "engine/Entity";
 
 

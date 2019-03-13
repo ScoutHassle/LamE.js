@@ -13,7 +13,7 @@ export class LoadBarrier {
     resourcesLoaded: number;
     
     constructor() {
-
+		this.ClearLoadBarrier();
     }
 	
 	ClearLoadBarrier(): void

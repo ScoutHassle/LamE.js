@@ -6,6 +6,7 @@ class Entity {
     constructor(name, x, y, w, h) {
         this.name = name;
         this.transform = new Transform_1.Transform(x, y, w, h);
+        this.components = [];
     }
     AddComponent(component) {
         if (component != null) {
@@ -30,7 +31,7 @@ class Entity {
     }
     Shutdown() {
         for (let i = 0; i < this.components.length; i++) {
-            this.components[i].shutdown();
+            this.components[i].Shutdown();
         }
         this.transform = null;
         this.components.splice(0, this.components.length);
@@ -52,8 +53,15 @@ exports.Entity = Entity;
 },{"./Transform":5}],2:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+var Platform;
+(function (Platform) {
+    Platform[Platform["Mobile"] = 0] = "Mobile";
+    Platform[Platform["Web"] = 1] = "Web";
+    Platform[Platform["PC"] = 2] = "PC";
+})(Platform = exports.Platform || (exports.Platform = {}));
 exports.frameTime = 0.5;
-exports.platform = Platform.platform_web;
+exports.platform = Platform.Web;
+exports.usingDebug = false;
 
 },{}],3:[function(require,module,exports){
 "use strict";
@@ -90,13 +98,15 @@ function startEngine() {
         SceneManager_1.SceneManager.Instance.Start(text);
     });
 }
+exports.startEngine = startEngine;
 function updateEngine() {
     // Dummy function to avoid issues
     SceneManager_1.SceneManager.Instance.Update();
 }
 exports.updateEngine = updateEngine;
+window.onload = startEngine;
 
-},{"./managers/SceneManager":17}],4:[function(require,module,exports){
+},{"./managers/SceneManager":19}],4:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const Entity_1 = require("./Entity");
@@ -107,6 +117,7 @@ const TextComponent_1 = require("./component/TextComponent");
 class Scene {
     constructor() {
         // ?
+        this.entityList = [];
     }
     //--------------------------------
     // Scene Running
@@ -170,19 +181,23 @@ class Scene {
         const temp = this.CreateEntity(data.name, data.x, data.y, data.w, data.h);
         const components = data.components;
         for (let i = 0; i < components.length; i++) {
+            let comp = null;
             switch (components[i].type) {
                 case "image":
-                    ImageComponent_1.ImageComponent.Load(temp, components[i]);
+                    comp = ImageComponent_1.ImageComponent.Load(temp, components[i]);
                     break;
                 case "colour":
-                    ColourComponent_1.ColourComponent.Load(temp, components[i]);
+                    comp = ColourComponent_1.ColourComponent.Load(temp, components[i]);
                     break;
                 case "text":
-                    TextComponent_1.TextComponent.Load(temp, components[i]);
+                    comp = TextComponent_1.TextComponent.Load(temp, components[i]);
                     break;
                 case "script":
-                    ScriptComponent_1.ScriptComponent.Load(temp, components[i]);
+                    comp = ScriptComponent_1.ScriptComponent.Load(temp, components[i]);
                     break;
+            }
+            if (comp != null) {
+                temp.AddComponent(comp);
             }
         }
     }
@@ -190,7 +205,7 @@ class Scene {
 }
 exports.Scene = Scene;
 
-},{"./Entity":1,"./component/ColourComponent":6,"./component/ImageComponent":7,"./component/TextComponent":8,"./component/base/ScriptComponent":11}],5:[function(require,module,exports){
+},{"./Entity":1,"./component/ColourComponent":6,"./component/ImageComponent":7,"./component/TextComponent":9,"./component/base/ScriptComponent":13}],5:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const Vector2_1 = require("./utility/Vector2");
@@ -223,7 +238,7 @@ class Transform {
 }
 exports.Transform = Transform;
 
-},{"./utility/Vector2":18}],6:[function(require,module,exports){
+},{"./utility/Vector2":21}],6:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const RenderComponent_1 = require("./base/RenderComponent");
@@ -250,7 +265,7 @@ class ColourComponent extends RenderComponent_1.RenderComponent {
 }
 exports.ColourComponent = ColourComponent;
 
-},{"../managers/CanvasManager":12,"./base/RenderComponent":10}],7:[function(require,module,exports){
+},{"../managers/CanvasManager":14,"./base/RenderComponent":12}],7:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const RenderComponent_1 = require("./base/RenderComponent");
@@ -262,10 +277,10 @@ class ImageComponent extends RenderComponent_1.RenderComponent {
     }
     static Load(temp, json) {
         const path = json.data[0].file;
-        const imgComp = new ImageComponent(temp, ResourceManager_1.ResourceManager.Instance.LoadResource(path, ResourceType.Image));
+        let imgComp = new ImageComponent(temp, ResourceManager_1.ResourceManager.Instance.LoadResource(path, ResourceManager_1.ResourceType.Image));
         return imgComp;
     }
-    render() {
+    Render() {
         if (this.IsVisible) {
             const ctx = CanvasManager_1.CanvasManager.Instance.GetContext();
             const transform = this.parent.transform;
@@ -277,7 +292,68 @@ class ImageComponent extends RenderComponent_1.RenderComponent {
 }
 exports.ImageComponent = ImageComponent;
 
-},{"../managers/CanvasManager":12,"../managers/ResourceManager":16,"./base/RenderComponent":10}],8:[function(require,module,exports){
+},{"../managers/CanvasManager":14,"../managers/ResourceManager":18,"./base/RenderComponent":12}],8:[function(require,module,exports){
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const PhysicsComponent_1 = require("./base/PhysicsComponent");
+const Vector2_1 = require("../utility/Vector2");
+const PhysicsManager_1 = require("../managers/PhysicsManager");
+class RigidBodyComponent extends PhysicsComponent_1.PhysicsComponent {
+    constructor(parent) {
+        super(parent);
+        this.constantForce = new Vector2_1.Vector2(0.0, 0.0);
+        this.velocity = new Vector2_1.Vector2(0.0, 0.0);
+        this.mass = 1.0;
+        PhysicsManager_1.PhysicsManager.Instance.AddRigidBody(this);
+    }
+    Velocity() {
+        return this.velocity;
+    }
+    Mass() {
+        return this.mass;
+    }
+    SetVelocity(v) {
+        this.velocity.Set(v);
+    }
+    SetMass(m) {
+        this.mass = m;
+    }
+    Update() {
+        // Stub - Unused by the physics side.   
+    }
+    PhysicsUpdate(delta) {
+        // Start with Euler's method for force calculations.
+        // It's simple and should serve my current needs.
+        let accel = this.ComputeForces();
+        accel.FloatDivide(this.mass);
+        accel.Clean();
+        let movement = new Vector2_1.Vector2(this.velocity.x, this.velocity.y);
+        movement.FloatMultiply(delta);
+        this.Parent().transform.Move(movement);
+        accel.FloatMultiply(delta);
+        this.velocity.Add(accel);
+        this.velocity.Clean();
+    }
+    Shutdown() {
+        super.Shutdown();
+    }
+    //  Utility
+    ComputeForces() {
+        let totalForce = new Vector2_1.Vector2(this.constantForce.x, this.constantForce.y);
+        let gravity = new Vector2_1.Vector2(PhysicsManager_1.PhysicsManager.Instance.Gravity().x, PhysicsManager_1.PhysicsManager.Instance.Gravity().y);
+        gravity.FloatMultiply(this.mass);
+        totalForce.Subtract(gravity);
+        // Apply drag
+        const speed = this.velocity.Magnitude();
+        let vel = new Vector2_1.Vector2(this.velocity.x, this.velocity.y);
+        vel.FloatMultiply(PhysicsManager_1.PhysicsManager.Instance.Drag() * this.mass * speed);
+        totalForce.Subtract(vel);
+        return totalForce;
+    }
+}
+exports.RigidBodyComponent = RigidBodyComponent;
+
+},{"../managers/PhysicsManager":17,"../utility/Vector2":21,"./base/PhysicsComponent":11}],9:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const RenderComponent_1 = require("./base/RenderComponent");
@@ -305,7 +381,7 @@ class TextComponent extends RenderComponent_1.RenderComponent {
         const textRes = new TextResource(json.data[0].resource.font, json.data[0].resource.colour, json.data[0].resource.alignment);
         return new TextComponent(temp, textRes, str);
     }
-    render() {
+    Render() {
         if (this.IsVisible) {
             let ctx = CanvasManager_1.CanvasManager.Instance.GetContext();
             ctx.save();
@@ -333,9 +409,17 @@ class TextResource {
 }
 exports.TextResource = TextResource;
 
-},{"../managers/CanvasManager":12,"./base/RenderComponent":10}],9:[function(require,module,exports){
+},{"../managers/CanvasManager":14,"./base/RenderComponent":12}],10:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+var ComponentType;
+(function (ComponentType) {
+    ComponentType[ComponentType["Component_Base"] = 1] = "Component_Base";
+    ComponentType[ComponentType["Component_Renderable"] = 2] = "Component_Renderable";
+    ComponentType[ComponentType["Component_Input"] = 3] = "Component_Input";
+    ComponentType[ComponentType["Component_Script"] = 4] = "Component_Script";
+    ComponentType[ComponentType["Component_Physics"] = 5] = "Component_Physics";
+})(ComponentType = exports.ComponentType || (exports.ComponentType = {}));
 class Component {
     constructor(type, parent) {
         this.type = type;
@@ -354,13 +438,30 @@ class Component {
 }
 exports.Component = Component;
 
-},{}],10:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const Component_1 = require("./Component");
+class PhysicsComponent extends Component_1.Component {
+    constructor(parent) {
+        super(Component_1.ComponentType.Component_Physics, parent);
+    }
+    PrePhysicsUpdate() {
+    }
+    PhysicsUpdate(delta) {
+    }
+    PostPhysicsUpdate() {
+    }
+}
+exports.PhysicsComponent = PhysicsComponent;
+
+},{"./Component":10}],12:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const Component_1 = require("./Component");
 class RenderComponent extends Component_1.Component {
     constructor(parent, resource) {
-        super(ComponentType.Component_Renderable, parent);
+        super(Component_1.ComponentType.Component_Renderable, parent);
         this.resource = resource;
         this.visible = true;
     }
@@ -387,13 +488,14 @@ class RenderComponent extends Component_1.Component {
 }
 exports.RenderComponent = RenderComponent;
 
-},{"./Component":9}],11:[function(require,module,exports){
+},{"./Component":10}],13:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const Component_1 = require("./Component");
+const ScriptBuilder_1 = require("../../utility/ScriptBuilder");
 class ScriptComponent extends Component_1.Component {
     constructor(name) {
-        super(ComponentType.Component_Script, null);
+        super(Component_1.ComponentType.Component_Script, null);
         this.scriptName = name;
     }
     //-----------------------------------
@@ -408,10 +510,9 @@ class ScriptComponent extends Component_1.Component {
     //	}]
     //-----------------------------------
     static Load(temp, json) {
-        let scriptObj = ScriptBuilder(json.data[0]);
+        let scriptObj = ScriptBuilder_1.ScriptBuilder(json.data[0]);
         if (scriptObj != null) {
             scriptObj.parent = temp;
-            temp.AddComponent(scriptObj);
         }
         return scriptObj;
     }
@@ -423,7 +524,7 @@ class ScriptComponent extends Component_1.Component {
 }
 exports.ScriptComponent = ScriptComponent;
 
-},{"./Component":9}],12:[function(require,module,exports){
+},{"../../utility/ScriptBuilder":20,"./Component":10}],14:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 class CanvasManager {
@@ -456,10 +557,22 @@ class CanvasManager {
 }
 exports.CanvasManager = CanvasManager;
 
-},{}],13:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const CanvasManager_1 = require("./CanvasManager");
+var Keys;
+(function (Keys) {
+    Keys[Keys["Key_Space_Bar"] = 32] = "Key_Space_Bar";
+    Keys[Keys["Key_Arrow_Left"] = 37] = "Key_Arrow_Left";
+    Keys[Keys["Key_Arrow_Down"] = 38] = "Key_Arrow_Down";
+    Keys[Keys["Key_Arrow_Right"] = 39] = "Key_Arrow_Right";
+    Keys[Keys["Key_Arrow_Up"] = 40] = "Key_Arrow_Up";
+    Keys[Keys["Key_A"] = 65] = "Key_A";
+    Keys[Keys["Key_D"] = 68] = "Key_D";
+    Keys[Keys["Key_S"] = 83] = "Key_S";
+    Keys[Keys["Key_W"] = 87] = "Key_W";
+})(Keys = exports.Keys || (exports.Keys = {}));
 class TouchData {
     constructor(id, x, y) {
         this.identifier = id;
@@ -472,6 +585,9 @@ class InputManager {
         return this.instance || (this.instance = new this());
     }
     constructor() {
+        this.inputComponentList = [];
+        this.handledTouches = [];
+        this.keys = [];
     }
     //-----------------------------
     Start() {
@@ -602,11 +718,11 @@ class InputManager {
     //--------------------
     OnMouseDown(e) {
         e.preventDefault();
-        if (this.GetTouchIdxById(e.button) === -1) {
-            const t = this.BadTouch(e.button, e.pageX, e.pageY);
-            this.handledTouches.push(t);
-            for (let i = 0; i < this.inputComponentList.length; i++) {
-                if (this.inputComponentList[i].OnTouchStart(t)) {
+        if (InputManager.Instance.GetTouchIdxById(e.button) === -1) {
+            const t = InputManager.Instance.BadTouch(e.button, e.pageX, e.pageY);
+            InputManager.Instance.handledTouches.push(t);
+            for (let i = 0; i < InputManager.Instance.inputComponentList.length; i++) {
+                if (InputManager.Instance.inputComponentList[i].OnTouchStart(t)) {
                     // Consumed.
                     break;
                 }
@@ -615,12 +731,12 @@ class InputManager {
     }
     OnMouseMove(e) {
         e.preventDefault();
-        const idx = this.GetTouchIdxById(e.button);
+        const idx = InputManager.Instance.GetTouchIdxById(e.button);
         if (idx > -1) {
-            const t = this.BadTouch(e.button, e.pageX, e.pageY);
-            this.handledTouches.splice(idx, 1, t);
-            for (let i = 0; i < this.inputComponentList.length; i++) {
-                if (this.inputComponentList[i].OnTouchMove(t)) {
+            const t = InputManager.Instance.BadTouch(e.button, e.pageX, e.pageY);
+            InputManager.Instance.handledTouches.splice(idx, 1, t);
+            for (let i = 0; i < InputManager.Instance.inputComponentList.length; i++) {
+                if (InputManager.Instance.inputComponentList[i].OnTouchMove(t)) {
                     // Consumed.
                     break;
                 }
@@ -629,12 +745,12 @@ class InputManager {
     }
     OnMouseUp(e) {
         e.preventDefault();
-        const idx = this.GetTouchIdxById(e.button);
+        const idx = InputManager.Instance.GetTouchIdxById(e.button);
         if (idx > -1) {
-            const t = this.BadTouch(e.button, e.pageX, e.pageY);
-            this.handledTouches.splice(idx, 1);
-            for (let i = 0; i < this.inputComponentList.length; i++) {
-                if (this.inputComponentList[i].OnTouchEnd(t)) {
+            const t = InputManager.Instance.BadTouch(e.button, e.pageX, e.pageY);
+            InputManager.Instance.handledTouches.splice(idx, 1);
+            for (let i = 0; i < InputManager.Instance.inputComponentList.length; i++) {
+                if (InputManager.Instance.inputComponentList[i].OnTouchEnd(t)) {
                     // Consumed.
                     break;
                 }
@@ -642,13 +758,13 @@ class InputManager {
         }
     }
     OnKeyDown(e) {
-        this.keys[e.keyCode] = true;
+        InputManager.Instance.keys[e.keyCode] = true;
     }
     OnKeyUp(e) {
-        this.keys[e.keyCode] = false;
+        InputManager.Instance.keys[e.keyCode] = false;
     }
     IsKeyDown(code) {
-        if (this.keys[code] != null && this.keys[code] == true) {
+        if (InputManager.Instance.keys[code] != null && InputManager.Instance.keys[code] == true) {
             return true;
         }
         return false;
@@ -656,7 +772,7 @@ class InputManager {
 }
 exports.InputManager = InputManager;
 
-},{"./CanvasManager":12}],14:[function(require,module,exports){
+},{"./CanvasManager":14}],16:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const CanvasManager_1 = require("./CanvasManager");
@@ -665,6 +781,7 @@ class LoadBarrier {
         return this.instance || (this.instance = new this());
     }
     constructor() {
+        this.ClearLoadBarrier();
     }
     ClearLoadBarrier() {
         this.resourcesWaiting = 0;
@@ -695,7 +812,7 @@ class LoadBarrier {
 }
 exports.LoadBarrier = LoadBarrier;
 
-},{"./CanvasManager":12}],15:[function(require,module,exports){
+},{"./CanvasManager":14}],17:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const Vector2_1 = require("../utility/Vector2");
@@ -726,7 +843,7 @@ class PhysicsManager {
         // PrePhysics
         // PhysicsUpdate
         for (let i = 0; i < this.kineticObjects.length; i++) {
-            this.kineticObjects[i].physicsUpdate(GlobalSettings_1.frameTime);
+            this.kineticObjects[i].PhysicsUpdate(GlobalSettings_1.frameTime);
         }
         // PostPhysics
     }
@@ -735,15 +852,21 @@ class PhysicsManager {
 }
 exports.PhysicsManager = PhysicsManager;
 
-},{"../GlobalSettings":2,"../utility/Vector2":18}],16:[function(require,module,exports){
+},{"../GlobalSettings":2,"../utility/Vector2":21}],18:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const LoadBarrier_1 = require("./LoadBarrier");
+var ResourceType;
+(function (ResourceType) {
+    ResourceType[ResourceType["Image"] = 0] = "Image";
+    ResourceType[ResourceType["Audio"] = 1] = "Audio";
+})(ResourceType = exports.ResourceType || (exports.ResourceType = {}));
 class ResourceManager {
     static get Instance() {
         return this.instance || (this.instance = new this());
     }
     constructor() {
+        this.resourceList = [];
     }
     Start() {
     }
@@ -807,7 +930,7 @@ function ImageLoadComplete() {
     LoadBarrier_1.LoadBarrier.Instance.ObjectLoaded();
 }
 
-},{"./LoadBarrier":14}],17:[function(require,module,exports){
+},{"./LoadBarrier":16}],19:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const Main_1 = require("../Main");
@@ -826,6 +949,7 @@ class SceneManager {
         return this.instance || (this.instance = new this());
     }
     constructor() {
+        this.currentScene = null;
     }
     //-----------------------------
     // Scene Management
@@ -885,7 +1009,26 @@ class SceneManager {
 }
 exports.SceneManager = SceneManager;
 
-},{"../GlobalSettings":2,"../Main":3,"../Scene":4,"./CanvasManager":12,"./InputManager":13,"./PhysicsManager":15,"./ResourceManager":16}],18:[function(require,module,exports){
+},{"../GlobalSettings":2,"../Main":3,"../Scene":4,"./CanvasManager":14,"./InputManager":15,"./PhysicsManager":17,"./ResourceManager":18}],20:[function(require,module,exports){
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.ScriptDatabase = [];
+function ScriptBuilder(json) {
+    const name = json.scriptName;
+    let script = null;
+    if (name != null) {
+        if (exports.ScriptDatabase[name] != null && exports.ScriptDatabase[name] != undefined) {
+            script = exports.ScriptDatabase[name]();
+            if (script != null && script != undefined) {
+                script.SetScriptData(json);
+            }
+        }
+    }
+    return script;
+}
+exports.ScriptBuilder = ScriptBuilder;
+
+},{}],21:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 class Vector2 {
@@ -945,4 +1088,71 @@ class Vector2 {
 }
 exports.Vector2 = Vector2;
 
-},{}]},{},[3]);
+},{}],22:[function(require,module,exports){
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const ScriptComponent_1 = require("../engine/component/base/ScriptComponent");
+const InputManager_1 = require("../engine/managers/InputManager");
+const SceneManager_1 = require("../engine/managers/SceneManager");
+const ColourComponent_1 = require("../engine/component/ColourComponent");
+const RigidBodyComponent_1 = require("../engine/component/RigidBodyComponent");
+const ScriptBuilder_1 = require("../engine/utility/ScriptBuilder");
+const Vector2_1 = require("../engine/utility/Vector2");
+class Player extends ScriptComponent_1.ScriptComponent {
+    constructor() {
+        super("Player");
+        this.health = 10;
+        this.speed = 5.0;
+        this.spawn = null;
+    }
+    SetScriptData(json) {
+        this.health = json.health;
+        this.speed = json.speed;
+    }
+    Update() {
+        if (InputManager_1.InputManager.Instance.IsKeyDown(InputManager_1.Keys.Key_W)) {
+            // Do something.
+            if (this.spawn == null) {
+                // Spawn a physics object
+                let e = SceneManager_1.SceneManager.Instance.currentScene.CreateEntity("entity", 375, 250, 50, 50);
+                e.AddComponent(new ColourComponent_1.ColourComponent(e, "#ff0000"));
+                let rb = new RigidBodyComponent_1.RigidBodyComponent(e);
+                e.AddComponent(rb);
+                this.spawn = { e: e, rb: rb };
+            }
+            let vel = this.spawn.rb.Velocity();
+            vel.Add(new Vector2_1.Vector2(0, -20));
+            this.spawn.rb.SetVelocity(vel);
+        }
+    }
+    Save() {
+        return this.constructor;
+    }
+}
+ScriptBuilder_1.ScriptDatabase["Player"] = function () { return new Player(); };
+
+},{"../engine/component/ColourComponent":6,"../engine/component/RigidBodyComponent":8,"../engine/component/base/ScriptComponent":13,"../engine/managers/InputManager":15,"../engine/managers/SceneManager":19,"../engine/utility/ScriptBuilder":20,"../engine/utility/Vector2":21}],23:[function(require,module,exports){
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const ScriptComponent_1 = require("../engine/component/base/ScriptComponent");
+const InputManager_1 = require("../engine/managers/InputManager");
+const SceneManager_1 = require("../engine/managers/SceneManager");
+const ScriptBuilder_1 = require("../engine/utility/ScriptBuilder");
+class SkipSplash extends ScriptComponent_1.ScriptComponent {
+    constructor() {
+        super("SkipSplash");
+        this.skipKey = InputManager_1.Keys.Key_Space_Bar;
+    }
+    SetScriptData(json) {
+        this.skipKey = json.skipKey;
+    }
+    Update() {
+        if (InputManager_1.InputManager.Instance.IsKeyDown(this.skipKey)) {
+            // Go to next scene!
+            SceneManager_1.SceneManager.Instance.ChangeScene(1);
+        }
+    }
+}
+ScriptBuilder_1.ScriptDatabase["SkipSplash"] = function () { return new SkipSplash(); };
+
+},{"../engine/component/base/ScriptComponent":13,"../engine/managers/InputManager":15,"../engine/managers/SceneManager":19,"../engine/utility/ScriptBuilder":20}]},{},[3,23,22]);

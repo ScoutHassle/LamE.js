@@ -1,7 +1,7 @@
 import { RenderComponent } from "./base/RenderComponent";
 import { Entity } from "engine/Entity";
 import { CanvasManager } from "../managers/CanvasManager";
-import { ResourceManager } from "../managers/ResourceManager";
+import { ResourceManager, ResourceType } from "../managers/ResourceManager";
 
 export class ImageComponent extends RenderComponent {
     
@@ -13,12 +13,11 @@ export class ImageComponent extends RenderComponent {
     static Load(temp: Entity, json: any): ImageComponent {
         
        const path = json.data[0].file;
-	   const imgComp = new ImageComponent(temp, ResourceManager.Instance.LoadResource(path, ResourceType.Image));
-	
+	   let imgComp = new ImageComponent(temp, ResourceManager.Instance.LoadResource(path, ResourceType.Image));
 	   return imgComp;
     }
     
-    render() {
+    Render() {
         if(this.IsVisible)
 		{
             const ctx = CanvasManager.Instance.GetContext();

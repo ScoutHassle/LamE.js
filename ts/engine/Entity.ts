@@ -1,4 +1,4 @@
-import { Component } from "./component/base/Component";
+import { Component, ComponentType } from "./component/base/Component";
 import { Transform } from "./Transform";
 
 export class Entity {
@@ -11,6 +11,7 @@ export class Entity {
 
 		this.name = name;
 		this.transform = new Transform(x, y, w, h);
+		this.components = [];
 	}
 	
 	AddComponent(component: Component) {
@@ -42,7 +43,7 @@ export class Entity {
 	Shutdown() {
 		for(let i = 0; i < this.components.length; i++)
 		{
-			this.components[i].shutdown();
+			this.components[i].Shutdown();
 		}
 		
 		this.transform = null;

@@ -1,6 +1,6 @@
-let ScriptDatabase:any[];
+export var ScriptDatabase: any[] = [];
 
-function ScriptBuilder(json) {
+export function ScriptBuilder(json) {
     
     const name = json.scriptName;
     let script = null;
@@ -10,7 +10,7 @@ function ScriptBuilder(json) {
             script = ScriptDatabase[name]();
             if(script != null && script != undefined) {
 
-                script.setScriptData(json);
+                script.SetScriptData(json);
             }
         }
     }

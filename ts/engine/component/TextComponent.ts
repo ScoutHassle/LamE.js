@@ -36,7 +36,7 @@ export class TextComponent extends RenderComponent {
         return new TextComponent(temp, textRes, str);
     }
     
-    render() {
+    Render() {
         if(this.IsVisible)
 		{
             let ctx = CanvasManager.Instance.GetContext();		

@@ -1,10 +1,8 @@
 import { LoadBarrier } from "./LoadBarrier";
 
-declare global {
-    enum ResourceType {
-        Image = 0,
-        Audio
-    }
+export enum ResourceType {
+    Image = 0,
+    Audio
 }
 
 export class ResourceManager {
@@ -21,7 +19,7 @@ export class ResourceManager {
     private audioFormat: string;
 
     constructor() {
-
+		this.resourceList = [];
 	}
 
     

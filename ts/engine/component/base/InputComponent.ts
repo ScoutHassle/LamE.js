@@ -1,12 +1,10 @@
-import { Component } from './Component';
+import { Component, ComponentType } from './Component';
 import { Entity } from '../../Entity';
 
-declare global {
-	enum TouchEventType {
-		Touch_Start = 1,
-		Touch_Move,
-		Touch_End
-	}
+export enum TouchEventType {
+	Touch_Start = 1,
+	Touch_Move,
+	Touch_End
 }
 
 interface LamETouchEvent { (touch: Touch): void }

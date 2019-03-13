@@ -1,23 +1,19 @@
 import { InputComponent } from "engine/component/base/InputComponent";
 import { CanvasManager } from "./CanvasManager";
 
-declare global {
 
-    enum Keys {
-        Key_Space_Bar = 32,
-        Key_Arrow_Left = 37,
-        Key_Arrow_Down = 38,
-        Key_Arrow_Right = 39,
-        Key_Arrow_Up = 40,
+export enum Keys {
+    Key_Space_Bar = 32,
+    Key_Arrow_Left = 37,
+    Key_Arrow_Down = 38,
+    Key_Arrow_Right = 39,
+    Key_Arrow_Up = 40,
 
-        Key_A = 65,
-        Key_D = 68,
-        Key_S = 83,
-        Key_W = 87
-    }
-
+    Key_A = 65,
+    Key_D = 68,
+    Key_S = 83,
+    Key_W = 87
 }
-
 
 class TouchData {
     identifier: number;
@@ -54,7 +50,10 @@ export class InputManager {
     keys: boolean[];
 
     constructor() {
-        
+		
+		this.inputComponentList = [];
+		this.handledTouches = [];
+		this.keys = [];
     }
 	
 	//-----------------------------
@@ -225,13 +224,13 @@ export class InputManager {
 	OnMouseDown(e: MouseEvent): void {
 
 		e.preventDefault();
-		if(this.GetTouchIdxById(e.button) === -1)
+		if(InputManager.Instance.GetTouchIdxById(e.button) === -1)
 		{			
-            const t = this.BadTouch(e.button,	e.pageX, e.pageY);
-            this.handledTouches.push(t);
+            const t = InputManager.Instance.BadTouch(e.button,	e.pageX, e.pageY);
+            InputManager.Instance.handledTouches.push(t);
 
-			for(let i = 0; i < this.inputComponentList.length; i++) {
-				if(this.inputComponentList[i].OnTouchStart(t))
+			for(let i = 0; i < InputManager.Instance.inputComponentList.length; i++) {
+				if(InputManager.Instance.inputComponentList[i].OnTouchStart(t))
 				{
 					// Consumed.
 					break;
@@ -243,15 +242,15 @@ export class InputManager {
 	OnMouseMove(e: MouseEvent): void {
 	
 		e.preventDefault();
-		const idx = this.GetTouchIdxById(e.button);
+		const idx = InputManager.Instance.GetTouchIdxById(e.button);
 		if(idx > -1)
 		{
-            const t = this.BadTouch(e.button,	e.pageX, e.pageY);				
-			this.handledTouches.splice(idx, 1, t);
+            const t = InputManager.Instance.BadTouch(e.button,	e.pageX, e.pageY);				
+			InputManager.Instance.handledTouches.splice(idx, 1, t);
 			
-			for(let i = 0; i < this.inputComponentList.length; i++)
+			for(let i = 0; i < InputManager.Instance.inputComponentList.length; i++)
 			{
-				if(this.inputComponentList[i].OnTouchMove(t))
+				if(InputManager.Instance.inputComponentList[i].OnTouchMove(t))
 				{
 					// Consumed.
 					break;
@@ -263,13 +262,13 @@ export class InputManager {
 	OnMouseUp(e: MouseEvent): void {
 
 		e.preventDefault();
-		const idx = this.GetTouchIdxById(e.button);
+		const idx = InputManager.Instance.GetTouchIdxById(e.button);
 		if(idx > -1) {
-            const t = this.BadTouch(e.button,	e.pageX, e.pageY);	
-			this.handledTouches.splice(idx, 1);
+            const t = InputManager.Instance.BadTouch(e.button,	e.pageX, e.pageY);	
+			InputManager.Instance.handledTouches.splice(idx, 1);
 			
-			for(let i = 0; i < this.inputComponentList.length; i++)	{
-				if(this.inputComponentList[i].OnTouchEnd(t)) {
+			for(let i = 0; i < InputManager.Instance.inputComponentList.length; i++)	{
+				if(InputManager.Instance.inputComponentList[i].OnTouchEnd(t)) {
 					// Consumed.
 					break;
 				}
@@ -279,17 +278,17 @@ export class InputManager {
     
     OnKeyDown(e: KeyboardEvent): void {
         
-        this.keys[e.keyCode] = true;
+        InputManager.Instance.keys[e.keyCode] = true;
     }
     
     OnKeyUp(e: KeyboardEvent): void {
         
-         this.keys[e.keyCode] = false;
+		InputManager.Instance.keys[e.keyCode] = false;
     }
     
     IsKeyDown(code: number): boolean {
         
-        if(this.keys[code] != null && this.keys[code] == true) {
+        if(InputManager.Instance.keys[code] != null && InputManager.Instance.keys[code] == true) {
         
             return true;
         }

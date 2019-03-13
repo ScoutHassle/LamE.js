@@ -1,5 +1,6 @@
-import { Component } from "./Component";
+import { Component, ComponentType } from "./Component";
 import { Entity } from "../../Entity";
+import { ScriptBuilder } from "../../utility/ScriptBuilder";
 
 
 export class ScriptComponent extends Component {
@@ -27,7 +28,6 @@ export class ScriptComponent extends Component {
         let scriptObj = ScriptBuilder(json.data[0]);
         if (scriptObj != null) {
             scriptObj.parent = temp;
-            temp.AddComponent(scriptObj);
         }
 
         return scriptObj;

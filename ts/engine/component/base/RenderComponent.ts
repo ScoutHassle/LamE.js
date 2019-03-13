@@ -1,4 +1,4 @@
-import { Component } from './Component';
+import { Component, ComponentType } from './Component';
 import { Entity } from '../../Entity';
 
 export class RenderComponent extends Component {
