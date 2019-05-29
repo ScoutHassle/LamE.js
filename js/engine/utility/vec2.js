@@ -2,14 +2,14 @@
 
 class vec2 {
     
-    constructor(x, y) {
-        this.x = x;
-        this.y = y;
+    constructor(fX, fY) {
+        this.x = fX;
+        this.y = fY;
     }
     
-    set Set(v) {
-        this.x = v.x;
-        this.y = v.y;
+    set Set(v2) {
+        this.x = v2.x;
+        this.y = v2.y;
     }
     
     magnitude() {

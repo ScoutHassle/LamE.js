@@ -44,4 +44,4 @@ class PhysicsManager {
     }
 }
 
-var physics = new PhysicsManager()
+const physics = new PhysicsManager();

@@ -5,70 +5,60 @@ var ExtendedComponentType = {
 	"Component_Button":4 };
 Object.freeze(ExtendedComponentType);
 
+class Entity {
 
-function entity(name, x, y, w, h) {
+	constructor(uid, name, iX, iY, iW, iH) {
+		this.uid = uid;
+		this.name = name;
+		this.transform = new Transform(iX, iY, iW, iH);
+		this.components = [];
+	}
+
+	addComponent(component) /* */ {
+		if(component != null) {
+			this.components.push(component);
+		}
+	}
+
+	removeComponent(idx) /* */ {
+		this.components.splice(index, 1);
+	}
+
+	update() /* */ {
+		for(var i = 0; i < this.components.length; i++)	{
+			this.components[i].update();
+		}
+	}
+
+	render() /* */ {
+		for(var i = 0; i < this.components.length; i++)	{
+			if(this.components[i].render) {
+				this.components[i].render();
+			}
+		}
+	}
+
+	shutdown() /* */ {
+		for(var i = 0; i < this.components.length; i++)	{
+			this.components[i].shutdown();
+		}
+		
+		this.transform = null;
+		this.components.splice(0, this.components.length);
+	}
+
+	getComponentAt(idx) /* Component */ {	
+		return this.components[idx];
+	}
+
+	getComponentIndexOfBaseType(componentType) /* idx */ {
 	
-	this.name = name;
-	this.transform = new Transform(x, y, w, h);
-	this.components = [];
+		for(var i = 0; i < this.components.length; i++)	{
+			if(this.components[i].type === componentType) {
+				return i;
+			}
+		}
+		
+		return -1;
+	}
 }
-
-entity.prototype.addComponent = function(component) {
-	
-	if(component != null) {
-		this.components.push(component);
-	}
-};
-
-entity.prototype.removeComponent = function(index) {
-	
-	this.components.splice(index, 1);
-};
-
-entity.prototype.update = function() {
-	
-	for(var i = 0; i < this.components.length; i++)
-	{
-		this.components[i].update();
-	}
-};
-
-entity.prototype.render = function() {
-	
-	for(var i = 0; i < this.components.length; i++)
-	{
-		if(this.components[i].render)
-		{
-			this.components[i].render();
-		}
-	}
-};
-
-entity.prototype.shutdown = function() {
-	
-	for(var i = 0; i < this.components.length; i++)
-	{
-		this.components[i].shutdown();
-	}
-	
-	this.transform = null;
-	this.components.splice(0, this.components.length);
-};
-
-entity.prototype.getComponentAt = function(i) {
-	
-	return this.components[i];
-};
-
-entity.prototype.getComponentIndexOfBaseType = function(type) {
-	
-	for(var i = 0; i < this.components.length; i++)
-	{
-		if(this.components[i].type === type)
-		{
-			return i;
-		}
-	}
-	
-	return -1;
-};

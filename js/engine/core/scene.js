@@ -1,117 +1,95 @@
-function scene()
-{
-	//--------------------------------
-	// Scene Creation - TO DO
-	//--------------------------------
+
+class Scene {
+
+	constructor() {
+		this.entityList = [];
+		this.nextUID = 0;
+	}
+
+	// Basic internals
+	start() /* */ {
 	
-	//--------------------------------
+	}
+	
+	update() /* */ {		
+		this.updateEntityList();
+	};
+	
+	render() /* */ {		
+		this.renderEntityList();
+	}
+	
+	shutdown() /* */ {		
+		this.clearEntityList();
+	}
+
 	// Entity Management
-	//--------------------------------
-	var entityList = [];
-	
-	this.createEntity = function(name, x, y, w, h) {
-		
-		var e = new entity(name, x, y, w, h);
-		entityList.push(e);
+	createEntity(name, iX, iY, iW, iH) /* Entity */ {
+		const e = new Entity(this.nextUID++, name, iX, iY, iW, iH);
+		this.entityList.push(e);
 		return e;
-	};
-	
-	this.clearEntityList = function() {
-		
-		for(var i = 0; i < entityList.length; i++)
-		{
-			entityList[i].shutdown();
+	}
+
+	clearEntityList() /* */ {		
+		for(let i = 0; i < this.entityList.length; i++)	{
+			this.entityList[i].shutdown();
 		}
 		
-		entityList.splice(0, entityList.length);
-	};
-	
-	this.updateEntityList = function() {
-		
-		for(var i = 0; i < entityList.length; i++)
-		{
-			entityList[i].update();
+		this.entityList.splice(0, this.entityList.length);
+	}
+
+	updateEntityList() /* */ {		
+		for(let i = 0; i < this.entityList.length; i++) {
+			this.entityList[i].update();
 		}
-	};
-	
-	this.renderEntityList = function() {
+	}
+
+	renderEntityList() /* */ {
 		
-		for(var i = 0; i < entityList.length; i++)
-		{
-			entityList[i].render();
+		for(let i = 0; i < this.entityList.length; i++)	{
+			this.entityList[i].render();
 		}
-	};
-	
-	// Utility Getters
-	this.getEntityCount = function() {
+	}
+
+	getEntityCount() /* int */ {		
+		return this.entityList.length;
+	}
+
+	getEntityAt(idx) /* Entity */ {		
+		return this.entityList[idx];
+	}
+
+	// SceneManager and loading functionality
+	load(json) /* */ {
+		const entitys = json['Entitys'];
+		for(let i = 0; i < entitys.length; i++)	{
+			// DONE - Pass entitys[i] into createEntity. Not my problem!
+			this.createEntityFromJson(entitys[i]);
+		}
+	}
+
+	createEntityFromJson(json) /* */ {			
+		const temp = this.createEntity(json.name, json.x, json.y, json.w, json.h);
 		
-		return entityList.length;
-	};
-	
-	this.getEntityAt = function(i) {
-		
-		return entityList[i];
-	};
+		const components = json.components;
+		for(let i = 0; i < components.length; i++) {
+			switch(components[i].type) {
+				case "image":
+					ImageComponent.load(temp, components[i]);
+					break;
+					
+				case "colour":
+					colourComponent.load(temp, components[i]);
+					break;
+					
+				case "text":
+					TextComponent.load(temp, components[i]);
+					break;
+					
+				case "script":
+					ScriptComponent.load(temp, components[i]);
+					break;
+			}
+		}
+	}
 }
-
-//--------------------------------
-// Extend
-//--------------------------------
-scene.prototype.load = function(json) {
-	// TO DO - Load in from json
-	// Running as a test example
-	
-	var entitys = json['Entitys'];
-	for(var i = 0; i < entitys.length; i++)
-	{
-		// DONE - Pass entitys[i] into createEntity. Not my problem!
-		this.createEntityFromJson(entitys[i]);
-	}
-};
-
-scene.prototype.createEntityFromJson = function(data) {	
-		
-	var temp = this.createEntity(data.name, data.x, data.y, data.w, data.h);
-	
-	var components = data.components;
-	for(var i = 0; i < components.length; i++)
-	{
-		switch(components[i].type)
-		{
-			case "image":
-				ImageComponent.load(temp, components[i]);
-				break;
-				
-			case "colour":
-				colourComponent.load(temp, components[i]);
-				break;
-				
-			case "text":
-				TextComponent.load(temp, components[i]);
-				break;
-                
-            case "script":
-                ScriptComponent.load(temp, components[i]);
-                break;
-		}
-	}
-};
-
-scene.prototype.start = function() {
-	
-};
-
-scene.prototype.update = function() {
-	
-	this.updateEntityList();
-};
-
-scene.prototype.render = function() {
-	
-	this.renderEntityList();
-};
-
-scene.prototype.shutdown = function() {
-	
-	this.clearEntityList();
-};

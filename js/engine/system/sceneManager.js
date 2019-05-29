@@ -4,19 +4,15 @@
 // Running as a singleton so won't be using prototypal inheritance
 // for this object.
 
-var sceneManager = {
-	
-	//-----------------------------
-	// Variables
-	//-----------------------------
-	projectData : null,
-	currentScene : null,
-    currentSceneIndex : 0,
-	
-	//-----------------------------
-	// Scene Management
-	//-----------------------------
-	changeScene : function(index) {
+class SceneManager {
+	constructor() {
+		
+		this.projectData = null; /* json */
+		this.currentScene = null; /* Scene */
+		this.currentSceneIndex = 1;
+	}
+
+	changeScene(index) /* */ {
 		
 		// Shutdown current
 		if(this.currentScene)
@@ -27,18 +23,12 @@ var sceneManager = {
         this.currentSceneIndex = index;
         
         
-		this.currentScene = new scene();
+		this.currentScene = new Scene();
         this.currentScene.load(this.getSceneData(index));
 		this.currentScene.start();
-		
-		return scene;
-	},
-	
-	//-----------------------------
-	// Scene Update etc.
-	//-----------------------------
-	initialise : function() {
-		
+	}
+
+	initialise() /* */ {
 		// Default things we need to get running.
 		// Global Canvas
 		globalCanvas = new canvasManager();
@@ -49,28 +39,27 @@ var sceneManager = {
 		
 		// Input Manager
 		inputManager.start();
-	},
-	
-	start : function(data) {
+	}
+
+	start(data) /* */ {
 		
 		this.projectData = JSON.parse(data);		
 		
 		// Finally handle our first scene - taken from json
 		this.changeScene(0);
-
 		
 		// And create the tick
 		// Interval is 1 second/frameTime in ms = ticks per second 
 		// e.g. 1.0/0.05 = 20 FPS.
 		this.interval = setInterval(updateEngine, 1.0/frameTime);
-	},
-	
-	shutdown : function() {
+	}
+
+	shutdown() /* */ {
 		
 		clearInterval(this.interval);
-	},
-	
-	update : function() {
+	}
+
+	update() /* */ {
 		
 		// Input first (so it is handled during the update)
 		inputManager.update();
@@ -83,16 +72,18 @@ var sceneManager = {
 		
 		// Finally draw...
 		this.render();
-	},
-	
-	render : function() {
+	}
+
+	render()  /* */ {
 		
 		globalCanvas.clear();
 		this.currentScene.render();
-	},
+	}
 	
-	getSceneData : function(i) {
+	getSceneData(idx) /* json */ {
 		
-		return this.projectData['Project']['Scenes'][i];
+		return this.projectData['Project']['Scenes'][idx];
 	}
 }
+
+const sceneManager = new SceneManager();
