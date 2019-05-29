@@ -1,35 +1,28 @@
-function canvasManager()
-{
-	this.canvas = null;
-	this.context = null;
-}
+class Canvas {
 
-canvasManager.prototype.createCanvas = function(w, h) {
-	
-	var c = document.createElement("canvas");
-	c.id = "MainCanvas";
-	c.width = w;
-	c.height = h;
-	document.body.insertBefore(c, document.body.childNodes[0]);
+	constructor() {
+		this.canvas = null; /* doc element "canvas" */
+		this.context = null; /* canvas context "2d" */
+	}
 
-	this.canvas = c;
-	this.getContext2d();
-	return c;
-}
+	createCanvas(iW, iH) /* <canvas> */ {
 
-canvasManager.prototype.getCanvas = function(id) {
-	
-	this.canvas = document.getElementById(id);
-	this.getContext2d();
-	return this.canvas;
-}
+		let c = document.createElement("canvas");
+		c.id = "MainCanvas";
+		c.width = iW;
+		c.height = iH;
+		document.body.insertBefore(c, document.body.childNodes[0]);
 
-canvasManager.prototype.getContext2d = function() {
-	
-	this.context = this.canvas.getContext("2d");
-}
+		this.canvas = c;
+		this.findContext2d();
+		return c;
+	}
 
-canvasManager.prototype.clear = function() {
+	findContext2d() /* */ {	
+		this.context = this.canvas.getContext("2d");
+	}
 
-	this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+	clear() /* */ {
+		this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+	}
 }

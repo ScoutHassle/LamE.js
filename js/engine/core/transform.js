@@ -1,35 +1,35 @@
 class Transform {
 	
-	constructor(x, y, w, h) {
-		this.x = x;
-		this.y = y;
-		this.width = w;
-		this.height = h;
+	constructor(iX, iY, iW, iH) {
+		this.x = iX;
+		this.y = iY;
+		this.width = iW;
+		this.height = iH;
 	}
 	
-	get Position() {
+	get Position() /* js: {x, y} */ {
 		return {x: x, y: y};
 	}
 
-	set Position(v) {
-		this.x = v.x;
-		this.y = v.y;
+	set Position(v2) /* */ {
+		this.x = v2.x;
+		this.y = v2.y;
 	}
 
-	moveX(x) {
-		this.x += x;
+	moveX(iX) /* */ {
+		this.x += iX;
 	}
 
-	moveY(y) {
-		this.y += y;
+	moveY(iY) /* */ {
+		this.y += iY;
 	}
 
-	move(v) {
-		this.x += v.x;
-		this.y += v.y;
+	move(v2) /* */ {
+		this.x += v2.x;
+		this.y += v2.y;
 	}
 
-	rotate(angle) {
+	rotate(angle) /* */ {
 
 	}
 }

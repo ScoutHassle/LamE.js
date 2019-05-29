@@ -22,7 +22,6 @@ class SceneManager {
 		
         this.currentSceneIndex = index;
         
-        
 		this.currentScene = new Scene();
         this.currentScene.load(this.getSceneData(index));
 		this.currentScene.start();
@@ -31,7 +30,7 @@ class SceneManager {
 	initialise() /* */ {
 		// Default things we need to get running.
 		// Global Canvas
-		globalCanvas = new canvasManager();
+		globalCanvas = new Canvas();
 		globalCanvas.createCanvas(800, 600);
 		
 		// Resource Manager
