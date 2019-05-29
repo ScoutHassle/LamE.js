@@ -12,11 +12,11 @@ Object.freeze(ComponentType);
 
 class Component {
     
-    constructor(type, parent) {
+    constructor(type, entity) {
         
         this.type = type;
-        this.parent = parent;
-        if(parent != null)  parent.addComponent(this);
+        this.parent = entity;
+        if(entity != null)  entity.addComponent(this);
     }
     
     get Parent(){

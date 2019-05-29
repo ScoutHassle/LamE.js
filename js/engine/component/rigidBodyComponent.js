@@ -2,9 +2,9 @@
 
 class RigidBodyComponent extends PhysicsComponent {    
     
-	constructor(parent) {
+	constructor(entity) {
         
-		super(parent);
+		super(entity);
 		this.constantForce = new vec2(0.0, 0.0);
         this.velocity = new vec2(0.0, 0.0);
         this.mass = 1.0;

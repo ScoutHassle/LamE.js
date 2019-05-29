@@ -2,9 +2,9 @@
 
 class RenderComponent extends Component {    
     
-    constructor(parent, r) {
+    constructor(entity, r) {
         
-        super(ComponentType.Component_Renderable, parent);
+        super(ComponentType.Component_Renderable, entity);
         this.resource = r;
         this.visible = true;
     }

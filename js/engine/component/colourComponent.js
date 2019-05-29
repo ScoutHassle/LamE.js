@@ -2,9 +2,9 @@
 
 class ColourComponent extends RenderComponent {
     
-    constructor(parent, r) {
+    constructor(entity, r) {
         
-        super(parent, r);
+        super(entity, r);
     }
     
     static load(temp, json) {

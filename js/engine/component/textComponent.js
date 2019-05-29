@@ -7,9 +7,9 @@ function textResource(font, colour, alignment)
 
 class TextComponent extends RenderComponent {
     
-    constructor(parent, txtRes, text){
+    constructor(entity, txtRes, text) {
         
-        super(parent, txtRes);
+        super(entity, txtRes);
         this.text = text;
     }
     

@@ -6,9 +6,9 @@ Object.freeze(TouchEventType);
 
 class InputComponent extends Component {
     
-    constructor(parent) {
+    constructor(entity) {
         
-        super(ComponentType.Component_Input, parent);
+        super(ComponentType.Component_Input, entity);
         
         this.touchId = -1;
         this.onTouchStartEvent = null;

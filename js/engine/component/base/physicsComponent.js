@@ -2,9 +2,9 @@
 
 class PhysicsComponent extends Component {    
     
-    constructor(parent) {
+    constructor(entity) {
         
-        super(ComponentType.Component_Physics, parent);
+        super(ComponentType.Component_Physics, entity);
     }
     
 

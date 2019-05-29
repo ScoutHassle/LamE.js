@@ -2,9 +2,9 @@
 
 class ButtonComponent extends InputComponent {
     
-    constructor(parent) {
+    constructor(entity) {
         
-        super(parent);
+        super(entity);
     }
     
     OnTouchStart(touch) {
