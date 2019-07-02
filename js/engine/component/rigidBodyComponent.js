@@ -9,7 +9,7 @@ class RigidBodyComponent extends PhysicsComponent {
         this.velocity = new vec2(0.0, 0.0);
         this.mass = 1.0;
 
-        physics.addRigidBody(this)
+        physics.addRigidBody(entity.uid, this)
     }
 
     get Velocity()  /* js: {x, y} */ {

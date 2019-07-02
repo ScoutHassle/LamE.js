@@ -26,6 +26,10 @@ class vec2 {
 		this.y = this.y / length;
     }
 
+    dot(v2) /* float */ {
+        return (this.x * v2.x) + (this.y * v2.y);
+    }
+
     clean() {
         if (Math.abs(this.x) < Number.EPSILON) {
             this.x = 0.0;

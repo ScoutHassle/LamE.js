@@ -8,7 +8,11 @@ class Transform {
 	}
 	
 	get Position() /* js: {x, y} */ {
-		return {x: x, y: y};
+		return {x: this.x, y: this.y};
+	}
+
+	get PositionV2() /* Vector2 */ {
+		return new vec2(this.x, this.y);
 	}
 
 	set Position(v2) /* */ {

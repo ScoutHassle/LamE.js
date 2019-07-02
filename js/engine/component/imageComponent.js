@@ -7,7 +7,7 @@ class ImageComponent extends RenderComponent {
         super(entity, r);
     }
     
-    static load(temp, json) {
+    static load(temp, json) /* ImageComponent */ {
         
        var path = json.data[0].file;
 	   var imgComp = new ImageComponent(temp, resourceManager.loadResource(path, resource_type_image));
@@ -15,7 +15,7 @@ class ImageComponent extends RenderComponent {
 	   return imgComp;
     }
     
-    render() {
+    render() /* */ {
         if(this.IsVisible)
 		{
             var ctx = globalCanvas.context;
