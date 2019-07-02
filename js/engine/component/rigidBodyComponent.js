@@ -12,32 +12,40 @@ class RigidBodyComponent extends PhysicsComponent {
         physics.addRigidBody(this)
     }
 
-    get Velocity() {
-        return this.velocity;
-    }
+    get Velocity()  /* js: {x, y} */ {
+		return this.velocity.position;
+	}
 
-    get Mass() {
+    get Mass() /* float */ {
         return this.mass;
     }
 
-    set Velocity(v) {
+    set Velocity(v) /* */ {
         this.velocity.Set = v;
     }
 
-    set Mass(m) {
+    set Mass(m) /* */ {
         this.mass = m;
     }
 
-    update() {
+    addForceX(fX) /* */ {
+        this.velocity.x += fX;
+    }
+
+    addForceY(fY) /* */ {
+        this.velocity.y += fY;
+    }
+
+    update() /* */ {
         
         // Stub - Unused by the physics side.   
     }
     
-    physicsUpdate(delta) {
+    physicsUpdate(delta) /* */ {
         
         // Start with Euler's method for force calculations.
         // It's simple and should serve my current needs.
-        var accel = this.ComputeForces()
+        var accel = this.computeForces()
         accel.fdivide(this.mass);
         accel.clean();
         
@@ -50,13 +58,13 @@ class RigidBodyComponent extends PhysicsComponent {
         this.velocity.clean();
     }
 
-    shutdown() {
+    shutdown() /* */ {
         
         super.shutdown();
     }
 	
 	//  Utility
-    ComputeForces(velocity) {
+    computeForces() /* Vec2 */ {
         
         var totalForce = new vec2(this.constantForce.x, this.constantForce.y);
         var gravity = new vec2(physics.Gravity.x, physics.Gravity.y);

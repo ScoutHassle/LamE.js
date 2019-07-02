@@ -35,6 +35,18 @@ class Player extends ScriptComponent {
 
             this.spawn.rb.Velocity = {x: 0, y: -20};
         }
+
+        if(inputManager.isKeyDown(key_A)) {
+            if(this.spawn != null) {
+                this.spawn.rb.addForceX(-5)
+            }
+        }
+
+        if(inputManager.isKeyDown(key_D)) {
+            if(this.spawn != null) {
+                this.spawn.rb.addForceX(5)
+            }
+        }
     }
     
     save() {
