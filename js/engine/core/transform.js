@@ -11,8 +11,16 @@ class Transform {
 		return {x: this.x, y: this.y};
 	}
 
+	get PivotPosition() /* js: {x, y} */ {
+		return {x: this.x + (this.width*0.5), y: this.y + (this.height*0.5)};
+	}
+
 	get PositionV2() /* Vector2 */ {
 		return new vec2(this.x, this.y);
+	}
+
+	get PivotPositionV2() /* Vector2 */ {
+		return new vec2(this.x + (this.width*0.5), this.y + (this.height*0.5));
 	}
 
 	set Position(v2) /* */ {

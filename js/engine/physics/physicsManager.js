@@ -13,10 +13,15 @@ class PhysicsManager {
 		
 		// Actual things...
 		this.physicsObjects = new Map(); /* Map: PhysicsObject */
+		this.collisionObjects = new Map(); /* Map: CollisionObject */
 
 		// Universal Settings
 		this.gravity = new vec2(0.0, -9.8);
 		this.drag = 0.1;
+
+
+
+		this.debug = true;
 	}
 
 	get Gravity() /* Vec2 */ {
@@ -75,10 +80,19 @@ class PhysicsManager {
 		// Calculate collisions
 		const list = Array.from(this.physicsObjects);
 		for(let i = 0; i < list.length-1; i++) {
-			if(list[i][1].collider != null) {
+
+			let obj1 = list[i][1];
+
+			if(obj1.collider != null) {
 				for(let j = i+1; j < list.length; j++) {
-					if(list[j][1].collider != null) {
-						list[i][1].collider.intersect(list[j][1].collider);
+
+					let obj2 = list[j][1];
+
+					if(obj2.collider != null) {
+						if(obj1.collider.intersect(obj2.collider)) {
+							Collision.Response(obj1.collider, obj2.collider, obj1.rigidBody, obj2.rigidBody);
+							// Force response...
+						}
 					}
 				}
 			}
@@ -89,6 +103,16 @@ class PhysicsManager {
 	shutdown() /* */ {
 		
 		this.parent = null;
+	}
+
+	DebugRender() /* */ {
+		if(this.debug) {
+			this.physicsObjects.forEach(function(value, key) {
+				if(value.collider != null) {
+					value.collider.DebugRender();
+				}
+			});
+		}
 	}
 }
 

@@ -71,4 +71,9 @@ class vec2 {
         this.x = this.x / f;
         this.y = this.y / f;
     }
+
+    // Static methods
+    static Subtract(v1, v2) /* Vector2 */ {
+        return new vec2(v1.x - v2.x, v1.y - v2.y);
+    }
 }

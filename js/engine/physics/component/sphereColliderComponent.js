@@ -16,13 +16,27 @@ class SphereColliderComponent extends ColliderComponent {
         //         return this.toPoint(collider);
 
             case ColliderShape.ColliderShape_Sphere:
-                return ColliderComponent.SphereToSphere(this, collider);
+                return Collision.SphereToSphere(this, collider);
 
             case ColliderShape.ColliderShape_Box:
-                return ColliderComponent.SphereToBox(this, collider);
+                return Collision.SphereToBox(this, collider);
         }
 
         // Unhandled shape to shape intersection.
         return false;
+    }
+
+    DebugRender() {
+
+        const ctx = globalCanvas.context;
+        ctx.fillStyle = this.GetResource;
+            
+        const transform = this.parent.transform;
+        const pos = transform.PivotPosition;
+
+        ctx.beginPath();
+        ctx.arc(pos.x, pos.y, this.radius, 0, 2 * Math.PI);
+        ctx.fillStyle = "#00ff0077"
+        ctx.fill();
     }
 }

@@ -77,6 +77,8 @@ class SceneManager {
 		
 		globalCanvas.clear();
 		this.currentScene.render();
+
+		physics.DebugRender();
 	}
 	
 	getSceneData(idx) /* json */ {
