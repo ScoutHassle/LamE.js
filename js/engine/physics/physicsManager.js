@@ -20,6 +20,7 @@ class PhysicsManager {
 		this.gravity = new vec2(0.0, -9.8);
 		this.gravity.fmultiply(this.pixelsToMetres);
 		this.drag = 0.025;
+		this.minVelocity = 0.75;
 
 		// WARNING: Using Debug?
 		this.debug = true;
@@ -107,10 +108,11 @@ class PhysicsManager {
 				case ColliderShape.ColliderShape_Sphere:
 					switch(collision.physObj2.collider.shape) {
 						case ColliderShape.ColliderShape_Sphere:
-								responseFunction = Collision.SphereToSphereResponse;
+							responseFunction = Collision.SphereToSphereResponse;
 							break;
 
 						case ColliderShape.ColliderShape_Box:
+							responseFunction = Collision.SphereToBoxResponse;
 							break;
 					}
 					break;
@@ -118,6 +120,7 @@ class PhysicsManager {
             	case ColliderShape.ColliderShape_Box:
 					switch(collision.physObj2.collider.shape) {
 						case ColliderShape.ColliderShape_Sphere:
+							responseFunction = Collision.BoxToSphereResponse;
 							break;
 	
 						case ColliderShape.ColliderShape_Box:

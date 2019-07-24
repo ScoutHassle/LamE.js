@@ -35,7 +35,7 @@ class Player extends ScriptComponent {
 				this.spawn = {e: e, col: col, rb: rb, cc: cc};
 			}
 
-			this.spawn.rb.Velocity = {x: 0, y: -20};
+			this.spawn.rb.addForceY(-20);
 		}
 
 		if(inputManager.isKeyDown(key_A)) {
@@ -51,11 +51,11 @@ class Player extends ScriptComponent {
 		}
 
 		if(this.spawn != null) {
-			if(this.spawn.cc.HasCollided) {
-				this.spawn.col.SetResource = "#00ff00";
-			} else {
-				this.spawn.col.SetResource = "#ff0000";
-			}
+			// if(this.spawn.cc.HasCollided) {
+			// 	this.spawn.col.SetResource = "#00ff00";
+			// } else {
+			// 	this.spawn.col.SetResource = "#ff0000";
+			// }
 		}
 	}
 	

@@ -76,6 +76,8 @@ class RigidBodyComponent extends PhysicsComponent {
         var vel = new vec2(this.velocity.x, this.velocity.y);
         vel.fmultiply(physics.Drag * this.mass * speed)
         totalForce.subtract(vel);
+
+        // TO DO: Fix drag when grounded (e.g. low gravity) for horizontal forces.
         
         return totalForce;
     }

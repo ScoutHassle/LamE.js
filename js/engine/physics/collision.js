@@ -33,10 +33,10 @@ class Collision {
     }
     
     // Sphere to Sphere - Update stuff later.
-    static SphereToSphereResponse(collider1, collider2, rigid1, rigid2) /*  Vector2 */ {
+    static SphereToSphereResponse(collider1, collider2, rigid1, rigid2) /*  */ {
 
         if(rigid1 == null && rigid2 == null) {
-            return new vec2(0.0, 0.0);
+            return
         }
 
         let responseShare = 0.5;
@@ -71,7 +71,7 @@ class Collision {
         const relativeVector = new vec2(-rigid2.velocity.x, -rigid2.velocity.y);
         const vDotN = collisionNormal.dot(relativeVector);
         if(vDotN < 0) {
-            return new vec2(0.0, 0.0);
+            return
         }
 
         const numerator = -(1.0)*vDotN;
@@ -88,5 +88,43 @@ class Collision {
             const minusCollisionNormal = new vec2(-collisionNormal.x, -collisionNormal.y);
             rigid2.velocity.add(minusCollisionNormal);
         }
+    }
+
+    static BoxToSphereResponse(collider1, collider2, rigid1, rigid2) /* */ {
+        Collision.SphereToBoxResponse(collider2, collider1, rigid2, rigid1);
+    }
+
+    static SphereToBoxResponse(collider1, collider2, rigid1, rigid2) /* */ {
+
+        const spherePos = collider1.Parent.transform.PivotPositionV2;
+
+        // For each "line" of the box do we intersect?
+        // Top - Really only one we care about atm.
+        let topOrigin = new vec2(collider2.minX, collider2.minY);
+        let topExtent = new vec2(collider2.maxX, collider2.minY);
+
+        let w = new vec2(spherePos.x - topOrigin.x, spherePos.y - topOrigin.y);
+        let wSquared = w.dot(w);
+        let topDir = new vec2(topExtent.x - topOrigin.x, topExtent.y - topOrigin.y);
+        let proj = w.dot(topDir);
+        let radSq = collider1.radius * collider1.radius;
+        let vSquared = topDir.dot(topDir);
+
+        if(vSquared * wSquared - proj * proj <= vSquared * radSq) {
+            // Coll top true!
+            collider1.Parent.transform.y = collider2.minY - (collider1.radius * 2);
+            if(rigid1 != null) {
+                rigid1.Velocity = new vec2(rigid1.velocity.x, 0.0);
+            }
+        }
+
+        // IvVector3 w = mCenter - line.GetOrigin();
+        // float wsq = w.Dot(w);
+        // float proj = w.Dot(line.GetDirection());
+        // float rsq = mRadius*mRadius;
+        // float vsq = line.GetDirection().Dot(line.GetDirection());
+    
+        // // test length of difference vs. radius
+        // return ( vsq*wsq - proj*proj <= vsq*rsq );
     }
 }
