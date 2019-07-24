@@ -18,13 +18,13 @@ class Collision {
 	}
 
 	static SphereToBox(sphere, box) /* bool */ {
-		const pos = sphere.Parent.transform.Position;
+		const pos = sphere.Parent.transform.PivotPositionV2;
 		const radius = sphere.radius;
 		// Are we inside of...
-		if( (pos.x + radius) > box.MinX && /* left-side */
-			(pos.x - radius) < box.MaxX && /* right-side */
-			(pos.y + radius) > box.MinY && /* top-side */
-			(pos.y - radius) < box.MaxY) { /* bottom-side*/
+		if( (pos.x + radius) > box.minX && /* left-side */
+			(pos.x - radius) < box.maxX && /* right-side */
+			(pos.y + radius) > box.minY && /* top-side */
+			(pos.y - radius) < box.maxY) { /* bottom-side*/
 				sphere.hasCollided = box.hasCollided = true;
 				return true;
 		}

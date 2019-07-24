@@ -2,25 +2,25 @@
 
 class BoxColliderComponent extends ColliderComponent {
 
-    constructor(entity, radius) {
+    constructor(entity, iMinX, iMinY, iMaxX, iMaxY) {
         super(entity, ColliderShape.ColliderShape_Box);
 
-        this.radius = radius; /* float */
+        this.minX = iMinX; /* int */
+        this.minY = iMinY; /* int */
+        this.maxX = iMaxX; /* int */
+        this.maxY = iMaxY; /* int */
     }
 
     // Keep base intersect
     intersect(collider) /* bool */ {
 
-        //  switch(collider.shape) {
-        // //     case ColliderShape_Point:
-        // //         return this.toPoint(collider);
+          switch(collider.shape) {
+             case ColliderShape.ColliderShape_Sphere:
+                 return Collision.SphereToBox(collider, this);
 
-        //     case ColliderShape.ColliderShape_Sphere:
-        //         return Collision.SphereToBox(collider, this);
-
-        //     case ColliderShape.ColliderShape_Box:
-        //         return Collision.BoxToBox(this, collider);
-        // }
+             case ColliderShape.ColliderShape_Box:
+                 return Collision.BoxToBox(this, collider);
+         }
 
         // Unhandled shape to shape intersection.
         return false;

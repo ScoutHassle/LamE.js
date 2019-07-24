@@ -7,9 +7,11 @@ class Ground extends ScriptComponent {
         super("Ground");
         
         // Spawn a physics object
-		var e = sceneManager.currentScene.createEntity("entity", 200, 450, 400, 50);
-		var col = new ColourComponent(e, "#0000ff");
-		var cc = new BoxColliderComponent(e, 25);
+		const e = sceneManager.currentScene.createEntity("entity", 200, 450, 400, 50);
+		const col = new ColourComponent(e, "#0000ff");
+
+		const t = e.transform;
+		const cc = new BoxColliderComponent(e,t.x, t.y, t.x + t.width, t.y + t.height);
 
 		this.spawn = {e: e, col: col, cc: cc};
 	}
