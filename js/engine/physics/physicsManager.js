@@ -89,9 +89,6 @@ class PhysicsManager {
 
 					if(obj2.collider != null) {
 						if(obj1.collider.intersect(obj2.collider)) {
-							//Collision.Response(obj1.collider, obj2.collider, obj1.rigidBody, obj2.rigidBody);
-							// Force response...
-
 							const collisionName = obj1.collider.parent.uid + "|" + obj2.collider.parent.uid;
 							const collObj = new CollisionObject(obj1, obj2);
 							this.collisionObjects.set(collisionName, collObj);

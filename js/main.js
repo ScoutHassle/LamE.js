@@ -152,6 +152,24 @@ var jsonData = `{
 						]
 					}
 				]
+			},
+			{
+				"name": "ground",
+				"x": 375.0,
+				"y": 375.0,
+				"w": 50.0,
+				"h": 50.0,
+				"components":[
+					{
+						"type": "script",
+						"data": [
+							{
+								"parent": null,
+								"scriptName": "Ground"
+							}
+						]
+					}
+				]
 			}]
         
         }]
