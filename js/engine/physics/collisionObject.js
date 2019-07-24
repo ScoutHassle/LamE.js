@@ -2,30 +2,27 @@
 
 
 class CollisionObject {
-	constructor(c1, c2, hit) /* */ {
-		this.collider1 = c1;
-		this.collider2 = c2;
+	constructor(physObj1, physObj2) /* */ {
+		this.physObj1 = physObj1;
+		this.physObj2 = physObj2;
         this.collisionEvent = CollisionEvent.Collision_Enter;
-        
-        this.hitPoint = hit; /* Vector2 */
 	}
 
 	CollisionEnter() /* */ {
         this.collisionEvent = CollisionEvent.Collision_Enter;
-		this.collider1.OnCollisionEnter(this.collider2, this);
-		this.collider2.OnCollisionEnter(this.collider1, this);
+		this.physObj1.collider.OnCollisionEnter(this.physObj2.collider, this);
+		this.physObj2.collider.OnCollisionEnter(this.physObj1.collider, this);
     }
     
-    CollisionActive(hit) /* */ {
-        this.hitPoint = hit;
+    CollisionActive() /* */ {
         this.collisionEvent = CollisionEvent.Collision_Active;
-		this.collider1.OnCollisionActive(this.collider2, this);
-		this.collider2.OnCollisionActive(this.collider1, this);
+		this.physObj1.collider.OnCollisionActive(this.physObj2.collider, this);
+		this.physObj2.collider.OnCollisionActive(this.physObj1.collider, this);
     }
 
     CollisionExit() /* */ {
         this.collisionEvent = CollisionEvent.Collision_Exit;
-		this.collider1.OnCollisionExit(this.collider2, this);
-		this.collider2.OnCollisionExit(this.collider1, this);
+		this.physObj1.collider.OnCollisionExit(this.physObj2.collider, this);
+		this.physObj2.collider.OnCollisionExit(this.physObj1.collider, this);
     }
 }

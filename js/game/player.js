@@ -29,6 +29,7 @@ class Player extends ScriptComponent {
 				var e = sceneManager.currentScene.createEntity("entity", 375, 250, 50, 50);
 				var col = new ColourComponent(e, "#ff0000");
 				var rb = new RigidBodyComponent(e);
+				rb.Mass = 5.0;
 				var cc = new SphereColliderComponent(e, 25);
 
 				this.spawn = {e: e, col: col, rb: rb, cc: cc};

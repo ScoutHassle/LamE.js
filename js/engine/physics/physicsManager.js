@@ -16,11 +16,12 @@ class PhysicsManager {
 		this.collisionObjects = new Map(); /* Map: CollisionObject */
 
 		// Universal Settings
+		this.pixelsToMetres = 5.0;
 		this.gravity = new vec2(0.0, -9.8);
-		this.drag = 0.1;
+		this.gravity.fmultiply(this.pixelsToMetres);
+		this.drag = 0.025;
 
-
-
+		// WARNING: Using Debug?
 		this.debug = true;
 	}
 
@@ -74,30 +75,71 @@ class PhysicsManager {
 				value.rigidBody.physicsUpdate(frameTime);
 			}
 		});
-	}
 
-	postPhysicsUpdateStep() /* */ {
 		// Calculate collisions
 		const list = Array.from(this.physicsObjects);
 		for(let i = 0; i < list.length-1; i++) {
 
-			let obj1 = list[i][1];
+			const obj1 = list[i][1];
 
 			if(obj1.collider != null) {
 				for(let j = i+1; j < list.length; j++) {
 
-					let obj2 = list[j][1];
+					const obj2 = list[j][1];
 
 					if(obj2.collider != null) {
 						if(obj1.collider.intersect(obj2.collider)) {
-							Collision.Response(obj1.collider, obj2.collider, obj1.rigidBody, obj2.rigidBody);
+							//Collision.Response(obj1.collider, obj2.collider, obj1.rigidBody, obj2.rigidBody);
 							// Force response...
+
+							const collisionName = obj1.collider.parent.uid + "|" + obj2.collider.parent.uid;
+							const collObj = new CollisionObject(obj1, obj2);
+							this.collisionObjects.set(collisionName, collObj);
 						}
 					}
 				}
 			}
 		}
+		
 		// Resolve collisions
+		this.collisionObjects.forEach(function(collision, key) {
+
+			let responseFunction = null;
+			switch(collision.physObj1.collider.shape) {
+
+				case ColliderShape.ColliderShape_Sphere:
+					switch(collision.physObj2.collider.shape) {
+						case ColliderShape.ColliderShape_Sphere:
+								responseFunction = Collision.SphereToSphereResponse;
+							break;
+
+						case ColliderShape.ColliderShape_Box:
+							break;
+					}
+					break;
+
+            	case ColliderShape.ColliderShape_Box:
+					switch(collision.physObj2.collider.shape) {
+						case ColliderShape.ColliderShape_Sphere:
+							break;
+	
+						case ColliderShape.ColliderShape_Box:
+						break;
+					}
+					break;
+			}
+
+			if(responseFunction != null) {
+				responseFunction(collision.physObj1.collider, collision.physObj2.collider, collision.physObj1.rigidBody, collision.physObj2.rigidBody);
+			}
+		});
+
+		// TO DO: Track these per frame - remove when needed.
+		this.collisionObjects.clear();
+	}
+
+	postPhysicsUpdateStep() /* */ {
+		
 	}
 	
 	shutdown() /* */ {

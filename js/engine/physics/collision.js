@@ -33,34 +33,40 @@ class Collision {
     }
     
     // Sphere to Sphere - Update stuff later.
-    static Response(collider1, collider2, rigid1, rigid2) /*  Vector2 */ {
+    static SphereToSphereResponse(collider1, collider2, rigid1, rigid2) /*  Vector2 */ {
 
         if(rigid1 == null && rigid2 == null) {
             return new vec2(0.0, 0.0);
         }
 
         let responseShare = 0.5;
-        if(rigid1 == null) {
-            responseShare = 0.0;
-        } else if(rigid2 == null) {
+        if(rigid1 == null || rigid2 == null) {
             responseShare = 1.0;
         }
 
         const collisionNormal = vec2.Subtract(collider2.Parent.transform.PivotPositionV2, collider1.Parent.transform.PivotPositionV2);
         const penetration = (collider1.radius + collider2.radius) - collisionNormal.magnitude();
-
         collisionNormal.normalize();
 
-        // TO DO: Sort all this out. Currently supports r1 == null and r2 set. Make it just work.
+        let mass1 = 1.0;
+        let mass2 = 1.0; 
+        if(rigid1 != null) {
+            let translate = new vec2(-collisionNormal.x * penetration, -collisionNormal.y * penetration);
+            translate.fmultiply(responseShare);
+            collider1.Parent.transform.move(translate);
 
-        // sooo
-        let translate = new vec2(-collisionNormal.x * penetration, -collisionNormal.y * penetration);
-        translate.fmultiply(responseShare);
-        collider1.Parent.transform.move(translate);
+            // Slight optimisation for vDotN >= 0
+            mass1 = rigid1.Mass;
+        }
 
-        translate =  new vec2(collisionNormal.x * penetration, collisionNormal.y * penetration);
-        translate.fmultiply(1.0 - responseShare);
-        collider2.Parent.transform.move(translate)
+        if(rigid2 != null) {
+            let translate =  new vec2(collisionNormal.x * penetration, collisionNormal.y * penetration);
+            translate.fmultiply(responseShare);
+            collider2.Parent.transform.move(translate)
+
+            // Slight optimisation for vDotN >= 0
+            mass2 = rigid2.Mass;
+        }
 
         const relativeVector = new vec2(-rigid2.velocity.x, -rigid2.velocity.y);
         const vDotN = collisionNormal.dot(relativeVector);
@@ -70,12 +76,17 @@ class Collision {
 
         const numerator = -(1.0)*vDotN;
         let denominator = collisionNormal.dot(collisionNormal);
-        denominator = denominator * (1.0/1.0 /*mass*/ + 1.0/1.0 /*r2 mass*/);
+        denominator = denominator * (1.0/mass1 + 1.0/mass2);
         const j = numerator/denominator;
 
-        const minusCollisionNormal = new vec2(-collisionNormal.x, -collisionNormal.y);
-        minusCollisionNormal.fmultiply(j/1.0);
-        rigid2.velocity.add(minusCollisionNormal);
-        // Other vel
+        collisionNormal.fmultiply(j/1.0);
+        if(rigid1 != null) {
+            rigid1.velocity.add(collisionNormal);
+        }
+
+        if(rigid2 != null) {
+            const minusCollisionNormal = new vec2(-collisionNormal.x, -collisionNormal.y);
+            rigid2.velocity.add(minusCollisionNormal);
+        }
     }
 }
