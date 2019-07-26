@@ -20,6 +20,9 @@ class SphereColliderComponent extends ColliderComponent {
 
             case ColliderShape.ColliderShape_Box:
                 return Collision.SphereToBox(this, collider);
+
+            case ColliderShape.ColliderShape_Plane:
+                    return Collision.SphereToLine(this, collider.getOrigin(), collider.getExtent());
         }
 
         // Unhandled shape to shape intersection.

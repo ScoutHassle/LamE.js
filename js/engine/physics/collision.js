@@ -103,20 +103,13 @@ class Collision {
         let topOrigin = new vec2(collider2.minX, collider2.minY);
         let topExtent = new vec2(collider2.maxX, collider2.minY);
 
-        let w = new vec2(spherePos.x - topOrigin.x, spherePos.y - topOrigin.y);
-        let wSquared = w.dot(w);
-        let topDir = new vec2(topExtent.x - topOrigin.x, topExtent.y - topOrigin.y);
-        let proj = w.dot(topDir);
-        let radSq = collider1.radius * collider1.radius;
-        let vSquared = topDir.dot(topDir);
-
-        if(vSquared * wSquared - proj * proj <= vSquared * radSq) {
-            // Coll top true!
-            collider1.Parent.transform.y = collider2.minY - (collider1.radius * 2);
-            if(rigid1 != null) {
-                rigid1.Velocity = new vec2(rigid1.velocity.x, 0.0);
-            }
-        }
+		if(Collision.SphereToLine(collider1, topOrigin, topExtent)) {
+			// Coll top true!
+			collider1.Parent.transform.y = collider2.minY - (collider1.radius * 2);
+			if(rigid1 != null) {
+				rigid1.Velocity = new vec2(rigid1.velocity.x, 0.0);
+			}
+		}
 
         // IvVector3 w = mCenter - line.GetOrigin();
         // float wsq = w.Dot(w);
@@ -126,5 +119,23 @@ class Collision {
     
         // // test length of difference vs. radius
         // return ( vsq*wsq - proj*proj <= vsq*rsq );
-    }
+	}
+	
+	static SphereToLine(sphereCollider, origin, extent) /* bool */ {
+
+		const spherePos = sphereCollider.Parent.transform.PivotPositionV2;
+
+		let w = new vec2(spherePos.x - origin.x, spherePos.y - origin.y);
+        let wSquared = w.dot(w);
+        let topDir = new vec2(extent.x - origin.x, extent.y - origin.y);
+        let proj = w.dot(topDir);
+        let radSq = sphereCollider.radius * sphereCollider.radius;
+        let vSquared = topDir.dot(topDir);
+
+        if(vSquared * wSquared - proj * proj <= vSquared * radSq) {
+            return true;
+		}
+		
+		return false
+	}
 }

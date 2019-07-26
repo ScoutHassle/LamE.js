@@ -3,7 +3,8 @@
 var ColliderShape = {
 	"ColliderShape_Point": 1,
 	"ColliderShape_Sphere": 2,
-	"ColliderShape_Box": 3,};
+	"ColliderShape_Box": 3,
+	"ColliderShape_Plane": 4,};
 Object.freeze(ColliderShape);
 
 var CollisionEvent = {
