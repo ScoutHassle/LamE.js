@@ -36,10 +36,27 @@ function startEngine()
 		let script = document.createElement('script');
 		script.type = 'text/javascript';
 		script.onload = function() {
-			sceneManager.start(JSON.stringify(localProjectJSON));
+
+			// Do settings
+			physics.loadSettings(settingsLocalJSON.Physics);
+
+			// Then...
+			// Load the scene
+			const head = document.getElementsByTagName('head')[0];
+			let script = document.createElement('script');
+			script.type = 'text/javascript';
+			script.onload = function() {
+
+				// Cool, engine is up and running now.
+				sceneManager.start(JSON.stringify(localProjectJSON));
+			}
+			script.src = './assets/ProjectLocal.js';
+			head.appendChild(script);
 		}
-		script.src = './assets/ProjectLocal.js';
+		script.src = './js/settingsLocal.js';
 		head.appendChild(script);
+
+		
 	}
 }
 

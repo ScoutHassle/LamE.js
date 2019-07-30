@@ -34,6 +34,13 @@ class PhysicsManager {
 		return this.drag;
 	}
 
+	loadSettings(json) /* */ {
+
+		this.pixelsToMetres = json.PixelRatio;
+		this.gravity = new vec2(json.Gravity.x, json.Gravity.y);
+		this.gravity.fmultiply(this.pixelsToMetres);
+	}
+
 	// Physics Object Management
 	addRigidBody(entityUID, rigidBody) /* */ {
 		let physObj = this.physicsObjects.get(entityUID);
