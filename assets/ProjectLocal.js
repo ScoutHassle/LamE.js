@@ -45,19 +45,37 @@ const localProjectJSON ={
             "Name": "Main",
             "Entitys":
             [{
-                "name": "e1",
+                "name": "Background_Layer",
                 "x": 0.0,
                 "y": 0.0,
                 "w": 800.0,
                 "h": 600.0,
                 "components":
                 [{
-                    "type": "image",
+                    "type": "colour",
                     "data":
                     [{
-                        "file": "assets/images/main_image.png"
+                        "colour": "#555555"
                     }]
                 }]
+			},
+			{
+				"name": "AsteroidField",
+				"x": 400.0,
+				"y": 200.0,
+				"w": 0.0,
+				"h": 0.0,
+				"components":[
+					{
+						"type": "script",
+						"data": [
+							{
+								"parent": null,
+								"scriptName": "AsteroidField"
+							}
+						]
+					}
+				]
 			},
 			{
 				"name": "player",
@@ -72,42 +90,6 @@ const localProjectJSON ={
 							{
 								"parent": null,
 								"scriptName": "Player"
-							}
-						]
-					}
-				]
-			},
-			{
-				"name": "obstacle",
-				"x": 375.0,
-				"y": 375.0,
-				"w": 50.0,
-				"h": 50.0,
-				"components":[
-					{
-						"type": "script",
-						"data": [
-							{
-								"parent": null,
-								"scriptName": "Obstacle"
-							}
-						]
-					}
-				]
-			},
-			{
-				"name": "ground",
-				"x": 375.0,
-				"y": 375.0,
-				"w": 50.0,
-				"h": 50.0,
-				"components":[
-					{
-						"type": "script",
-						"data": [
-							{
-								"parent": null,
-								"scriptName": "Ground"
 							}
 						]
 					}

@@ -76,7 +76,7 @@ class Collision {
 
         const numerator = -(1.0)*vDotN;
         let denominator = collisionNormal.dot(collisionNormal);
-        denominator = denominator * (1.0/mass1 + 1.0/mass2);
+        denominator = denominator * (mass1/1.0 + 1.0/mass2);
         const j = numerator/denominator;
 
         collisionNormal.fmultiply(j/1.0);

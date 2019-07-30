@@ -8,54 +8,50 @@ class Player extends ScriptComponent {
 		
 		this.health = 10;
 		this.speed = 5.0;
+		
+		this.entity = null;
+		this.rigidBody = null;
+		this.createPlayer();
+	}
 
-		this.spawn = null;
+	createPlayer() {
+		this.entity = sceneManager.currentScene.createEntity("entity", 375, 250, 50, 50);
+		new ImageComponent(this.entity, resourceManager.loadResource("assets/images/ship.png", resource_type_image));
+		this.rigidBody = new RigidBodyComponent(this.entity);
+		this.rigidBody.Mass = 1.0;
+		new SphereColliderComponent(this.entity, 25);
 	}
 	
 	setScriptData(json) {
 		
-		this.health = json.health;
-		this.speed = json.speed;
+		if(json.health) {
+			this.health = json.health;
+		}
+
+		if(json.speed) {
+			this.speed = json.speed;
+		}
 	}
 	
 	update() {
 		
 		if(inputManager.isKeyDown(key_W)) {
-			
-			// Do something.
-			if (this.spawn == null) {
-			   
-				// Spawn a physics object
-				var e = sceneManager.currentScene.createEntity("entity", 375, 250, 50, 50);
-				var col = new ColourComponent(e, "#ff0000");
-				var rb = new RigidBodyComponent(e);
-				rb.Mass = 5.0;
-				var cc = new SphereColliderComponent(e, 25);
 
-				this.spawn = {e: e, col: col, rb: rb, cc: cc};
-			}
-
-			this.spawn.rb.addForceY(-20);
+			this.rigidBody.addForceY(-this.speed);
 		}
 
+		if(inputManager.isKeyDown(key_S)) {
+
+			this.rigidBody.addForceY(this.speed);
+		}
+
+
 		if(inputManager.isKeyDown(key_A)) {
-			if(this.spawn != null) {
-				this.spawn.rb.addForceX(-5)
-			}
+			this.rigidBody.addForceX(-this.speed)
 		}
 
 		if(inputManager.isKeyDown(key_D)) {
-			if(this.spawn != null) {
-				this.spawn.rb.addForceX(5)
-			}
-		}
-
-		if(this.spawn != null) {
-			// if(this.spawn.cc.HasCollided) {
-			// 	this.spawn.col.SetResource = "#00ff00";
-			// } else {
-			// 	this.spawn.col.SetResource = "#ff0000";
-			// }
+			this.rigidBody.addForceX(this.speed)
 		}
 	}
 	
