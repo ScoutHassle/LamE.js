@@ -96,29 +96,47 @@ class Collision {
 
     static SphereToBoxResponse(collider1, collider2, rigid1, rigid2) /* */ {
 
-        const spherePos = collider1.Parent.transform.PivotPositionV2;
+		const spherePos = collider1.Parent.transform.PivotPositionV2;
+        let closestPoint = Collision.ClosestPoint(spherePos, collider2);        
 
-        // For each "line" of the box do we intersect?
-        // Top - Really only one we care about atm.
-        let topOrigin = new vec2(collider2.minX, collider2.minY);
-        let topExtent = new vec2(collider2.maxX, collider2.minY);
+		let collisionNormal = vec2.Subtract(spherePos, closestPoint);
+        let distance = Math.sqrt(((closestPoint.x - spherePos.x) * (closestPoint.x - spherePos.x)) + ((closestPoint.y - spherePos.y) *  (closestPoint.y - spherePos.y)));
+        collisionNormal.normalize();
 
-		if(Collision.SphereToLine(collider1, topOrigin, topExtent)) {
-			// Coll top true!
-			collider1.Parent.transform.y = collider2.minY - (collider1.radius * 2);
-			if(rigid1 != null) {
-				rigid1.Velocity = new vec2(rigid1.velocity.x, 0.0);
-			}
-		}
+        let contactNormal = vec2.DeepCopy(collisionNormal);
+		contactNormal.fmultiply(collider1.radius - distance);
+        collider1.Parent.transform.move(contactNormal);
+        
+        // Do the forces now - Taken from sphere, don't think this is right.
+        // TO DO: Fix.
+        const relativeVector = new vec2(rigid1.velocity.x, rigid1.velocity.y);
+        const vDotN = collisionNormal.dot(relativeVector);
+        if(vDotN < 0) {
+            return
+        }
 
-        // IvVector3 w = mCenter - line.GetOrigin();
-        // float wsq = w.Dot(w);
-        // float proj = w.Dot(line.GetDirection());
-        // float rsq = mRadius*mRadius;
-        // float vsq = line.GetDirection().Dot(line.GetDirection());
-    
-        // // test length of difference vs. radius
-        // return ( vsq*wsq - proj*proj <= vsq*rsq );
+        const numerator = -(1.0)*vDotN;
+        let denominator = collisionNormal.dot(collisionNormal);
+        denominator = denominator * (1.0/1.0 + 1.0/1.0);
+        const j = numerator/denominator;
+
+        collisionNormal.fmultiply(j/1.0);
+        if(rigid1 != null) {
+            rigid1.velocity.add(collisionNormal);
+        }
+	}
+
+	static ClosestPoint(point, boxCollider) /* Vector 2*/ {
+
+		let x = point.x;
+		x = Math.max(x, boxCollider.minX);
+		x = Math.min(x, boxCollider.maxX);
+
+		let y = point.y;
+		y = Math.max(y, boxCollider.minY);
+		y = Math.min(y, boxCollider.maxY);
+
+		return new vec2(x, y);
 	}
 	
 	static SphereToLine(sphereCollider, origin, extent) /* bool */ {
@@ -137,5 +155,14 @@ class Collision {
 		}
 		
 		return false
+
+		// IvVector3 w = mCenter - line.GetOrigin();
+        // float wsq = w.Dot(w);
+        // float proj = w.Dot(line.GetDirection());
+        // float rsq = mRadius*mRadius;
+        // float vsq = line.GetDirection().Dot(line.GetDirection());
+    
+        // // test length of difference vs. radius
+        // return ( vsq*wsq - proj*proj <= vsq*rsq );
 	}
 }

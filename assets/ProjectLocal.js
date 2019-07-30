@@ -1,4 +1,4 @@
-{
+const localProjectJSON ={
 	"Project": {
 		"Scenes": [{
 			"Name": "Splash",
