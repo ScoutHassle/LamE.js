@@ -79,7 +79,7 @@ class Scene {
 					break;
 					
 				case "colour":
-					colourComponent.load(temp, components[i]);
+					ColourComponent.load(temp, components[i]);
 					break;
 					
 				case "text":

@@ -4,6 +4,8 @@
 // Running as a singleton so won't be using prototypal inheritance
 // for this object.
 
+const defaultCanvas = new vec2(800, 600);
+
 class SceneManager {
 	constructor() {
 		
@@ -31,7 +33,7 @@ class SceneManager {
 		// Default things we need to get running.
 		// Global Canvas
 		globalCanvas = new Canvas();
-		globalCanvas.createCanvas(800, 600);
+		globalCanvas.createCanvas(defaultCanvas.x, defaultCanvas.y);
 		
 		// Resource Manager
 		resourceManager.start();

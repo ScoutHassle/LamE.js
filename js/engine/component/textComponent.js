@@ -39,21 +39,21 @@ class TextComponent extends RenderComponent {
     render() {
         if(this.IsVisible)
 		{
-            var ctx = globalCanvas.context;		
-			ctx.save();
+            // var ctx = globalCanvas.context;		
+			// ctx.save();
 				
-			// Grab our textResource object
-			var resource = this.GetResource;				
-			ctx.font = resource.font;
-			ctx.fillStyle = resource.colour;
-			ctx.textAlign = resource.alignment;
+			// // Grab our textResource object
+			// var resource = this.GetResource;				
+			// ctx.font = resource.font;
+			// ctx.fillStyle = resource.colour;
+			// ctx.textAlign = resource.alignment;
 				
-			// Cache transform and draw
-			var transform = this.parent.transform;
-			ctx.fillText(this.text, transform.x, transform.y );
+			// // Cache transform and draw
+			// var transform = this.parent.transform;
+			// ctx.fillText(this.text, transform.x, transform.y );
 				
-			// Restore ctx to its old state
-			ctx.restore();
+			// // Restore ctx to its old state
+			// ctx.restore();
         }
     }
 }

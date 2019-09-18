@@ -5,6 +5,7 @@ class Transform {
 		this.y = iY;
 		this.width = iW;
 		this.height = iH;
+		this.rotation = 0.0;
 	}
 	
 	get Position() /* js: {x, y} */ {
@@ -28,6 +29,14 @@ class Transform {
 		this.y = v2.y;
 	}
 
+	get Rotation() /* float */ {
+		return this.rotation;
+	}
+
+	set Rotation(fAngle) /* */ {
+		this.rotation = fAngle;
+	}
+
 	moveX(iX) /* */ {
 		this.x += iX;
 	}
@@ -42,6 +51,6 @@ class Transform {
 	}
 
 	rotate(angle) /* */ {
-
+		this.rotation += angle;
 	}
 }

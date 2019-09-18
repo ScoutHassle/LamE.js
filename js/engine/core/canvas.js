@@ -18,6 +18,12 @@ class Canvas {
 		return c;
 	}
 
+	resize(iW, iH) /* */ {
+		this.canvas.width = iW;
+		this.canvas.height = iH;
+		this.clear();
+	}
+
 	findContext2d() /* */ {	
 		this.context = this.canvas.getContext("2d");
 	}

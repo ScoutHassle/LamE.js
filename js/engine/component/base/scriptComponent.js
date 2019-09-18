@@ -8,6 +8,10 @@ class ScriptComponent extends Component {
         
         this.scriptName = name;
     }
+
+    start() /* */ {
+        // default - called after the script is loaded so the parent is present.
+    }
     
     //-----------------------------------
     // Load from Json
@@ -20,7 +24,7 @@ class ScriptComponent extends Component {
     //      }
     //	}]
     //-----------------------------------
-    static load(temp, json) {
+    static load(temp, json) /* oftype ScriptComponent */ {
         
         var scriptObj = scriptBuilder(json.data[0]);
         
@@ -28,17 +32,19 @@ class ScriptComponent extends Component {
             
             scriptObj.parent = temp;
             temp.addComponent(scriptObj);
+
+            scriptObj.start();
         }
         
         return scriptObj;
     }
     
-    setScriptData(json) {
+    setScriptData(json) /* */ {
         
         // default
     }
     
-    shutdown() {
+    shutdown() /* */ {
         
         super.shutdown();
     }

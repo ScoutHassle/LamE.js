@@ -20,7 +20,11 @@ class ImageComponent extends RenderComponent {
 		{
             var ctx = globalCanvas.context;
             var transform = this.parent.transform;
-            ctx.drawImage(this.GetResource, transform.x, transform.y, transform.width, transform.height);
+            const centre =  transform.PivotPosition;
+
+            ctx.setTransform(1, 0, 0, 1, centre.x, centre.y);
+            ctx.rotate(transform.Rotation  * Math.PI / 180);
+            ctx.drawImage(this.GetResource,Math.floor(-transform.width * 0.5), Math.floor(-transform.height * 0.5), transform.width, transform.height);
         }
     }
 }
