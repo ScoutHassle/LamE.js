@@ -9,8 +9,8 @@ class ImageComponent extends RenderComponent {
     
     static load(temp, json) /* ImageComponent */ {
         
-       var path = json.data[0].file;
-	   var imgComp = new ImageComponent(temp, resourceManager.loadResource(path, resource_type_image));
+       const path = json.data[0].file;
+	   const imgComp = new ImageComponent(temp, resourceManager.loadResource(path, resource_type_image));
 	
 	   return imgComp;
     }
@@ -18,8 +18,8 @@ class ImageComponent extends RenderComponent {
     render() /* */ {
         if(this.IsVisible)
 		{
-            var ctx = globalCanvas.context;
-            var transform = this.parent.transform;
+            const ctx = globalCanvas.context;
+            const transform = this.parent.transform;
             const centre =  transform.PivotPosition;
 
             ctx.setTransform(1, 0, 0, 1, centre.x, centre.y);

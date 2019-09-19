@@ -1,6 +1,6 @@
 'use strict';
 
-var ComponentType = {
+const ComponentType = {
 	"Component_Base": 1,
 	"Component_Renderable": 2,
 	"Component_Input": 3,
