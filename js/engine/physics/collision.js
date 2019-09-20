@@ -7,7 +7,7 @@ class Collision {
 		// (C1 - C2)dot(C1 - C2) <= (r1 + r2)squared
 
 		// Get S1/S2 Pos at Pivot.
-		const distance = vec2.Subtract(s2.Parent.transform.PivotPositionV2, s1.Parent.transform.PivotPositionV2);
+		const distance = vec2.Subtract(s2.Parent.transform.PivotPosition, s1.Parent.transform.PivotPosition);
 		const distSquared = distance.dot(distance);  
 		const radiusSum = s1.radius + s2.radius;
 		if(distSquared <= (radiusSum * radiusSum)) {
@@ -18,7 +18,7 @@ class Collision {
 	}
 
 	static SphereToBox(sphere, box) /* bool */ {
-		const pos = sphere.Parent.transform.PivotPositionV2;
+		const pos = sphere.Parent.transform.PivotPosition;
 		const radius = sphere.radius;
 		// Are we inside of...
 		if( (pos.x + radius) > box.minX && /* left-side */
@@ -44,7 +44,7 @@ class Collision {
             responseShare = 1.0;
         }
 
-        const collisionNormal = vec2.Subtract(collider2.Parent.transform.PivotPositionV2, collider1.Parent.transform.PivotPositionV2);
+        const collisionNormal = vec2.Subtract(collider2.Parent.transform.PivotPosition, collider1.Parent.transform.PivotPosition);
         const penetration = (collider1.radius + collider2.radius) - collisionNormal.magnitude();
         collisionNormal.normalize();
 
@@ -96,7 +96,7 @@ class Collision {
 
     static SphereToBoxResponse(collider1, collider2, rigid1, rigid2) /* */ {
 
-		const spherePos = collider1.Parent.transform.PivotPositionV2;
+		const spherePos = collider1.Parent.transform.PivotPosition;
         let closestPoint = Collision.ClosestPoint(spherePos, collider2);        
 
 		let collisionNormal = vec2.Subtract(spherePos, closestPoint);
@@ -141,7 +141,7 @@ class Collision {
 	
 	static SphereToLine(sphereCollider, origin, extent) /* bool */ {
 
-		const spherePos = sphereCollider.Parent.transform.PivotPositionV2;
+		const spherePos = sphereCollider.Parent.transform.PivotPosition;
 
 		let w = new vec2(spherePos.x - origin.x, spherePos.y - origin.y);
         let wSquared = w.dot(w);
