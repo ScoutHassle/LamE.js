@@ -39,6 +39,7 @@ class Transform {
 
 	// World (local + parent)
 	get Position() /* js: {x, y} */ {
+		// TO DO: Make this a matrix and stop bodging the maths. Post Halloween project, shouldn't be required yet.
 		if(this.parent != null) {
 			/* Position accounting for parents rotation */
 			const s = Math.sin(this.parent.transform.Rotation * Math.PI/180);
@@ -61,7 +62,7 @@ class Transform {
 
 	get Rotation() /* float */ {
 		if(this.parent != null) {
-			return this.rotation + this.parent.transform.Rotation;
+			return this.parent.transform.Rotation - this.rotation;
 		}
 		return this.rotation;
 	}

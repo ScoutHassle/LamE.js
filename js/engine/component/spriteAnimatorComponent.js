@@ -126,13 +126,16 @@ class SpriteAnimation {
 		const centre =  transform.PivotPosition;
 
 		ctx.setTransform(direction, 0, 0, 1, centre.x, centre.y);
-		ctx.rotate(transform.Rotation  * Math.PI / 180);
+		
 
 		// let offset = 0;
 		let multiplier = 0.5;
 		 if(direction == AnimationDirection.AnimationDirection_Left) {
 		// 	offset = -transform.width * 0.5; // If we flip we need to shift it back into position.
 			multiplier = 0;
+			ctx.rotate(-transform.Rotation  * Math.PI / 180);
+		 } else {
+			ctx.rotate(transform.Rotation  * Math.PI / 180);
 		 }
 
 		ctx.drawImage(this.frames[idx] ,Math.floor(-transform.width *multiplier), Math.floor(-transform.height * 0.5), transform.width, transform.height);
