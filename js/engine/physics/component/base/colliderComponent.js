@@ -29,7 +29,7 @@ class ColliderComponent extends PhysicsComponent {
 		this.onCollisionActive = function(collider, collision){}; /* Function Ptr: (collider, collision) */
 		this.onCollisionExit = function(collider, collision){}; /* Function Ptr: (collider, collision) */
 
-		physics.addCollider(entity.uid, this)
+		physics.addCollider(entity.UID, this)
 		if(physics.debug) {
 			this.resource = "#00ff0077";
 		}

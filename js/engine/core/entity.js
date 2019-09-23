@@ -1,4 +1,4 @@
-var ExtendedComponentType = {
+let ExtendedComponentType = {
 	"Component_Colour":1,
 	"Component_Image":2,
 	"Component_Text":3,
@@ -6,12 +6,17 @@ var ExtendedComponentType = {
 Object.freeze(ExtendedComponentType);
 
 class Entity {
+	#uid;
 
 	constructor(uid, name, iX, iY, iW, iH) {
-		this.uid = uid;
+		this.#uid = uid;
 		this.name = name;
 		this.transform = new Transform(iX, iY, iW, iH);
 		this.components = [];
+	}
+
+	get UID() /* int */ {
+		return this.#uid;
 	}
 
 	addComponent(component) /* */ {
@@ -25,13 +30,13 @@ class Entity {
 	}
 
 	update() /* */ {
-		for(var i = 0; i < this.components.length; i++)	{
+		for(let i = 0; i < this.components.length; i++)	{
 			this.components[i].update();
 		}
 	}
 
 	render() /* */ {
-		for(var i = 0; i < this.components.length; i++)	{
+		for(let i = 0; i < this.components.length; i++)	{
 			if(this.components[i].render) {
 				this.components[i].render();
 			}
@@ -39,7 +44,7 @@ class Entity {
 	}
 
 	shutdown() /* */ {
-		for(var i = 0; i < this.components.length; i++)	{
+		for(let i = 0; i < this.components.length; i++)	{
 			this.components[i].shutdown();
 		}
 		
@@ -53,12 +58,25 @@ class Entity {
 
 	getComponentIndexOfBaseType(componentType) /* idx */ {
 	
-		for(var i = 0; i < this.components.length; i++)	{
+		for(let i = 0; i < this.components.length; i++)	{
 			if(this.components[i].type === componentType) {
 				return i;
 			}
 		}
 		
 		return -1;
+	}
+
+	getScriptableComponentByName(name) /* Component */ {
+		for(let i = 0; i < this.components.length; i++)	{
+			const component = this.components[i];
+			if(component.type === ComponentType.Component_Script) {
+				if(component.scriptName == name) {
+					return component;
+				}
+			}
+		}
+		
+		return null;
 	}
 }

@@ -69,7 +69,7 @@ class SpriteAnimatorComponent extends RenderComponent {
 						this.currentFrame = 0;
 					}
 					else {
-						if(defaultAnimation != "") {
+						if(this.defaultAnimation != "") {
 							this.playAnimation(this.defaultAnimation, this.currentDirection);
 						} else {
 							this.currentFrame = this.currentAnimation.GetFrameCount() - 1;

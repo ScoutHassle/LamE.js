@@ -59,6 +59,16 @@ class Scene {
 		return this.entityList[idx];
 	}
 
+	getEntityWithName(name) /* Entity */ {
+		for(let i = 0; i < this.entityList.length; i++)	{
+			if(this.entityList[i].name == name) {
+				return this.entityList[i];
+			}
+		}
+
+		return null;
+	}
+
 	// SceneManager and loading functionality
 	load(json) /* */ {
 		const entitys = json['Entitys'];

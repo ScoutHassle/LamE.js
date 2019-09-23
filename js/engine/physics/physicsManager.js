@@ -118,7 +118,7 @@ class PhysicsManager {
 
 					if(obj2.collider != null) {
 						if(obj1.collider.intersect(obj2.collider)) {
-							const collisionName = obj1.collider.parent.uid + "|" + obj2.collider.parent.uid;
+							const collisionName = obj1.collider.parent.UID + "|" + obj2.collider.parent.UID;
 
 							let collObj = this.collisionObjects.get(collisionName);
 							if(collObj != undefined) {
