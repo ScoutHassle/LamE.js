@@ -32,14 +32,14 @@ class SphereColliderComponent extends ColliderComponent {
     DebugRender() {
 
         const ctx = globalCanvas.context;
-        ctx.fillStyle = this.GetResource;
             
         const transform = this.parent.transform;
         const pos = transform.PivotPosition;
 
+        ctx.setTransform(1, 0, 0, 1, 0, 0);
         ctx.beginPath();
         ctx.arc(pos.x, pos.y, this.radius, 0, 2 * Math.PI);
-        ctx.fillStyle = "#00ff0077"
+        ctx.fillStyle = this.resource;
         ctx.fill();
     }
 }

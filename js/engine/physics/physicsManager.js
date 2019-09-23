@@ -75,6 +75,27 @@ class PhysicsManager {
 				value.collider.prePhysicsUpdate();
 			}
 		});
+
+		// Update any collisions
+		let clearList = [];
+		this.collisionObjects.forEach(function(value, key){
+			switch(value.collisionEvent) {
+				// Set these to expire at the end of the frame.
+				case  CollisionEvent.Collision_Enter:
+				case  CollisionEvent.Collision_Active:
+					value.collisionEvent =  CollisionEvent.Collision_Expire;
+					break;
+
+				case CollisionEvent.Collision_Exit:
+					// Clean up
+					clearList.push(key);
+					break;
+			}
+		});
+
+		for(let i = 0; i < clearList.length; i++) {
+			this.collisionObjects.delete(clearList[i]);
+		}
 	}
 
 	physicsUpdateStep() /* */ {
@@ -98,8 +119,16 @@ class PhysicsManager {
 					if(obj2.collider != null) {
 						if(obj1.collider.intersect(obj2.collider)) {
 							const collisionName = obj1.collider.parent.uid + "|" + obj2.collider.parent.uid;
-							const collObj = new CollisionObject(obj1, obj2);
+
+							let collObj = this.collisionObjects.get(collisionName);
+							if(collObj != undefined) {
+								collObj.collisionEvent = CollisionEvent.Collision_Active;
+								collObj.CollisionActive();
+								continue;
+							}
+							collObj = new CollisionObject(obj1, obj2);
 							this.collisionObjects.set(collisionName, collObj);
+							collObj.CollisionEnter();
 						}
 					}
 				}
@@ -107,42 +136,52 @@ class PhysicsManager {
 		}
 		
 		// Resolve collisions
+		const clearList = [];
 		this.collisionObjects.forEach(function(collision, key) {
 
-			let responseFunction = null;
-			switch(collision.physObj1.collider.shape) {
+			switch(collision.collisionEvent) { 
+				case CollisionEvent.Collision_Enter:
+				case CollisionEvent.Collision_Active:
+					let responseFunction = null;
+					switch(collision.physObj1.collider.shape) {
 
-				case ColliderShape.ColliderShape_Sphere:
-					switch(collision.physObj2.collider.shape) {
 						case ColliderShape.ColliderShape_Sphere:
-							responseFunction = Collision.SphereToSphereResponse;
+							switch(collision.physObj2.collider.shape) {
+								case ColliderShape.ColliderShape_Sphere:
+									responseFunction = Collision.SphereToSphereResponse;
+									break;
+
+								case ColliderShape.ColliderShape_Box:
+									responseFunction = Collision.SphereToBoxResponse;
+									break;
+							}
 							break;
 
 						case ColliderShape.ColliderShape_Box:
-							responseFunction = Collision.SphereToBoxResponse;
+							switch(collision.physObj2.collider.shape) {
+								case ColliderShape.ColliderShape_Sphere:
+									responseFunction = Collision.BoxToSphereResponse;
+									break;
+			
+								case ColliderShape.ColliderShape_Box:
+								break;
+							}
 							break;
+					}
+
+					if(responseFunction != null) {
+						responseFunction(collision.physObj1.collider, collision.physObj2.collider, collision.physObj1.rigidBody, collision.physObj2.rigidBody);
 					}
 					break;
 
-            	case ColliderShape.ColliderShape_Box:
-					switch(collision.physObj2.collider.shape) {
-						case ColliderShape.ColliderShape_Sphere:
-							responseFunction = Collision.BoxToSphereResponse;
-							break;
-	
-						case ColliderShape.ColliderShape_Box:
-						break;
-					}
+				case CollisionEvent.Collision_Expire:
+					// Same again, think this needs resolving AFTER the foreach.
+					collision.CollisionExit();
 					break;
-			}
-
-			if(responseFunction != null) {
-				responseFunction(collision.physObj1.collider, collision.physObj2.collider, collision.physObj1.rigidBody, collision.physObj2.rigidBody);
 			}
 		});
 
-		// TO DO: Track these per frame - remove when needed.
-		this.collisionObjects.clear();
+		
 	}
 
 	postPhysicsUpdateStep() /* */ {
