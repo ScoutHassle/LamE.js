@@ -20,6 +20,7 @@ class Entity {
 
 	addComponent(component) /* */ {
 		if(component != null) {
+			component.parent = this;
 			this.components.push(component);
 		}
 	}

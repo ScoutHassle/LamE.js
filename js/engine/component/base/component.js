@@ -15,7 +15,6 @@ class Component {
     constructor(type, entity) {
         
         this.type = type;
-        this.parent = entity;
         if(entity != null)  entity.addComponent(this);
     }
     

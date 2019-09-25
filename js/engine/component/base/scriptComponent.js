@@ -9,10 +9,6 @@ class ScriptComponent extends Component {
         this.scriptName = name;
     }
 
-    start() /* */ {
-        // default - called after the script is loaded so the parent is present.
-    }
-    
     //-----------------------------------
     // Load from Json
     // Format:
@@ -33,10 +29,14 @@ class ScriptComponent extends Component {
             scriptObj.parent = temp;
             temp.addComponent(scriptObj);
 
-            scriptObj.start();
+            scriptObj.awake();
         }
         
         return scriptObj;
+    }
+
+    awake() /* */ {
+        // default - called after the script is loaded so the parent is present.
     }
     
     setScriptData(json) /* */ {
