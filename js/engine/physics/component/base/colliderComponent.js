@@ -17,13 +17,12 @@ Object.freeze(CollisionEvent);
 // Whilst ColliderComponent is a base type it is also an extension of the
 // PhysicsComponent in order to get the PhysicsUpdate methods.
 class ColliderComponent extends PhysicsComponent {
-	#tag;
 
 	constructor(entity, colliderShape) {
 		super(entity);
 		this.shape = colliderShape;
 		this.hasCollided = false;
-		this.#tag = "";
+		this.tag = ""; // TO DO: this.#tag - When private is standardised.
 
 		this.onCollisionEnter = function(collider, collision){}; /* Function Ptr: (collider, collision) */
 		this.onCollisionActive = function(collider, collision){}; /* Function Ptr: (collider, collision) */
@@ -44,11 +43,11 @@ class ColliderComponent extends PhysicsComponent {
 	}
 
 	get Tag() /* string */ {
-		return this.#tag;
+		return this.tag;
 	}
 
 	set Tag(name) /* */ {
-		this.#tag = name;
+		this.tag = name;
 	}
 
 	intersect(collider) /* bool */ {

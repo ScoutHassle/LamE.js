@@ -6,17 +6,16 @@ let ExtendedComponentType = {
 Object.freeze(ExtendedComponentType);
 
 class Entity {
-	#uid;
 
 	constructor(uid, name, iX, iY, iW, iH) {
-		this.#uid = uid;
+		this.uid = uid; // TO DO: this.#uid - When private is standardised.
 		this.name = name;
 		this.transform = new Transform(iX, iY, iW, iH);
 		this.components = [];
 	}
 
 	get UID() /* int */ {
-		return this.#uid;
+		return this.uid;
 	}
 
 	addComponent(component) /* */ {
