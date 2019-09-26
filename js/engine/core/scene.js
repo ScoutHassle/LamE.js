@@ -78,8 +78,11 @@ class Scene {
 		}
 	}
 
-	createEntityFromJson(json) /* */ {			
-		const temp = this.createEntity(json.name, json.x, json.y, json.w, json.h);
+	createEntityFromJson(json) /* */ {
+
+		// Lets get the values from our resolution.
+		const transformValues = globalCanvas.ResolveTransformValues(json.x, json.y, json.w, json.h);
+		const temp = this.createEntity(json.name, transformValues.x, transformValues.y, transformValues.w, transformValues.h);
 		
 		const components = json.components;
 		for(let i = 0; i < components.length; i++) {
