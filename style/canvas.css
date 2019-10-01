@@ -1,12 +1,11 @@
-canvas
-{
+canvas {
 	border: 0px;
 	background-color: #000000;
 	padding: 0 0 0 0;
+	position: absolute;
 }
 
-body
-{
+body {
 	margin: 0 0 0 0;
 	background-color: #000000;
 }
@@ -17,4 +16,20 @@ body
 
 @font-face {
 	font-family: 'Arial';
+}
+
+#ui {
+	position: relative;
+}
+
+.uiObject {
+	position: absolute;
+}
+
+.uiPanel {
+	position: absolute;
+}
+
+.uiButton {
+	position: absolute;
 }
