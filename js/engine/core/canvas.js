@@ -58,6 +58,11 @@ class Canvas {
 		this.clear();
 	}
 
+	refreshCanvas() {
+		this.canvas = document.getElementById("MainCanvas");
+		this.findContext2d();
+	}
+
 	findContext2d() /* */ {	
 		this.context = this.canvas.getContext("2d");
 	}
