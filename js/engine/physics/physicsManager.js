@@ -23,7 +23,7 @@ class PhysicsManager {
 		this.minVelocity = 0.75;
 
 		// WARNING: Using Debug?
-		this.debug = true;
+		this.debug = false;
 	}
 
 	get Gravity() /* Vec2 */ {
