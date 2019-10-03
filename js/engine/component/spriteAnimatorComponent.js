@@ -72,7 +72,7 @@ class SpriteAnimatorComponent extends RenderComponent {
 						if(this.defaultAnimation != "") {
 							this.playAnimation(this.defaultAnimation, this.currentDirection);
 						} else {
-							this.currentFrame = this.currentAnimation.GetFrameCount() - 1;
+							this.currentFrame = this.currentAnimation.FrameCount - 1;
 							this.active = false; // Stop the animator running.
 						}
 					}

@@ -61,6 +61,10 @@ class PhysicsManager {
 		physObj.collider = collider;
 		this.physicsObjects.set(entityUID, physObj)
 	}
+
+	removeCollider(entityUID) /* */ {
+		this.physicsObjects.delete(entityUID);
+	}
 	
 	update() /* */ {
 		this.prePhysicsUpdateStep();

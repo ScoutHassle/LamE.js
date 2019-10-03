@@ -30,6 +30,15 @@ class Scene {
 		return e;
 	}
 
+	removeEntity(uid) {
+		for(let i = 0; i < this.entityList.length; i++)	{
+			if(this.entityList[i].uid == uid) {
+				this.entityList[i].shutdown();
+				this.entityList.splice(i, 1);
+			}
+		}
+	}
+
 	clearEntityList() /* */ {		
 		for(let i = 0; i < this.entityList.length; i++)	{
 			this.entityList[i].shutdown();
