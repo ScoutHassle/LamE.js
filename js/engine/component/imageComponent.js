@@ -10,7 +10,11 @@ class ImageComponent extends RenderComponent {
     static load(temp, json) /* ImageComponent */ {
         
        const path = json.data[0].file;
-	   const imgComp = new ImageComponent(temp, resourceManager.loadResource(path, resource_type_image));
+       const imgComp = new ImageComponent(temp, resourceManager.loadResource(path, resource_type_image));
+       
+       if(json.data[0].layer != null) {
+           imgComp.RenderLayer = json.data[0].layer;
+       }
 	
 	   return imgComp;
     }

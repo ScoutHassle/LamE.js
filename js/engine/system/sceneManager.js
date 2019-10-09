@@ -78,7 +78,7 @@ class SceneManager {
 	render()  /* */ {
 		
 		globalCanvas.clear();
-		this.currentScene.render();
+		renderManager.render();
 
 		physics.DebugRender();
 	}
