@@ -42,9 +42,9 @@ var inputManager = {
 		//if(platform === platform_web || platform === platform_pc)
 		//{
 			// Mouse controls
-			globalCanvas.canvas.addEventListener('mousedown', 	this.onMouseDown, 	false);
-			globalCanvas.canvas.addEventListener('mousemove', 	this.onMouseMove, 	false);
-			globalCanvas.canvas.addEventListener('mouseup', 	this.onMouseUp, 	false);
+			document.addEventListener('mousedown', 	this.onMouseDown, 	false);
+			document.addEventListener('mousemove', 	this.onMouseMove, 	false);
+			document.addEventListener('mouseup', 	this.onMouseUp, 	false);
         
         // Keys
         document.addEventListener('keydown',     this.onKeyDown,     false);
