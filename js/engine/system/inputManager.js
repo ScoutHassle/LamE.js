@@ -30,26 +30,26 @@ var inputManager = {
 	//-----------------------------
 	start : function() {
 		
-		/*if(platform === platform_mobile)			
-		{
-			// Add touch controls!
-			sceneManager.canvas.addEventListener('touchstart', this.onTouchStart, false);
-			sceneManager.canvas.addEventListener('touchmove', this.onTouchMove, false);
-			sceneManager.canvas.addEventListener('touchend', this.onTouchEnd, false);
-			sceneManager.canvas.addEventListener('touchcancel', this.onTouchCancel, false);
-		}*/
+		// if(platform === platform_mobile)			
+		// {
+		// 	// Add touch controls!
+		// 	document.addEventListener('touchstart', this.onTouchStart, false);
+		// 	document.addEventListener('touchmove', this.onTouchMove, false);
+		// 	document.addEventListener('touchend', this.onTouchEnd, false);
+		// 	document.addEventListener('touchcancel', this.onTouchCancel, false);
+		// }
 		
-		//if(platform === platform_web || platform === platform_pc)
-		//{
+		// if(platform === platform_web || platform === platform_pc)
+		{
 			// Mouse controls
 			document.addEventListener('mousedown', 	this.onMouseDown, 	false);
 			document.addEventListener('mousemove', 	this.onMouseMove, 	false);
 			document.addEventListener('mouseup', 	this.onMouseUp, 	false);
         
-        // Keys
-        document.addEventListener('keydown',     this.onKeyDown,     false);
-       document.addEventListener('keyup',       this.onKeyUp,       false);
-		//}
+       		// Keys
+			document.addEventListener('keydown',     this.onKeyDown,     false);
+			document.addEventListener('keyup',       this.onKeyUp,       false);
+		}
 	},
 	
 	update : function() {
