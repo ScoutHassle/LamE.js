@@ -91,9 +91,9 @@ var inputManager = {
 		var touches = e.changedTouches;
 		for(var t = 0; t < touches.length; t++)
 		{
-			for(var i = 0; i < this.inputComponentList.length; i++)
+			for(var i = 0; i < inputManager.inputComponentList.length; i++)
 			{
-				if(this.inputComponentList[i].onTouchStart(touches[t]))
+				if(inputManager.inputComponentList[i].onTouchStart(touches[t]))
 				{
 					// Consumed.
 					break;
@@ -110,9 +110,9 @@ var inputManager = {
 		var touches = e.changedTouches;
 		for(var t = 0; t < touches.length; t++)
 		{
-			for(var i = 0; i < this.inputComponentList.length; i++)
+			for(var i = 0; i < inputManager.inputComponentList.length; i++)
 			{
-				if(this.inputComponentList[i].onTouchMove(touches[t]))
+				if(inputManager.inputComponentList[i].onTouchMove(touches[t]))
 				{
 					// Consumed.
 					break;
@@ -134,9 +134,9 @@ var inputManager = {
 		var touches = e.changedTouches;
 		for(var t = 0; t < touches.length; t++)
 		{
-			for(var i = 0; i < this.inputComponentList.length; i++)
+			for(var i = 0; i < inputManager.inputComponentList.length; i++)
 			{
-				if(this.inputComponentList[i].onTouchEnd(t))
+				if(inputManager.inputComponentList[i].onTouchEnd(t))
 				{
 					// Consumed.
 					break;
