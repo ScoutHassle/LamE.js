@@ -83,11 +83,7 @@ var inputManager = {
 	//-----------------------------
 	// Event Handlers
 	//-----------------------------
-	onTouchStart : function(e)
-	{
-		// To fix an android based issue.
-		e.preventDefault();
-		
+	onTouchStart : function(e) {		
 		var touches = e.changedTouches;
 		for(var t = 0; t < touches.length; t++)
 		{
@@ -102,11 +98,7 @@ var inputManager = {
 		}
 	},
 	
-	onTouchMove : function(e)
-	{
-		// To fix an android based issue.
-		e.preventDefault();
-		
+	onTouchMove : function(e) {		
 		var touches = e.changedTouches;
 		for(var t = 0; t < touches.length; t++)
 		{
@@ -121,15 +113,10 @@ var inputManager = {
 		}
 	},
 	
-	onTouchCancel : function(e)
-	{
-		e.preventDefault();
+	onTouchCancel : function(e)	{
 	},
 	
-	onTouchEnd : function(e)
-	{
-		// Yep, android.
-		e.preventDefault();
+	onTouchEnd : function(e) {
 		
 		var touches = e.changedTouches;
 		for(var t = 0; t < touches.length; t++)
