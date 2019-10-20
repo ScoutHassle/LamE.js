@@ -30,16 +30,16 @@ var inputManager = {
 	//-----------------------------
 	start : function() {
 		
-		// if(platform === platform_mobile)			
-		// {
+		 if(platform === platform_mobile)			
+		 {
 		// 	// Add touch controls!
-		// 	document.addEventListener('touchstart', this.onTouchStart, false);
-		// 	document.addEventListener('touchmove', this.onTouchMove, false);
-		// 	document.addEventListener('touchend', this.onTouchEnd, false);
-		// 	document.addEventListener('touchcancel', this.onTouchCancel, false);
-		// }
+		 	document.addEventListener('touchstart', this.onTouchStart, false);
+		 	document.addEventListener('touchmove', this.onTouchMove, false);
+		 	document.addEventListener('touchend', this.onTouchEnd, false);
+		 	document.addEventListener('touchcancel', this.onTouchCancel, false);
+		 }
 		
-		// if(platform === platform_web || platform === platform_pc)
+		 if(platform === platform_web || platform === platform_pc)
 		{
 			// Mouse controls
 			document.addEventListener('mousedown', 	this.onMouseDown, 	false);
