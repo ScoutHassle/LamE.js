@@ -136,7 +136,7 @@ var inputManager = {
 		{
 			for(var i = 0; i < inputManager.inputComponentList.length; i++)
 			{
-				if(inputManager.inputComponentList[i].onTouchEnd(t))
+				if(inputManager.inputComponentList[i].onTouchEnd(touches[t]))
 				{
 					// Consumed.
 					break;
