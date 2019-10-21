@@ -30,7 +30,7 @@ class RenderManager {
 	}
 
 	swapLayer(renderObj, uid, oldLayer, newLayer) /* */ {
-		this.removeRenderable(oldLayer, uid);
+		this.removeRenderable(uid, oldLayer);
 		this.buckets[newLayer].set(uid, renderObj);
 	}
 

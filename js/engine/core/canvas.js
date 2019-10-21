@@ -39,6 +39,13 @@ class Canvas {
 		return this.canvas.height;
 	}
 
+	ResolveVectorValues(iX, iY) /* js {x, y} */ {
+		iX = (iX / this.baseWidth) * this.canvas.width;
+		iY = (iY / this.baseHeight) * this.canvas.height;
+
+		return {x: iX, y: iY};
+	}
+
 	ResolveTransformValues(iX, iY, iW, iH) /* js {x, y, w, h} */ {
 		iX = (iX / this.baseWidth) * this.canvas.width;
 		iY = (iY / this.baseHeight) * this.canvas.height;
