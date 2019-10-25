@@ -12,6 +12,9 @@ class SceneManager {
 		this.projectData = null; /* json */
 		this.currentScene = null; /* Scene */
 		this.currentSceneIndex = 1;
+
+		this.paused = false;
+		this.pausedUpdate = null;
 	}
 
 	changeScene(index) /* */ {
@@ -63,13 +66,19 @@ class SceneManager {
 	update() /* */ {
 		
 		// Input first (so it is handled during the update)
-		inputManager.update();
+		inputManager.update(); // We can still make inputs whilst paused.
 		
-		// Now the scene handling
-		this.currentScene.update();
+		if(!this.paused) {
+			// Now the scene handling
+			this.currentScene.update();
 
-		// Global PhysicsManager.
-		physics.update();
+			// Global PhysicsManager.
+			physics.update();
+		} else {
+			if(this.pausedUpdate != null) {
+				this.pausedUpdate();
+			}
+		}
 		
 		// Finally draw...
 		this.render();
@@ -81,6 +90,15 @@ class SceneManager {
 		renderManager.render();
 
 		physics.DebugRender();
+	}
+
+	pause(updateFunc) {
+		this.paused = true;
+		this.pausedUpdate = updateFunc;
+	}
+
+	unpause() {
+		this.paused = false;
 	}
 	
 	getSceneData(idx) /* json */ {
