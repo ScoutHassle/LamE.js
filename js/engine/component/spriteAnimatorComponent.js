@@ -11,6 +11,7 @@ class SpriteAnimatorComponent extends RenderComponent {
 
 		this.animations = new Map(); /* Map: SpriteAnimation */
 		this.active = false;
+		this.forceRender = false;
 
 		this.defaultAnimation = "";
 		this.currentAnimation = null; /* SpriteAnimation */
@@ -89,7 +90,7 @@ class SpriteAnimatorComponent extends RenderComponent {
 	}
 
 	render() /* */ {
-		if(this.active)	{
+		if(this.active || this.forceRender)	{
 			this.currentAnimation.render(this.parent.transform, this.currentFrame, this.currentDirection);
 		}
 	}
