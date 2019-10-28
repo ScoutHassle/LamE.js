@@ -65,6 +65,12 @@ class PhysicsManager {
 	removeCollider(entityUID) /* */ {
 		this.physicsObjects.delete(entityUID);
 	}
+
+	// Basically a kill all between senes. Just purges the whole system.
+	purge() /* */ {
+		this.physicsObjects.clear();
+		this.collisionObjects.clear();
+	}
 	
 	update() /* */ {
 		this.prePhysicsUpdateStep();

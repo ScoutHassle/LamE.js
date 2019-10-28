@@ -29,6 +29,12 @@ class RenderManager {
 		this.buckets[layer].delete(uid);
 	}
 
+	purge() /* */ {
+		for(let i = 0; i < RenderLayer.RenderLayer_Count; i++) {
+			this.buckets[i].clear();
+		}
+	}
+
 	swapLayer(renderObj, uid, oldLayer, newLayer) /* */ {
 		this.removeRenderable(uid, oldLayer);
 		this.buckets[newLayer].set(uid, renderObj);
