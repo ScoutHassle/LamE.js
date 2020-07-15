@@ -16,8 +16,8 @@ class matrix3 {
 
         // Matrix 3x3
         this.m = [  
-            1, 0, fX,
-            0, 1, fY,
+            1, 0, iX,
+            0, 1, iY,
             0, 0, 1
         ];
     }
