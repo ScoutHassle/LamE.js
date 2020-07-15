@@ -12,7 +12,7 @@ Object.freeze(m3);
 
 class matrix3 {
     
-    constructor(fX, fY) {
+    constructor(iX, iY) {
 
         // Matrix 3x3
         this.m = [  
@@ -22,22 +22,22 @@ class matrix3 {
         ];
     }
 
-    translateX(fX) /* */ {
-        this.m[m3.X] += fX;
+    translateX(iX) /* */ {
+        this.m[m3.X] += iX;
     }
 
-    translateY(fY) /* */ {
-        this.m[m3.Y] += fY;
+    translateY(iY) /* */ {
+        this.m[m3.Y] += iY;
     }
 
-    translate(fX, fY) /* */ {
-        this.m[m3.X] += fX;
-        this.m[m3.Y] += fY;
+    translate(iX, iY) /* */ {
+        this.m[m3.X] += iX;
+        this.m[m3.Y] += iY;
     }
 
-    setPosition(fX, fY) /* */ {
-        this.m[m3.X] = fX;
-        this.m[m3.Y] = fY;
+    setPosition(iX, iY) /* */ {
+        this.m[m3.X] = iX;
+        this.m[m3.Y] = iY;
     }
 
     scaleX(fX) /* */ {

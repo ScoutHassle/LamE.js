@@ -1,8 +1,7 @@
 class Transform {
 	
 	constructor(iX, iY, iW, iH) {
-		this.x = iX;
-		this.y = iY;
+		this.matrix = new matrix3(iX, iY);
 		this.width = iW;
 		this.height = iH;
 		this.rotation = 0.0;
@@ -39,20 +38,9 @@ class Transform {
 
 	// World (local + parent)
 	get Position() /* js: {x, y} */ {
-		// TO DO: Make this a matrix and stop bodging the maths. Post Halloween project, shouldn't be required yet.
-		if(this.parent != null) {
-			/* Position accounting for parents rotation */
-			const s = Math.sin(this.parent.transform.Rotation * Math.PI/180);
-			const c = Math.cos(this.parent.transform.Rotation * Math.PI/180);
-
-			const local = this.LocalPivotPosition;
-			const x = (local.x * c - local.y * s) - (this.width * 0.5);
-			const y = local.x * s + local.y * c - (this.height * 0.5);
-			
-			const pos = this.parent.transform.PivotPosition;
-			return {x: x + pos.x, y: y + pos.y};
-		}
-		return new vec2(this.x, this.y);
+		// TO DO: Parenting back in.
+		// For now just use position.
+		return new vec2(this.matrix.m[m3.X], this.matrix.m[m3.Y]);
 	}
 
 	get PivotPosition() /* Vector2 */ {
@@ -61,19 +49,19 @@ class Transform {
 	}
 
 	get Rotation() /* float */ {
-		if(this.parent != null) {
-			return this.parent.transform.Rotation - this.rotation;
-		}
+		// if(this.parent != null) {
+		// 	return this.parent.transform.Rotation - this.rotation;
+		// }
 		return this.rotation;
 	}
 
 	// Locals
 	get LocalPosition()  /* Vector2 */ {
-		return new vec2(this.x, this.y);
+		return new vec2(this.matrix.m[m3.X], this.matrix.m[m3.Y]);
 	}
 
 	get LocalPivotPosition() /* Vector2 */ {
-		return new vec2(this.x + (this.width*0.5), this.y + (this.height));
+		return new vec2(this.matrix.m[m3.X] + (this.width*0.5),this.matrix.m[m3.Y] + (this.height));
 	}
 
 	get LocalRotation() /* float */ {
@@ -85,16 +73,15 @@ class Transform {
 	}
 
 	moveX(iX) /* */ {
-		this.x += iX;
+		this.matrix.translateX(iX);
 	}
 
 	moveY(iY) /* */ {
-		this.y += iY;
+		this.matrix.translateY(iY);
 	}
 
 	move(v2) /* */ {
-		this.x += v2.x;
-		this.y += v2.y;
+		this.matrix.translate(v2.x, v2.y);
 	}
 
 	rotate(angle) /* */ {
