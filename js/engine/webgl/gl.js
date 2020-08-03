@@ -1,0 +1,6 @@
+class glContext {
+
+    constructor() {
+
+    }
+}

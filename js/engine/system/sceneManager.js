@@ -35,8 +35,10 @@ class SceneManager {
 	initialise() /* */ {
 		// Default things we need to get running.
 		// Global Canvas
-		globalCanvas = new Canvas();
+		//globalCanvas = new Canvas();
+		globalCanvas = new GLCanvas();
 		globalCanvas.createCanvas(defaultCanvas.x, defaultCanvas.y);
+		
 		
 		// Resource Manager
 		resourceManager.start();

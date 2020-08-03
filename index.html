@@ -7,6 +7,7 @@
 
 	<!-- Engine Includes -->
 	<!-- Early/Shared -->
+	<script src="js/engine/utility/matrix3.js"></script>
 	<script src="js/engine/utility/vec2.js"></script>
 
 	<!-- Engine//Components -->
@@ -24,6 +25,7 @@
 	<script src="js/engine/component/imageComponent.js"></script>
 	<script src="js/engine/component/textComponent.js"></script>
 	<script src="js/engine/component/colourComponent.js"></script>
+	<script src="js/engine/component/spriteAnimatorComponent.js"></script>
 	<!-- Input -->
 	<script src="js/engine/component/buttonComponent.js"></script>
 	<!-- Physics -->
@@ -33,15 +35,11 @@
 	<script src="js/engine/physics/component/planeColliderComponent.js"></script>
 	
     <!-- Required before all additional scripts -->
-    <script src="js/engine/utility/scriptBuilder.js"></script>
-    
-     <!-- Game -->
-    <script src="js/game/player.js"></script>
-	<script src="js/game/skipSplash.js"></script>
-	<script src="js//game/obstacle.js"></script>
-	<script src="js/game/ground.js"></script>
+	<script src="js/engine/utility/scriptBuilder.js"></script>
 	
 	<!-- Core -->
+	<script src="js/engine/system/renderManager.js"></script>
+	<script src="js/engine/webgl/glcanvas.js"></script>
 	<script src="js/engine/core/canvas.js"></script>
 	<script src="js/engine/core/transform.js"></script>
 	<script src="js/engine/core/entity.js"></script>
@@ -64,6 +62,7 @@
 </head>
 
 <body onload="startEngine()">
+	
 </body>
 
 </html>
