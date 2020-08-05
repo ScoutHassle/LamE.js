@@ -5,6 +5,7 @@
 // for this object.
 
 const defaultCanvas = new vec2(1280, 720);
+let glcontext = null;
 
 class SceneManager {
 	constructor() {
@@ -36,9 +37,8 @@ class SceneManager {
 		// Default things we need to get running.
 		// Global Canvas
 		//globalCanvas = new Canvas();
-		globalCanvas = new GLCanvas();
-		globalCanvas.createCanvas(defaultCanvas.x, defaultCanvas.y);
-		
+		glcontext = new GLContext();
+		glcontext.Initialise(defaultCanvas.x, defaultCanvas.y);		
 		
 		// Resource Manager
 		resourceManager.start();
@@ -88,8 +88,9 @@ class SceneManager {
 
 	render()  /* */ {
 		
-		globalCanvas.clear();
-		renderManager.render();
+		glcontext.Render();
+		//globalCanvas.clear();
+		//renderManager.render();
 
 		physics.DebugRender();
 	}
