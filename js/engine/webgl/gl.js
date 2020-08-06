@@ -3,7 +3,8 @@ class GLContext {
     constructor() {
         this.gl = null;
         this.canvas = new GLCanvas();
-        this.shaderController = new ShaderManager();
+		this.shaderController = new ShaderManager();
+		this.camera = new Camera();
 
 		// SORT THIS
 		this.mesh = new Mesh();
@@ -23,7 +24,8 @@ class GLContext {
             // TODO: Logging.
             return false;
 		}
-		
+
+		this.camera.BuildProjectionMatrix(this.canvas.baseWidth, this.canvas.baseHeight);		
 		
 		this.mesh.LoadMesh(this.gl);
 
@@ -41,17 +43,7 @@ class GLContext {
 		
 		//-------------------------------
         // TO DO CAMERA
-        const fieldOfView = 45 * Math.PI / 180;   // in radians
-		const aspect = gl.canvas.clientWidth / gl.canvas.clientHeight;
-		const zNear = 0.1;
-		const zFar = 100.0;
-		const projectionMatrix = mat4.create();
-
-		mat4.perspective(projectionMatrix,
-			fieldOfView,
-			aspect,
-			zNear,
-			zFar);
+       this.camera.UpdateView();
 		//-------------------------------
 	
 
@@ -79,21 +71,21 @@ class GLContext {
 		}
 
 		gl.uniformMatrix4fv(
-			gl.getUniformLocation(activeShader, 'uProjectionMatrix'),
+			gl.getUniformLocation(activeShader, 'uViewProjMatrix'),
 			false,
-			projectionMatrix);
+			this.camera.viewProjMatrix);
 		//-------------------------------
 
 		
 		//-------------------------------
 		// Do render
-		const modelViewMatrix = mat4.create();
-		mat4.translate(modelViewMatrix,	modelViewMatrix, [-0.0, 0.0, -6.0]);
+		const modelMatrix = mat4.create();
+		mat4.translate(modelMatrix,	modelMatrix, [-0.0, 0.0, -6.0]);
 
 		gl.uniformMatrix4fv(
-			gl.getUniformLocation(activeShader, 'uModelViewMatrix'),
+			gl.getUniformLocation(activeShader, 'uWorldMatrix'),
 			false,
-			modelViewMatrix);
+			modelMatrix);
 	
 
 		{

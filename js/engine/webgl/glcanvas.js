@@ -4,7 +4,6 @@ class GLCanvas {
         this.canvas = null;
 
         // Used for scaling.
-		this.aspect = 0;
 		this.baseWidth = 0;
 		this.baseHeight = 0;
     }
@@ -13,7 +12,6 @@ class GLCanvas {
 
         this.baseWidth = iW;
         this.baseHeight = iH;
-        this.aspect = iW / iH;
 
         let c = document.createElement("canvas");
         c.id = "glCanvas";
