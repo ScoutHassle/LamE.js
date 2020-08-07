@@ -1,11 +1,11 @@
 const vsSource = `
-    attribute vec4 aVertexPosition;
+    attribute vec4 vertPos;
 
-    uniform mat4 uWorldMatrix;
-    uniform mat4 uViewProjMatrix;
+    uniform mat4 worldMat;
+    uniform mat4 viewProjMat;
 
     void main() {
-      gl_Position = uViewProjMatrix * uWorldMatrix * aVertexPosition;
+      gl_Position = viewProjMat * worldMat * vertPos;
     }
   `;
 

@@ -1,10 +1,9 @@
-
 const VertexShader = {
 	"Default": 0,
 };
 Object.freeze(VertexShader);
 const vertShaderSources = [
-	vsSource, // Default
+	vsSource, // Defulat
 ];
 
 const FragmentShader = {
@@ -20,9 +19,19 @@ const ShaderPrograms = {
 };
 Object.freeze(ShaderPrograms);
 const shaderPrograms = [
-	{v: VertexShader.Default, f: FragmentShader.Default}, // Default
+	{
+		v: VertexShader.Default, 
+		f: FragmentShader.Default,
+	}, // Default
 ];
 
+function DefaultShaderProgramBindDraw(glctx, program, model) {
+
+}
+
+const vertexPosition = "vertPos";
+const viewProjectionMatrix = "viewProjMat";
+const worldMatrix = "worldMat";
 class ShaderManager {
 
 	constructor() {
@@ -64,6 +73,42 @@ class ShaderManager {
 		}
 
 		return true;
+	}
+
+	BindShader(glctx, shaderIdx, camera) /* {program: WebGLProgram, bindDraw: function(glctx, program, model) */  {
+		const program = this.programs[shaderIdx];
+		glctx.useProgram(program);
+
+		// Set up the vertex position, generic
+		glctx.vertexAttribPointer(
+			glctx.getAttribLocation(program, vertexPosition),
+			2, 			// points per vertex
+			glctx.FLOAT,
+			false, 		// normalize
+			0,			// stride
+			0,			//offset
+		);
+		glctx.enableVertexAttribArray(glctx.getAttribLocation(program, vertexPosition));
+		glctx.uniformMatrix4fv(
+			glctx.getUniformLocation(program, viewProjectionMatrix),
+			false,
+			camera.viewProjMatrix);
+
+		// TO DO: Potentially a thing for more complex shaders?
+		// const bindPerFrame = shaderPrograms[shaderIdx].bindFrame;
+		// if (bindPerFrame != null) {
+		// 	bindPerFrame(glctx, program, camera)
+		// }
+
+		return {
+			program: program,
+			bindWorldMatrix: function(gltx, matrix) {
+				gltx.uniformMatrix4fv(
+					gltx.getUniformLocation(program, worldMatrix),
+					false,
+					matrix);
+			}
+		}
 	}
 
 	createShaderProgram(glctx, vertexShader, fragmentShader) /* WebGLProgram */ {

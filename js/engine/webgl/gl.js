@@ -49,43 +49,14 @@ class GLContext {
 
 		//-------------------------------
 		//Set up the shader program
-		const activeShader = this.shaderController.programs[ShaderPrograms.Default];
-
-		gl.useProgram(activeShader);
-		{
-			const numComponents = 2;  // pull out 2 values per iteration
-			const type = gl.FLOAT;    // the data in the buffer is 32bit floats
-			const normalize = false;  // don't normalize
-			const stride = 0;         // how many bytes to get from one set of values to the next
-									// 0 = use type and numComponents above
-			const offset = 0;         // how many bytes inside the buffer to start from
-	
-			gl.vertexAttribPointer(
-				gl.getAttribLocation(activeShader, 'aVertexPosition'),
-				numComponents,
-				type,
-				normalize,
-				stride,
-				offset);
-			gl.enableVertexAttribArray(gl.getAttribLocation(activeShader, 'aVertexPosition'));
-		}
-
-		gl.uniformMatrix4fv(
-			gl.getUniformLocation(activeShader, 'uViewProjMatrix'),
-			false,
-			this.camera.viewProjMatrix);
-		//-------------------------------
+		const activeShader = this.shaderController.BindShader(gl, ShaderPrograms.Default, this.camera);
 
 		
 		//-------------------------------
 		// Do render
 		const modelMatrix = mat4.create();
 		mat4.translate(modelMatrix,	modelMatrix, [-0.0, 0.0, -6.0]);
-
-		gl.uniformMatrix4fv(
-			gl.getUniformLocation(activeShader, 'uWorldMatrix'),
-			false,
-			modelMatrix);
+		activeShader.bindWorldMatrix(gl, modelMatrix);
 	
 
 		{
