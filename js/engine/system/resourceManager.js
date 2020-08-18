@@ -1,82 +1,88 @@
 var resource_type_image = 0;
 var resource_type_audio = 1;
 
-var resourceManager = {
-	resourceList : [],
+const ResourceType = {
+	"Image": 0,
+	"Autio": 1,
+	"Texture": 2,
+	"Mesh": 3, // because plans.
+};
+Object.freeze(ResourceType);
+
+class ResourceManager {
+	constructor() {
+		this.resourceList = [];
+		this.audioType = "";
+	}
 	
-	audioType : "",
+	Initialise() {
+	}
 	
-	start : function()
-	{
-		
-	},
-	
-	loadResource : function(src, type)
-	{
+	LoadResource(src, type)	{
 		var res = this.resourceList.find(res => res.source === src);
 		var obj = null;
-		if(!res)
-		{
-			switch(type)
-			{
-				case resource_type_image:
+		if(!res) {
+			switch(type) {
+				case ResourceType.Image:
 				obj = new Image();
 				obj.onload = imageLoadComplete();
 				obj.src = src;				
 				break;
 				
-				case resource_type_audio:
+				case ResourceType.Audio:
 				obj = new Audio(src + this.audioType);
 				loadBarrier.objectLoaded(); // auto loads
+
+				case ResourceType.Texture:
+				obj = glcontext.LoadTexture(src);
 			}
 			
 			res = new resource(src, obj, type);
+			this.resourceList[src] = res;
 			loadBarrier.resourceLoading();
 		}
-		else
-		{
+		else {
 			obj = res.object;
 			res.addReference();
 		}
 		
 		return obj;
-	},
+	}
 	
-	getResource : function(src)
-	{
+	getResource(src) {
 		var res = this.resourceList.find(res => res.source === src);
-		if(res)
-		{
+		if(res) {
 			return res.obj;
 		}
 		
 		return null;
-	},
+	}
 	
-	unloadResource : function(src)
-	{
+	unloadResource(src)	{
 		// TO DO
 	}
 }
 
-function resource(src, obj, type)
-{
-	this.source = src;
-	this.object = obj;
-	this.type = type;
+
+const resources = new ResourceManager()
+
+class resource {
+
+	constructor(src, obj, type) {
+		this.source = src;
+		this.object = obj;
+		this.type = type;
+		
+		this.referenceCount = 1;
+	}
 	
-	this.referenceCount = 1;
-	
-	this.addReference = function()
-	{
+	addReference() {
 		referenceCount++;
 	}
 	
-	this.removeReference = function()
-	{
+	removeReference() {
 		referenceCount--;
-		if(referenceCount < 0 )
-		{
+		if(referenceCount < 0 )	{
 			referenceCount = 0;
 		}
 	}

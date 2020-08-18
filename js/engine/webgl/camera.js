@@ -19,6 +19,18 @@ class Camera {
 		);
 	}
 
+	BuildOrthographicMatrix(iW, iH) {
+		mat4.ortho(
+			this.projMatrix, 
+			0,
+			iW, 
+			iH,
+			0, 
+			-1,
+			1,
+		);
+	}
+
     UpdateView() {
 		mat4.invert(this.viewMatrix, this.worldMatrix);
 		mat4.multiply(this.viewProjMatrix, this.viewMatrix, this.projMatrix);

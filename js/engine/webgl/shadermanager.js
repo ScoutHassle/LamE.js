@@ -1,21 +1,26 @@
 const VertexShader = {
 	"Default": 0,
+	"Texture": 1,
 };
 Object.freeze(VertexShader);
 const vertShaderSources = [
-	vsSource, // Defulat
+	vsColourSource,  // Default
+	vsTextureSource, // Texture
 ];
 
 const FragmentShader = {
 	"Default": 0,
+	"Texture": 1,
 };
 Object.freeze(FragmentShader);
 const fragShaderSources = [
-	fsSource, // Default
+	fsColourSource,  // Default
+	fsTextureSource, // Texture
 ];
 
 const ShaderPrograms = {
 	"Default": 0,
+	"Texture": 1,
 };
 Object.freeze(ShaderPrograms);
 const shaderPrograms = [
@@ -23,6 +28,10 @@ const shaderPrograms = [
 		v: VertexShader.Default, 
 		f: FragmentShader.Default,
 	}, // Default
+	{
+		v: VertexShader.Texture, 
+		f: FragmentShader.Texture,
+	}, // Texture
 ];
 
 function DefaultShaderProgramBindDraw(glctx, program, model) {
@@ -30,6 +39,8 @@ function DefaultShaderProgramBindDraw(glctx, program, model) {
 }
 
 const vertexPosition = "vertPos";
+const textureCoordinates = "textureCoord";
+const textureSampler = "texture";
 const viewProjectionMatrix = "viewProjMat";
 const worldMatrix = "worldMat";
 class ShaderManager {
@@ -73,6 +84,12 @@ class ShaderManager {
 		}
 
 		return true;
+	}
+
+	// Rammed in for the sprite rendering.
+	GetProgram(shaderIdx) /* WebGLProgram */ {
+		const program = this.programs[shaderIdx];
+		return program;
 	}
 
 	BindShader(glctx, shaderIdx, camera) /* {program: WebGLProgram, bindDraw: function(glctx, program, model) */  {

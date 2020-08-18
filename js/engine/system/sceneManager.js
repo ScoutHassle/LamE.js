@@ -41,7 +41,7 @@ class SceneManager {
 		glcontext.Initialise(defaultCanvas.x, defaultCanvas.y);		
 		
 		// Resource Manager
-		resourceManager.start();
+		resources.Initialise();
 		
 		// Input Manager
 		inputManager.start();
@@ -88,7 +88,8 @@ class SceneManager {
 
 	render()  /* */ {
 		
-		glcontext.Render();
+		//glcontext.Render();
+		glcontext.RenderSprites();
 		//globalCanvas.clear();
 		//renderManager.render();
 
